@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { json } from "sequelize/types";
-import Author from "../models/author";
+import { Author } from "../models/";
 
 export const getAuthors = async (req: Request, res: Response) => {
   const authors = await Author.findAll();
@@ -26,15 +25,16 @@ export const postAuthor = async (req: Request, res: Response) => {
   const { body } = req;
 
   try {
-    const existEmail = await Author.findOne({
+    const existAuthor = await Author.findOne({
       where: {
-        email: body.email,
+        name: body.name,
+        country: body.country,
       },
     });
 
-    if (existEmail) {
+    if (existAuthor) {
       return res.status(400).json({
-        msg: "a authors exists with the email address: " + body.email,
+        msg: `a authors exists with the name ${body.name} & country ${body.country}`,
       });
     }
 

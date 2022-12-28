@@ -4,7 +4,7 @@ import database from "../db/connection";
 const modelName: string =
   (process.env.DATABASE_AUTHORS_MODEL_NAME as string) ?? "";
 
-const Author = database.define(modelName, {
+export const Author = database.define(modelName, {
   id: {
     type: DataTypes.NUMBER,
     primaryKey: true

@@ -1,5 +1,5 @@
 import express, { Application } from "express";
-import userRoutes from "../routes/author";
+import { authorRouter, bookRouter } from "../routes/";
 import cors from "cors";
 
 import database from "../db/connection";
@@ -9,6 +9,7 @@ class Server {
   private port: string;
   private apiPaths = {
     authors: "/api/authors",
+    books: "/api/books",
   };
 
   constructor() {
@@ -39,7 +40,8 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.apiPaths.authors, userRoutes);
+    this.app.use(this.apiPaths.authors, authorRouter);
+    this.app.use(this.apiPaths.books, bookRouter);
   }
 
   listen() {
