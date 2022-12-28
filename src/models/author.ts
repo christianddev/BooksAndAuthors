@@ -6,14 +6,18 @@ const modelName: string =
 
 export const Author = database.define(modelName, {
   id: {
-    type: DataTypes.NUMBER,
-    primaryKey: true
+    type: DataTypes.INTEGER.UNSIGNED,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false
   },
   name: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(150),
+    allowNull: false
   },
   country: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(5),
+    allowNull: false
   },
   updatedAt: {
     type: DataTypes.TIME,

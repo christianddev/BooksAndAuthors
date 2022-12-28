@@ -6,11 +6,14 @@ const modelName: string =
 
 export const Book = database.define(modelName, {
   id: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER.UNSIGNED,
     primaryKey: true,
+    autoIncrement: true,
+    allowNull: false
   },
   title: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(150),
+    allowNull: false
   },
   updatedAt: {
     type: DataTypes.TIME,
