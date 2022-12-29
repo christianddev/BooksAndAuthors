@@ -2,19 +2,21 @@ import express, { Application } from "express";
 import { authorRouter, bookRouter } from "../routes/";
 import cors from "cors";
 
-import database from "../db/connection";
+import database from "../database/connection";
 
-const booksPath = `${(process.env.SERVER_BASE_URL as string) ?? ""}${(process.env.SERVER_URL_BOOKS as string) ?? ""}`;
-console.log('booksPath', booksPath)
-const authorsPath = `${(process.env.SERVER_BASE_URL as string) ?? ""}${(process.env.SERVER_URL_AUTHORS as string) ?? ""}`;
-console.log('authorsPath', authorsPath)
+const booksPath = `${(process.env.SERVER_BASE_URL as string) ?? ""}${
+  (process.env.SERVER_URL_BOOKS as string) ?? ""
+}`;
+const authorsPath = `${(process.env.SERVER_BASE_URL as string) ?? ""}${
+  (process.env.SERVER_URL_AUTHORS as string) ?? ""
+}`;
 
 class Server {
   private app: Application;
   private port: string;
   private apiPaths = {
     books: booksPath,
-    authors: authorsPath,
+    authors: authorsPath
   };
 
   constructor() {
@@ -32,6 +34,7 @@ class Server {
       await database.authenticate();
       console.log("Database online");
     } catch (error) {
+      // TODO: manage this
       throw error;
     }
   }

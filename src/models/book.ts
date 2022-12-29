@@ -1,30 +1,29 @@
 import { DataTypes } from "sequelize";
-import database from "../db/connection";
+import database from "../database/connection";
 
 const modelName: string =
   (process.env.DATABASE_BOOK_MODEL_NAME as string) ?? "";
 
-export const Book = database.define(modelName, {
-  id: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false
+export const Book = database.define(
+  modelName,
+  {
+    id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
+    title: {
+      type: DataTypes.STRING(150),
+      allowNull: false,
+    },
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+    },
   },
-  title: {
-    type: DataTypes.STRING(150),
-    allowNull: false
-  },
-  createdAt: {
-    type: DataTypes.TIME,
-  },
-  updatedAt: {
-    type: DataTypes.TIME,
-  },
-  isDeleted: {
-    type: DataTypes.BOOLEAN,
-  },
-});
-
+  {
+    timestamps: true,
+  }
+);
 
 export default Book;

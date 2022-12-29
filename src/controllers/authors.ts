@@ -8,6 +8,7 @@ export const getAuthors = async (req: Request, res: Response) => {
 };
 
 export const getAuthor = async (req: Request, res: Response) => {
+  console.log('getAuthor')
   const { id } = req.params;
 
   const author = await Author.findByPk(id);
@@ -51,6 +52,7 @@ export const postAuthor = async (req: Request, res: Response) => {
 };
 
 export const putAuthor = async (req: Request, res: Response) => {
+  console.log('putAuthor')
   const { id } = req.params;
   const { body } = req;
 
@@ -74,6 +76,7 @@ export const putAuthor = async (req: Request, res: Response) => {
 };
 
 export const deleteAuthor = async (req: Request, res: Response) => {
+  console.log('deleteAuthor')
   const { id } = req.params;
 
   const author = await Author.findByPk(id);
