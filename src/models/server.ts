@@ -4,12 +4,17 @@ import cors from "cors";
 
 import database from "../db/connection";
 
+const booksPath = `${(process.env.SERVER_BASE_URL as string) ?? ""}${(process.env.SERVER_URL_BOOKS as string) ?? ""}`;
+console.log('booksPath', booksPath)
+const authorsPath = `${(process.env.SERVER_BASE_URL as string) ?? ""}${(process.env.SERVER_URL_AUTHORS as string) ?? ""}`;
+console.log('authorsPath', authorsPath)
+
 class Server {
   private app: Application;
   private port: string;
   private apiPaths = {
-    authors: "/api/authors",
-    books: "/api/books",
+    books: booksPath,
+    authors: authorsPath,
   };
 
   constructor() {

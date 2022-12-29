@@ -19,11 +19,14 @@ export const Author = database.define(modelName, {
     type: DataTypes.STRING(5),
     allowNull: false
   },
+  createdAt: {
+    type: DataTypes.TIME,
+  },
   updatedAt: {
     type: DataTypes.TIME,
   },
-  createdAt: {
-    type: DataTypes.TIME,
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
   },
 });
 

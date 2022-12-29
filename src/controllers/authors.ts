@@ -83,7 +83,7 @@ export const deleteAuthor = async (req: Request, res: Response) => {
     });
   }
 
-  await author.update({ estado: false });
+  await author.update({ isDeleted: true });
 
   // await author.destroy();
 

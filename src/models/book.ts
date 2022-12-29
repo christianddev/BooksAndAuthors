@@ -15,10 +15,16 @@ export const Book = database.define(modelName, {
     type: DataTypes.STRING(150),
     allowNull: false
   },
-  updatedAt: {
-    type: DataTypes.TIME,
-  },
   createdAt: {
     type: DataTypes.TIME,
   },
+  updatedAt: {
+    type: DataTypes.TIME,
+  },
+  isDeleted: {
+    type: DataTypes.BOOLEAN,
+  },
 });
+
+
+export default Book;

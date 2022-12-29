@@ -82,7 +82,7 @@ export const deleteBook = async (req: Request, res: Response) => {
     });
   }
 
-  await book.update({ estado: false });
+  await book.update({ isDeleted: true });
 
   // await book.destroy();
 
