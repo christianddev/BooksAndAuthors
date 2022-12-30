@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import database from "../database/connection";
+import Author from "./author";
 
 const modelName: string =
   (process.env.DATABASE_BOOK_MODEL_NAME as string) ?? "";

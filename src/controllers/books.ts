@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
+import {
+  createABook,
+  createABookWithAuthors,
+  findOneBookByTitle,
+} from "../helpers/database";
 import { Book } from "../models";
+import { CreateBook } from "../typings/book";
 
 export const getBooks = async (req: Request, res: Response) => {
   const books = await Book.findAll();
@@ -22,25 +28,28 @@ export const getBook = async (req: Request, res: Response) => {
 };
 
 export const postBook = async (req: Request, res: Response) => {
-  const { body } = req;
+  const rawBook = req?.body as CreateBook;
+
+  if (!rawBook?.title) {
+    res.status(400).json({
+      msg: "check the book data",
+    });
+  }
 
   try {
-    const existAuthor = await Book.findOne({
-      where: {
-        title: body.title,
-      },
-    });
+    const book = await findOneBookByTitle({ title: rawBook?.title });
 
-    if (existAuthor) {
+    if (book) {
       return res.status(400).json({
-        msg: `a books exists with the title ${body.title}`,
+        msg: `a books exists with the title ${rawBook?.title}`,
       });
     }
 
-    const book = Book.build(body);
-    await book.save();
+    if (rawBook?.authors?.length) {
+      return await createABookWithAuthors(rawBook, res);
+    }
 
-    res.json(book);
+    return await createABook(rawBook, res);
   } catch (error) {
     console.log(error);
     res.status(500).json({

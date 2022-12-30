@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { findOneAuthorByTitle } from "../helpers";
 import { Author } from "../models/";
 
 export const getAuthors = async (req: Request, res: Response) => {
@@ -8,7 +9,7 @@ export const getAuthors = async (req: Request, res: Response) => {
 };
 
 export const getAuthor = async (req: Request, res: Response) => {
-  console.log('getAuthor')
+  console.log("getAuthor");
   const { id } = req.params;
 
   const author = await Author.findByPk(id);
@@ -26,11 +27,9 @@ export const postAuthor = async (req: Request, res: Response) => {
   const { body } = req;
 
   try {
-    const existAuthor = await Author.findOne({
-      where: {
-        name: body.name,
-        country: body.country,
-      },
+    const existAuthor = await findOneAuthorByTitle({
+      name: body.name,
+      country: body.country,
     });
 
     if (existAuthor) {
@@ -52,7 +51,7 @@ export const postAuthor = async (req: Request, res: Response) => {
 };
 
 export const putAuthor = async (req: Request, res: Response) => {
-  console.log('putAuthor')
+  console.log("putAuthor");
   const { id } = req.params;
   const { body } = req;
 
@@ -76,7 +75,7 @@ export const putAuthor = async (req: Request, res: Response) => {
 };
 
 export const deleteAuthor = async (req: Request, res: Response) => {
-  console.log('deleteAuthor')
+  console.log("deleteAuthor");
   const { id } = req.params;
 
   const author = await Author.findByPk(id);
