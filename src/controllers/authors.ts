@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { findOneAuthorByTitle } from "../helpers";
+import { findOneAuthorByNameAndCountry } from "../helpers";
 import { Author } from "../models/";
 
 export const getAuthors = async (req: Request, res: Response) => {
@@ -26,21 +26,21 @@ export const postAuthor = async (req: Request, res: Response) => {
   const { body } = req;
 
   try {
-    const existAuthor = await findOneAuthorByTitle({
+    const author = await findOneAuthorByNameAndCountry({
       name: body.name,
       country: body.country,
     });
 
-    if (existAuthor) {
+    if (author) {
       return res.status(400).json({
         msg: `a authors exists with the name ${body.name} & country ${body.country}`,
       });
     }
 
-    const author = Author.build(body);
-    await author.save();
+    const newAuthor = Author.build(body);
+    await newAuthor.save();
 
-    res.json(author);
+    res.json(newAuthor);
   } catch (error) {
     console.log(error);
     res.status(500).json({

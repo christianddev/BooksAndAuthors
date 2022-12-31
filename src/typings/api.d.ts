@@ -3,9 +3,12 @@ export interface ApiResponse<T> {
   error?: T;
 }
 
-
 export interface ErrorResponse {
-  code: number
-  message: string
-  errors?: string[] | object[]
+  code: number;
+  message: string;
+  errors?: string[] | object[];
+}
+
+export interface ErrorOperation {
+  message: string;
 }

@@ -1,9 +1,5 @@
 import { Request, Response } from "express";
-import {
-  createABook,
-  createABookWithAuthors,
-  findOneBookByTitle,
-} from "../helpers/database";
+import { createBook, createABookWithAuthors } from "../helpers/database";
 import { Book } from "../models";
 import { CreateBook } from "../typings/book";
 
@@ -37,19 +33,13 @@ export const postBook = async (req: Request, res: Response) => {
   }
 
   try {
-    const book = await findOneBookByTitle({ title: rawBook?.title });
-
-    if (book) {
-      return res.status(400).json({
-        msg: `a books exists with the title ${rawBook?.title}`,
-      });
-    }
-
     if (rawBook?.authors?.length) {
-      return await createABookWithAuthors(rawBook, res);
+      const newBook = await createABookWithAuthors(rawBook);
+      res.json(newBook);
     }
 
-    return await createABook(rawBook, res);
+    const newBook = await createBook(rawBook);
+    res.json(newBook);
   } catch (error) {
     console.log(error);
     res.status(500).json({

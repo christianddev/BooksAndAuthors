@@ -1,4 +1,4 @@
-import { Author } from "./author";
+import { CreateAuthor } from "./author";
 
 export interface Book {
   title: string;
@@ -6,5 +6,5 @@ export interface Book {
 
 export interface CreateBook {
   title: string;
-  authors?: Author[];
+  authors?: CreateAuthor[];
 }
