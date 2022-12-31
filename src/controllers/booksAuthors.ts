@@ -22,4 +22,3 @@ export const getAllBooksAuthorsGroupByAuthor = async (
 
   res.json({ booksAuthors });
 };
-
