@@ -9,7 +9,6 @@ export const getAuthors = async (req: Request, res: Response) => {
 };
 
 export const getAuthor = async (req: Request, res: Response) => {
-  console.log("getAuthor");
   const { id } = req.params;
 
   const author = await Author.findByPk(id);
