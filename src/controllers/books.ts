@@ -35,14 +35,17 @@ export const postBook = async (req: Request, res: Response) => {
   try {
     if (rawBook?.authors?.length) {
       const newBook = await createABookWithAuthors(rawBook);
-      res.json(newBook);
+      // TODO: error by code
+      // TODO: check this return, disable if middleware nos run for this request
+      return res.json(newBook);
     }
 
     const newBook = await createBook(rawBook);
-    res.json(newBook);
+    // TODO: check this return, disable if middleware nos run for this request
+    return res.json(newBook);
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    console.trace(error);
+    return res.status(500).json({
       msg: "contact with the administrator",
     });
   }

@@ -1,6 +1,6 @@
 import { Model } from "sequelize";
 import { Author as AuthorModel, Book as BookModel } from "../models";
-import type { ErrorOperation } from "../typings/api";
+import type { ResponseOperation } from "../typings/api";
 import type { Author, CreateAuthor } from "../typings/author";
 import type { CreateBook } from "../typings/book";
 
@@ -24,21 +24,23 @@ export const findOneAuthorByNameAndCountry = async ({
 
 export const createBook = async (
   rawBook: CreateBook
-): Promise<Model<any, any> | ErrorOperation> => {
+): Promise<ResponseOperation> => {
   if (!rawBook?.title) {
-    return { message: "check book data" };
+    return { error: { message: "check book data" } };
   }
 
   const book = await findOneBookByTitle({ title: rawBook?.title });
 
   if (book) {
-    return { message: `there is a book with the title '${rawBook?.title}'` };
+    return {
+      error: { message: `there is a book with the title '${rawBook?.title}'` },
+    };
   }
   const newBook = await BookModel.create({
     title: rawBook?.title,
   });
 
-  return newBook;
+  return { data: newBook };
 };
 
 export const createAuthor = async (rawAuthor: CreateAuthor) => {
@@ -65,25 +67,36 @@ export const createAuthor = async (rawAuthor: CreateAuthor) => {
   return newAuthor;
 };
 
-const createAuthorsFromBook = async (rawAuthors: CreateAuthor[]) => {
-  const newAuthors = [];
-  for (let i = 0; i < rawAuthors.length; i++) {
-    const newAuthor = await createAuthor(rawAuthors[i]);
-    newAuthors.push(newAuthor);
-  }
-  return newAuthors;
-};
+const createAuthorsFromBook = async (rawAuthors: CreateAuthor[]) =>
+  new Promise(async (resolve, reject) => {
 
-export const createABookWithAuthors = async (rawBook: CreateBook) => {
+    try {
+      const newAuthors = [];
+      for (let i = 0; i < rawAuthors.length; i++) {
+        const newAuthor = await createAuthor(rawAuthors[i]);
+        newAuthors.push(newAuthor);
+      }
+      resolve(newAuthors);
+    } catch (error) {
+      console.trace("createAuthorsFromBook: ", error);
+      reject(error);
+    }
+  });
+
+export const createABookWithAuthors = async (
+  rawBook: CreateBook
+): Promise<ResponseOperation> => {
+
   if (!rawBook?.authors?.length) {
-    return { error: `check authors data` };
+    return { error: { message: `check authors data` } };
   }
 
   try {
-    const newBook: Model<any, any> | ErrorOperation = await createBook(rawBook);
-    console.log("### newBook", typeof newBook);
-    // if (newBook.message) {
-    // }
+    const newBook = await createBook(rawBook);
+    if (newBook?.error?.message) {
+      return { error: { message: newBook?.error?.message } };
+    }
+
     const newAuthors = await createAuthorsFromBook(rawBook?.authors);
     console.log("### newAuthors", newAuthors);
 
@@ -92,7 +105,7 @@ export const createABookWithAuthors = async (rawBook: CreateBook) => {
 
     return newBook;
   } catch (error) {
-    console.log("error", error);
+    console.log("error createABookWithAuthors: ", error);
     throw new Error("createABookWithAuthors");
   }
 };
