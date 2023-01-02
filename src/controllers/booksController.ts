@@ -55,6 +55,7 @@ export const getAllBooksAuthorsGroupByBook = async (
   req: Request,
   res: Response
 ) => {
+  // TODO: add pagination
   const booksAuthors = await BookModel.findAll({
     include: [AuthorModel],
   });

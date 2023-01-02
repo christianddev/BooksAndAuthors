@@ -7,9 +7,13 @@ import {
 } from "./constants";
 
 export const findAllAuthors = async (
-  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS,
+  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED
 ) =>
   await AuthorModel?.findAll({
+    where: {
+      isDeleted: excludeTemporaryDeleted,
+    },
     attributes: {
       exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
     },
@@ -17,8 +21,8 @@ export const findAllAuthors = async (
 
 export const findAuthorById = async (
   id: string,
-  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
-  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS,
+  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED
 ) =>
   await AuthorModel.findOne({
     where: {

@@ -2,12 +2,21 @@ import { BookModel } from "../models";
 import type { OperationResponse } from "../typings/api";
 import type { BookRequest } from "../typings/book";
 import { createAuthorsBooks } from "./bookAuthorDatabase";
-import { EXCLUDE_ORM_FIELDS, SEQUELIZE_FIELDS } from "./constants";
+import {
+  EXCLUDE_ORM_FIELDS,
+  EXCLUDE_TEMPORARY_DELETED,
+  SEQUELIZE_FIELDS,
+} from "./constants";
+
 
 export const findAllBooks = async (
-  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS,
+  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED
 ) =>
   await BookModel.findAll({
+    where: {
+      isDeleted: excludeTemporaryDeleted,
+    },
     attributes: {
       exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
     },
