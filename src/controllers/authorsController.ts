@@ -38,7 +38,7 @@ export const getAuthor = async (req: Request, res: Response) => {
     }
 
     return res.status(httpStatus?.NOT_FOUND).json({
-      msg: `author not found: ${id}`,
+      msg: `author with id '${id}' not found`,
     });
   } catch (error) {
     console.trace(error);

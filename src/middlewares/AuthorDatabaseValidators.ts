@@ -15,7 +15,7 @@ export const validateAuthorById = async (
 
     if (!author) {
       return res.status(httpStatus?.NOT_FOUND).json({
-        msg: `author not found: ${id}`,
+        msg: `author with id '${id}' not found`,
       });
     }
 
