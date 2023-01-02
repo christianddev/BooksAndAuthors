@@ -1,4 +1,4 @@
-export * from "./server";
+import ServerModel from "./ServerModel";
 import AuthorModel from "./AuthorModel";
 import BookModel from "./BookModel";
 import BooksAuthorsModel from "./BooksAuthorsModel";
@@ -19,4 +19,4 @@ AuthorModel.belongsToMany(BookModel, {
   uniqueKey: authorId,
 });
 
-export { AuthorModel, BookModel, BooksAuthorsModel };
+export { ServerModel, AuthorModel, BookModel, BooksAuthorsModel };

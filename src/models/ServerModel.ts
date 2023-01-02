@@ -1,5 +1,5 @@
 import express, { Application } from "express";
-import { authorRouter, bookRouter } from "../routes/";
+import { authorRouter, bookRouter } from "../routes";
 import cors from "cors";
 
 import database from "../database/connection";
@@ -11,7 +11,7 @@ const authorsPath = `${(process.env.SERVER_BASE_URL as string) ?? ""}${
   (process.env.SERVER_URL_AUTHORS as string) ?? ""
 }`;
 
-class Server {
+class ServerModel {
   private app: Application;
   private port: string;
   private apiPaths = {
@@ -58,4 +58,4 @@ class Server {
   }
 }
 
-export default Server;
+export default ServerModel;
