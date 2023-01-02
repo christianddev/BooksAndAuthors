@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { createBook, createABookWithAuthors } from "../helpers/database";
-import { Book } from "../models";
+import { Author, Book } from "../models";
 import { CreateBook } from "../typings/book";
 
 export const getBooks = async (req: Request, res: Response) => {
@@ -23,6 +23,17 @@ export const getBook = async (req: Request, res: Response) => {
   }
 };
 
+export const getAllBooksAuthorsGroupByBook = async (
+  req: Request,
+  res: Response
+) => {
+  const booksAuthors = await Book.findAll({
+    include: [Author],
+  });
+
+  res.json({ booksAuthors });
+};
+
 export const postBook = async (req: Request, res: Response) => {
   const rawBook = req?.body as CreateBook;
 
@@ -30,6 +41,30 @@ export const postBook = async (req: Request, res: Response) => {
     res.status(400).json({
       msg: "check the book data",
     });
+  }
+
+  try {
+    const newBook = await createBook(rawBook);
+    // TODO: check this return, disable if middleware nos run for this request
+    return res.json(newBook);
+  } catch (error) {
+    console.trace(error);
+    return res.status(500).json({
+      msg: "contact with the administrator",
+    });
+  }
+};
+export const postBookWithAuthors = async (req: Request, res: Response) => {
+  const rawBook = req?.body as CreateBook;
+
+  if (!rawBook?.title) {
+    res.status(400).json({
+      msg: "check the book data",
+    });
+  }
+
+  if (!rawBook?.authors?.length) {
+    return { error: { message: `check authors data` } };
   }
 
   try {

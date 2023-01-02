@@ -1,6 +1,10 @@
 import { Model } from "sequelize";
-import { Author as AuthorModel, Book as BookModel } from "../models";
-import type { ResponseOperation } from "../typings/api";
+import {
+  Author as AuthorModel,
+  Book as BookModel,
+  BooksAuthors,
+} from "../models";
+import type { OperationResponse } from "../typings/api";
 import type { Author, CreateAuthor } from "../typings/author";
 import type { CreateBook } from "../typings/book";
 
@@ -22,9 +26,16 @@ export const findOneAuthorByNameAndCountry = async ({
     },
   });
 
+export const findBooksAuthorsByBookId = async (bookId: string) =>
+  await BooksAuthors.findAll({
+    where: {
+      bookId,
+    },
+  });
+
 export const createBook = async (
   rawBook: CreateBook
-): Promise<ResponseOperation> => {
+): Promise<OperationResponse> => {
   if (!rawBook?.title) {
     return { error: { message: "check book data" } };
   }
@@ -67,43 +78,95 @@ export const createAuthor = async (rawAuthor: CreateAuthor) => {
   return newAuthor;
 };
 
-const createAuthorsFromBook = async (rawAuthors: CreateAuthor[]) =>
-  new Promise(async (resolve, reject) => {
+// const createAuthorsFromBook = async (rawAuthors: CreateAuthor[]) =>
+//   new Promise(async (resolve, reject) => {
 
+//     try {
+//       const newAuthors = [];
+//       for (let i = 0; i < rawAuthors.length; i++) {
+//         const newAuthor = await createAuthor(rawAuthors[i]);
+//         newAuthors.push(newAuthor);
+//       }
+//       resolve(newAuthors);
+//     } catch (error) {
+//       console.trace("createAuthorsFromBook: ", error);
+//       reject(error);
+//     }
+//   });
+
+export const createBookAuthor = async (
+  bookId: string,
+  authorId: string
+): Promise<OperationResponse> => {
+  if (!bookId || !authorId) {
+    return {
+      error: { message: `check bookId '${bookId}' and authorId ${bookId}` },
+    };
+  }
+
+  const bookAuthor = await BooksAuthors.findOne({
+    where: {
+      bookId,
+      authorId,
+    },
+  });
+
+  if (bookAuthor) {
+    return {
+      error: {
+        message: `there is an author with the bookId '${bookId}' & authorId "${authorId}"`,
+      },
+    };
+  }
+
+  const newBookAuthor = await BooksAuthors.create({
+    bookId,
+    authorId,
+  });
+
+  return { data: newBookAuthor };
+};
+
+const createAuthorsBooks = async (
+  bookId: string,
+  authorsIds: string[]
+): Promise<Array<OperationResponse>> =>
+  new Promise(async (resolve, reject) => {
     try {
-      const newAuthors = [];
-      for (let i = 0; i < rawAuthors.length; i++) {
-        const newAuthor = await createAuthor(rawAuthors[i]);
-        newAuthors.push(newAuthor);
+      const booksAuthorResult = [];
+      for (let i = 0; i < authorsIds.length; i++) {
+        console.log("bookId, authorsIds[i]", bookId, authorsIds[i]);
+        const newAuthor = await createBookAuthor(bookId, authorsIds[i]);
+        booksAuthorResult.push(newAuthor);
       }
-      resolve(newAuthors);
+      resolve(booksAuthorResult);
     } catch (error) {
-      console.trace("createAuthorsFromBook: ", error);
+      console.trace("createAuthorsBooks: ", error);
       reject(error);
     }
   });
 
-export const createABookWithAuthors = async (
-  rawBook: CreateBook
-): Promise<ResponseOperation> => {
-
+// TODO: check response
+export const createABookWithAuthors = async (rawBook: CreateBook) => {
   if (!rawBook?.authors?.length) {
     return { error: { message: `check authors data` } };
   }
 
   try {
     const newBook = await createBook(rawBook);
+    console.log("newBook", newBook);
     if (newBook?.error?.message) {
-      return { error: { message: newBook?.error?.message } };
+      return { error: newBook?.error };
     }
 
-    const newAuthors = await createAuthorsFromBook(rawBook?.authors);
-    console.log("### newAuthors", newAuthors);
+    const booksAuthors = await createAuthorsBooks(
+      newBook?.data?.dataValues?.id,
+      rawBook?.authors
+    );
+    console.log("### booksAuthors", booksAuthors);
 
-    // TODO: return a single book or a book with his authors
-    // TODO: if authors exists, return a message
-
-    return newBook;
+    // return await findBooksAuthorsByBookId(newBook?.data?.dataValues?.id);
+    return booksAuthors;
   } catch (error) {
     console.log("error createABookWithAuthors: ", error);
     throw new Error("createABookWithAuthors");

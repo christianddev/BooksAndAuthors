@@ -6,6 +6,7 @@ import {
   putBook,
   deleteBook,
   getAllBooksAuthorsGroupByBook,
+  postBookWithAuthors,
 } from "../controllers";
 
 export const bookRouter = Router();
@@ -14,5 +15,6 @@ bookRouter.get("/", getBooks);
 bookRouter.get("/:id", getBook);
 bookRouter.get("/all/authors", getAllBooksAuthorsGroupByBook);
 bookRouter.post("/", postBook);
+bookRouter.post("/authors", postBookWithAuthors);
 bookRouter.put("/:id", putBook);
 bookRouter.delete("/:id", deleteBook);

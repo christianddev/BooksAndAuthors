@@ -11,7 +11,7 @@ export interface ErrorResponse {
   errors?: string[] | object[];
 }
 
-export interface ResponseOperation<T = Model<any, any>> {
+export interface OperationResponse<T = Model<any, any>> {
   data?: T;
   error?: ErrorOperation;
 }

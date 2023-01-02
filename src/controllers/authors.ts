@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { findOneAuthorByNameAndCountry } from "../helpers";
-import { Author } from "../models/";
+import { Author, Book } from "../models/";
 
 export const getAuthors = async (req: Request, res: Response) => {
   const authors = await Author.findAll();
@@ -20,6 +20,17 @@ export const getAuthor = async (req: Request, res: Response) => {
       msg: `author not found: ${id}`,
     });
   }
+};
+
+export const getAllBooksAuthorsGroupByAuthor = async (
+  req: Request,
+  res: Response
+) => {
+  const booksAuthors = await Author.findAll({
+    include: [Book],
+  });
+
+  res.json({ booksAuthors });
 };
 
 export const postAuthor = async (req: Request, res: Response) => {
