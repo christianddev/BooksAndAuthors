@@ -1,11 +1,9 @@
 import { DataTypes } from "sequelize";
 import database from "../database/connection";
-
-const modelName: string =
-  (process.env.DATABASE_BOOK_MODEL_NAME as string) ?? "";
+import { BOOK_MODEL_NAME } from "../helpers/";
 
 export const BookModel = database.define(
-  modelName,
+  BOOK_MODEL_NAME,
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,

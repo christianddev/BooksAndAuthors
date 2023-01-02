@@ -1,18 +1,13 @@
 import { AuthorModel, BookModel } from "../models";
 import type { AuthorRequest } from "../typings/author";
-import { SEQUELIZE_FIELDS } from "./constants";
-
-const defaultValueExcludeORMFields = Boolean(
-  process.env.EXCLUDE_ORM_FIELDS as string
-);
-
-console.log("defaultValueExcludeORMFields", defaultValueExcludeORMFields);
-const defaultValueExcludeTemporaryDeleted = Boolean(
-  process.env.EXCLUDE_ORM_FIELDS as string
-);
+import {
+  EXCLUDE_ORM_FIELDS,
+  EXCLUDE_TEMPORARY_DELETED,
+  SEQUELIZE_FIELDS,
+} from "./constants";
 
 export const findAllAuthors = async (
-  excludeORMFields: boolean = defaultValueExcludeORMFields
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
   await AuthorModel?.findAll({
     attributes: {
@@ -22,8 +17,8 @@ export const findAllAuthors = async (
 
 export const findAuthorById = async (
   id: string,
-  excludeTemporaryDeleted: boolean = false,
-  excludeORMFields: boolean = true
+  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
   await AuthorModel.findOne({
     where: {
@@ -47,7 +42,7 @@ export const findOneAuthorByNameAndCountry = async ({
   });
 
 export const findAllBooksAuthorsGroupByAuthor = async (
-  excludeORMFields: boolean = true
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
   await AuthorModel?.findAll({
     attributes: {

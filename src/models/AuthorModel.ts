@@ -1,11 +1,9 @@
 import { DataTypes } from "sequelize";
 import database from "../database/connection";
-
-const modelName: string =
-  (process.env.DATABASE_AUTHORS_MODEL_NAME as string) ?? "";
+import { AUTHOR_MODEL_NAME } from "../helpers/";
 
 export const AuthorModel = database.define(
-  modelName,
+  AUTHOR_MODEL_NAME,
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -30,7 +28,7 @@ export const AuthorModel = database.define(
       type: DataTypes.DATE,
       allowNull: false,
       field: "created_at",
-      defaultValue: DataTypes.NOW
+      defaultValue: DataTypes.NOW,
     },
     updatedAt: {
       type: DataTypes.DATE,

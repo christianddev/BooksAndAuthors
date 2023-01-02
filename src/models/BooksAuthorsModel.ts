@@ -1,40 +1,32 @@
 import { DataTypes } from "sequelize";
 import database from "../database/connection";
-
-const modelName: string =
-  (process.env.DATABASE_BOOK_AUTHORS_MODEL_NAME as string) ?? "";
-
-const bookModelName: string =
-  (process.env.DATABASE_BOOK_MODEL_NAME as string) ?? "";
-
-const authorModelName: string =
-  (process.env.DATABASE_AUTHORS_MODEL_NAME as string) ?? "";
-
-const bookId: string =
-  (process.env.DATABASE_BOOK_AUTHORS_BOOK_ID as string) ?? "";
-
-const authorId: string =
-  (process.env.DATABASE_BOOK_AUTHORS_AUTHOR_ID as string) ?? "";
+import {
+  AUTHOR_ID_FIELD,
+  AUTHOR_MODEL_NAME,
+  BOOK_AUTHOR_MODEL_NAME,
+  BOOK_ID_FIELD,
+  BOOK_MODEL_NAME,
+} from "../helpers/";
 
 export const BooksAuthorsModel = database.define(
-  modelName,
+  BOOK_AUTHOR_MODEL_NAME,
   {
-    [bookId]: {
+    [BOOK_ID_FIELD]: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       field: "book_id",
       references: {
-        model: bookModelName,
+        model: BOOK_MODEL_NAME,
         key: "id",
       },
       onDelete: "CASCADE",
     },
-    [authorId]: {
+    [AUTHOR_ID_FIELD]: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       field: "author_id",
       references: {
-        model: authorModelName,
+        model: AUTHOR_MODEL_NAME,
         key: "id",
       },
       onDelete: "CASCADE",

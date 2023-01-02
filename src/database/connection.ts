@@ -1,24 +1,26 @@
-import { Dialect, Sequelize } from "sequelize";
+import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
+import {
+  DATABASE_DIALECT,
+  DATABASE_HOST,
+  DATABASE_LOGGING,
+  DATABASE_NAME,
+  DATABASE_PASSWORD,
+  DATABASE_PORT,
+  DATABASE_USER,
+} from "../helpers/";
 
 dotenv.config();
 
-const databaseName: string = (process.env.DATABASE_NAME as string) ?? "";
-const databaseUser: string = (process.env.DATABASE_USER as string) ?? "";
-const databasePassword: string =
-  (process.env.DATABASE_PASSWORD as string) ?? "";
-const databaseHost: string = (process.env.DATABASE_HOST as string) ?? "";
-const databasePort: string = process.env.DATABASE_PORT ?? "";
-const databaseDialect: Dialect =
-  (process.env.DATABASE_DIALECT as Dialect) ?? "mysql";
-const databaseLogging: boolean = Boolean(
-  process.env.DATABASE_LOGGING as string
+const database = new Sequelize(
+  DATABASE_NAME,
+  DATABASE_USER,
+  DATABASE_PASSWORD,
+  {
+    host: `${DATABASE_HOST}${DATABASE_PORT ? ":" + DATABASE_PORT : ""}`,
+    dialect: DATABASE_DIALECT,
+    logging: DATABASE_LOGGING,
+  }
 );
-
-const database = new Sequelize(databaseName, databaseUser, databasePassword, {
-  host: `${databaseHost}${databasePort ? ":" + databasePort : ""}`,
-  dialect: databaseDialect,
-  logging: databaseLogging,
-});
 
 export default database;

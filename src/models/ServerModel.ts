@@ -3,21 +3,14 @@ import cors from "cors";
 
 import { bookRouter, authorRouter } from "../routes";
 import database from "../database/connection";
-
-const booksPath = `${(process.env.SERVER_BASE_URL as string) ?? ""}${
-  (process.env.SERVER_URL_BOOKS as string) ?? ""
-}`;
-
-const authorsPath = `${(process.env.SERVER_BASE_URL as string) ?? ""}${
-  (process.env.SERVER_URL_AUTHORS as string) ?? ""
-}`;
+import { AUTHORS_PATH, BOOKS_PATH } from "../helpers/";
 
 class ServerModel {
   private app: Application;
   private port: string;
   private apiPaths = {
-    books: booksPath,
-    authors: authorsPath,
+    books: BOOKS_PATH,
+    authors: AUTHORS_PATH,
   };
 
   constructor() {

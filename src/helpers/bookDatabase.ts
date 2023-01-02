@@ -2,9 +2,11 @@ import { BookModel } from "../models";
 import type { OperationResponse } from "../typings/api";
 import type { BookRequest } from "../typings/book";
 import { createAuthorsBooks } from "./bookAuthorDatabase";
-import { SEQUELIZE_FIELDS } from "./constants";
+import { EXCLUDE_ORM_FIELDS, SEQUELIZE_FIELDS } from "./constants";
 
-export const findAllBooks = async (excludeORMFields: boolean = true) =>
+export const findAllBooks = async (
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
+) =>
   await BookModel.findAll({
     attributes: {
       exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
@@ -13,7 +15,7 @@ export const findAllBooks = async (excludeORMFields: boolean = true) =>
 
 export const findBookById = async (
   id: string,
-  excludeORMFields: boolean = true
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
   await BookModel.findByPk(id, {
     attributes: {
@@ -23,7 +25,7 @@ export const findBookById = async (
 
 export const findOneBookByISBN = async (
   isbn: string,
-  excludeORMFields: boolean = true
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
   await BookModel.findOne({
     where: {
