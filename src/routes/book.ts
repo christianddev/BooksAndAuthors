@@ -8,11 +8,12 @@ import {
   getAllBooksAuthorsGroupByBook,
   postBookWithAuthors,
 } from "../controllers";
+import { validateId } from "../middlewares/fieldsValidators";
 
 export const bookRouter = Router();
 
 bookRouter.get("/", getBooks);
-bookRouter.get("/:id", getBook);
+bookRouter.get("/:id", [validateId], getBook);
 bookRouter.get("/all/authors", getAllBooksAuthorsGroupByBook);
 bookRouter.post("/", postBook);
 bookRouter.post("/authors", postBookWithAuthors);

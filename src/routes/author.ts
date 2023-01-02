@@ -7,14 +7,34 @@ import {
   deleteAuthor,
   getAllBooksAuthorsGroupByAuthor,
 } from "../controllers/";
+import {
+  validateAuthorById,
+  validateAuthorByNameAndCountry,
+  validateBookIDs,
+  validateCountry,
+  validateId,
+  validateName,
+  validateNameAndCountry,
+} from "../middlewares/";
 
 export const authorRouter = Router();
 
 authorRouter.get("/", getAuthors);
-authorRouter.get("/:id", getAuthor);
+authorRouter.get("/:id", [validateId], getAuthor);
 authorRouter.get("/all/books", getAllBooksAuthorsGroupByAuthor);
-authorRouter.post("/", postAuthor);
-authorRouter.post("/books", postAuthor);
-authorRouter.put("/:id", putAuthor);
-authorRouter.delete("/:id", deleteAuthor);
-
+authorRouter.post(
+  "/",
+  [validateName, validateCountry, validateAuthorByNameAndCountry],
+  postAuthor
+);
+authorRouter.post(
+  "/books",
+  [validateName, validateCountry, validateBookIDs],
+  postAuthor
+);
+authorRouter.put(
+  "/:id",
+  [validateId, validateAuthorById, validateNameAndCountry],
+  putAuthor
+);
+authorRouter.delete("/:id", [validateId, validateAuthorById], deleteAuthor);

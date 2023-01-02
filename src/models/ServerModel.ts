@@ -1,12 +1,13 @@
 import express, { Application } from "express";
-import { authorRouter, bookRouter } from "../routes";
 import cors from "cors";
 
+import { bookRouter, authorRouter } from "../routes";
 import database from "../database/connection";
 
 const booksPath = `${(process.env.SERVER_BASE_URL as string) ?? ""}${
   (process.env.SERVER_URL_BOOKS as string) ?? ""
 }`;
+
 const authorsPath = `${(process.env.SERVER_BASE_URL as string) ?? ""}${
   (process.env.SERVER_URL_AUTHORS as string) ?? ""
 }`;

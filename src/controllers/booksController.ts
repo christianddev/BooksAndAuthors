@@ -4,17 +4,17 @@ import httpStatus from "http-status";
 import {
   createBook,
   createABookWithAuthors,
-  findAllBooksMin,
+  findAllBooks,
   findBookById,
   findOneBookByISBN,
-} from "../helpers/database";
+} from "../helpers/bookDatabase";
 import { AuthorModel, BookModel } from "../models";
 import { BookRequest } from "../typings/book";
 
 export const getBooks = async (req: Request, res: Response) => {
   try {
     // TODO: add pagination
-    const books = await findAllBooksMin();
+    const books = await findAllBooks();
 
     return res.status(httpStatus.OK).json({ books });
   } catch (error) {
