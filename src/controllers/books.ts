@@ -63,9 +63,9 @@ export const getAllBooksAuthorsGroupByBook = async (
 export const postBook = async (req: Request, res: Response) => {
   const rawBook = req?.body as CreateBookRequest;
 
-  if (!rawBook?.title) {
-    res.status(httpStatus.BAD_REQUEST).json({
-      msg: "check the book data",
+  if (!rawBook?.isbn || !rawBook?.title) {
+    return res.status(httpStatus.BAD_REQUEST).json({
+      msg: `check the book isbn '${rawBook?.isbn}' & title '${rawBook?.title}'`,
     });
   }
 

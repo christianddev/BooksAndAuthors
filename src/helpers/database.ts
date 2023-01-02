@@ -1,8 +1,4 @@
-import {
-  AuthorModel,
-  BookModel,
-  BooksAuthorsModel,
-} from "../models";
+import { AuthorModel, BookModel, BooksAuthorsModel } from "../models";
 import type { OperationResponse } from "../typings/api";
 import type { Author, CreateAuthorRequest } from "../typings/author";
 import type { CreateBookRequest } from "../typings/book";
@@ -21,10 +17,10 @@ export const findAllBooksMin = async () =>
     },
   });
 
-export const findOneBookByTitle = async ({ title = "" }: { title: string }) =>
+export const findOneBookByISBN = async (isbn: string) =>
   await BookModel.findOne({
     where: {
-      title,
+      isbn,
     },
   });
 
@@ -52,18 +48,25 @@ export const findBooksAuthorsByBookId = async (bookId: string) =>
 export const createBook = async (
   rawBook: CreateBookRequest
 ): Promise<OperationResponse> => {
-  if (!rawBook?.title) {
-    return { error: { message: "check book data" } };
+  if (!rawBook?.isbn || !rawBook?.title) {
+    return {
+      error: {
+        message: `check the book isbn '${rawBook?.isbn}' & title '${rawBook?.title}'`,
+      },
+    };
   }
 
-  const book = await findOneBookByTitle({ title: rawBook?.title });
+  const book = await findOneBookByISBN(rawBook?.isbn);
 
   if (book) {
     return {
-      error: { message: `there is a book with the title '${rawBook?.title}'` },
+      error: {
+        message: `there is a book with the isbn '${rawBook?.isbn}' & title '${rawBook?.title}'`,
+      },
     };
   }
   const newBook = await BookModel.create({
+    isbn: rawBook?.isbn,
     title: rawBook?.title,
   });
 

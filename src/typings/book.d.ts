@@ -3,6 +3,7 @@ export interface Book {
 }
 
 export interface CreateBookRequest {
+  isbn: string;
   title: string;
   authors?: string[];
 }

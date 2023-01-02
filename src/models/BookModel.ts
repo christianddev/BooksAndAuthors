@@ -13,6 +13,12 @@ export const BookModel = database.define(
       autoIncrement: true,
       allowNull: false,
     },
+    isbn: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      unique: true,
+      field: "isbn",
+    },
     title: {
       type: DataTypes.STRING(150),
       allowNull: false,
