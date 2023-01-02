@@ -6,7 +6,7 @@ import {
   findAllAuthorsMin,
   findOneAuthorByNameAndCountry,
 } from "../helpers";
-import { AuthorModel, BookModel } from "../models/";
+import { AuthorModel, BookModel } from "../models";
 import { AuthorRequest } from "../typings/author";
 
 export const getAuthors = async (req: Request, res: Response) => {

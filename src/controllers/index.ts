@@ -1,2 +1,2 @@
-export * from "./authors";
-export * from "./books";
+export * from "./authorsController";
+export * from "./booksController";
