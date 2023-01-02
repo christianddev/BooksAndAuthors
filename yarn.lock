@@ -512,6 +512,11 @@ http-errors@2.0.0:
     statuses "2.0.1"
     toidentifier "1.0.1"
 
+http-status@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/http-status/-/http-status-1.6.1.tgz#8917cbc0df1e2a0f9bc5c43777d9371eaeb862b5"
+  integrity sha512-kr3txP/rwmTi6WhSPgw8Ai4WGq39l/Am8DeXgRhTSbjnnbo98m0A11+we+my3+NJw05h7g6HWhen+jJkLMw6oA==
+
 iconv-lite@0.4.24:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"

@@ -1,3 +1,2 @@
-export * from "./authors"
-export * from "./books"
-export * from "./booksAuthors"
+export * from "./authors";
+export * from "./books";

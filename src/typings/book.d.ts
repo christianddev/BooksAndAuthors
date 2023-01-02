@@ -2,7 +2,7 @@ export interface Book {
   title: string;
 }
 
-export interface CreateBook {
+export interface CreateBookRequest {
   title: string;
   authors?: string[];
 }

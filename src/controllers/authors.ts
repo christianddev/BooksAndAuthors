@@ -1,22 +1,24 @@
 import { Request, Response } from "express";
+import httpStatus from "http-status";
+
 import { findOneAuthorByNameAndCountry } from "../helpers";
 import { Author, Book } from "../models/";
 
 export const getAuthors = async (req: Request, res: Response) => {
-  const authors = await Author.findAll();
+  const authors = await Author?.findAll();
 
-  res.json({ authors });
+  res.status(httpStatus?.OK).json({ authors });
 };
 
 export const getAuthor = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { id } = req?.params;
 
-  const author = await Author.findByPk(id);
+  const author = await Author?.findByPk(id);
 
   if (author) {
-    res.json(author);
+    res.status(httpStatus?.OK).json(author);
   } else {
-    res.status(404).json({
+    res.status(httpStatus?.NOT_FOUND).json({
       msg: `author not found: ${id}`,
     });
   }
@@ -26,11 +28,11 @@ export const getAllBooksAuthorsGroupByAuthor = async (
   req: Request,
   res: Response
 ) => {
-  const booksAuthors = await Author.findAll({
+  const booksAuthors = await Author?.findAll({
     include: [Book],
   });
 
-  res.json({ booksAuthors });
+  res.status(httpStatus?.OK).json({ booksAuthors });
 };
 
 export const postAuthor = async (req: Request, res: Response) => {
@@ -38,66 +40,62 @@ export const postAuthor = async (req: Request, res: Response) => {
 
   try {
     const author = await findOneAuthorByNameAndCountry({
-      name: body.name,
-      country: body.country,
+      name: body?.name,
+      country: body?.country,
     });
 
     if (author) {
-      return res.status(400).json({
-        msg: `a authors exists with the name ${body.name} & country ${body.country}`,
+      return res.status(httpStatus?.NOT_FOUND).json({
+        msg: `a authors exists with the name ${body?.name} & country ${body?.country}`,
       });
     }
 
-    const newAuthor = Author.build(body);
-    await newAuthor.save();
+    const newAuthor = Author?.build(body);
+    await newAuthor?.save();
 
-    res.json(newAuthor);
+    res.status(httpStatus?.OK).json(newAuthor);
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    console.trace(error);
+    res.status(httpStatus?.INTERNAL_SERVER_ERROR).json({
       msg: "contact with the administrator",
     });
   }
 };
 
 export const putAuthor = async (req: Request, res: Response) => {
-  console.log("putAuthor");
-  const { id } = req.params;
+  const { id } = req?.params;
   const { body } = req;
 
   try {
-    const author = await Author.findByPk(id);
+    const author = await Author?.findByPk(id);
     if (!author) {
-      return res.status(404).json({
+      return res.status(httpStatus?.NOT_FOUND).json({
         msg: `author not found: ${id}`,
       });
     }
 
-    await author.update(body);
+    await author?.update(body);
 
-    res.json(author);
+    res.status(httpStatus?.OK).json(author);
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
+    console.trace(error);
+    res.status(httpStatus?.INTERNAL_SERVER_ERROR).json({
       msg: "contact with the administrator",
     });
   }
 };
 
 export const deleteAuthor = async (req: Request, res: Response) => {
-  console.log("deleteAuthor");
-  const { id } = req.params;
+  const { id } = req?.params;
 
-  const author = await Author.findByPk(id);
+  const author = await Author?.findByPk(id);
   if (!author) {
-    return res.status(404).json({
+    return res.status(httpStatus?.NOT_FOUND).json({
       msg: `author not found: ${id}`,
     });
   }
 
-  await author.update({ isDeleted: true });
+  await author?.update({ isDeleted: true });
 
-  // await author.destroy();
-
-  res.json(author);
+  res.status(httpStatus?.OK).json(author);
 };

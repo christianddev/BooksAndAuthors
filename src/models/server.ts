@@ -16,14 +16,13 @@ class Server {
   private port: string;
   private apiPaths = {
     books: booksPath,
-    authors: authorsPath
+    authors: authorsPath,
   };
 
   constructor() {
     this.app = express();
     this.port = (process.env.SERVER_PORT as string) ?? "";
 
-    // Métodos iniciales
     this.dbConnection();
     this.middlewares();
     this.routes();
