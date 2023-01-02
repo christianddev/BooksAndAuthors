@@ -7,6 +7,20 @@ import type { OperationResponse } from "../typings/api";
 import type { Author, CreateAuthorRequest } from "../typings/author";
 import type { CreateBookRequest } from "../typings/book";
 
+export const findAllAuthorsMin = async () =>
+  await AuthorModel?.findAll({
+    attributes: {
+      exclude: ["isDeleted", "createdAt", "updatedAt"],
+    },
+  });
+
+export const findAllBooksMin = async () =>
+  await BookModel.findAll({
+    attributes: {
+      exclude: ["isDeleted", "createdAt", "updatedAt"],
+    },
+  });
+
 export const findOneBookByTitle = async ({ title = "" }: { title: string }) =>
   await BookModel.findOne({
     where: {

@@ -1,25 +1,45 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
 
-import { findOneAuthorByNameAndCountry } from "../helpers";
+import { findAllAuthorsMin, findOneAuthorByNameAndCountry } from "../helpers";
 import { Author, Book } from "../models/";
 
 export const getAuthors = async (req: Request, res: Response) => {
-  const authors = await Author?.findAll();
+  try {
+    // TODO: add pagination
+    const authors = await findAllAuthorsMin();
 
-  res.status(httpStatus?.OK).json({ authors });
+    res.status(httpStatus?.OK).json({ authors });
+  } catch (error) {
+    console.trace(error);
+    res.status(httpStatus?.INTERNAL_SERVER_ERROR).json({
+      msg: "contact with the administrator",
+    });
+  }
 };
 
 export const getAuthor = async (req: Request, res: Response) => {
-  const { id } = req?.params;
+  try {
+    const { id } = req?.params;
 
-  const author = await Author?.findByPk(id);
+    if (!id) {
+      return res.status(httpStatus?.BAD_REQUEST).json({
+        msg: "check author id",
+      });
+    }
+    const author = await Author?.findByPk(id);
 
-  if (author) {
-    res.status(httpStatus?.OK).json(author);
-  } else {
-    res.status(httpStatus?.NOT_FOUND).json({
+    if (author) {
+      return res.status(httpStatus?.OK).json(author);
+    }
+
+    return res.status(httpStatus?.NOT_FOUND).json({
       msg: `author not found: ${id}`,
+    });
+  } catch (error) {
+    console.trace(error);
+    res.status(httpStatus?.INTERNAL_SERVER_ERROR).json({
+      msg: "contact with the administrator",
     });
   }
 };
@@ -63,8 +83,10 @@ export const postAuthor = async (req: Request, res: Response) => {
 };
 
 export const putAuthor = async (req: Request, res: Response) => {
-  const { id } = req?.params;
-  const { body } = req;
+  const {
+    body,
+    params: { id },
+  } = req;
 
   try {
     const author = await Author?.findByPk(id);
