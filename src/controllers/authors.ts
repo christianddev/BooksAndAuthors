@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import httpStatus from "http-status";
 
 import { findAllAuthorsMin, findOneAuthorByNameAndCountry } from "../helpers";
-import { Author, Book } from "../models/";
+import { AuthorModel, BookModel } from "../models/";
 
 export const getAuthors = async (req: Request, res: Response) => {
   try {
@@ -27,7 +27,7 @@ export const getAuthor = async (req: Request, res: Response) => {
         msg: "check author id",
       });
     }
-    const author = await Author?.findByPk(id);
+    const author = await AuthorModel?.findByPk(id);
 
     if (author) {
       return res.status(httpStatus?.OK).json(author);
@@ -48,8 +48,8 @@ export const getAllBooksAuthorsGroupByAuthor = async (
   req: Request,
   res: Response
 ) => {
-  const booksAuthors = await Author?.findAll({
-    include: [Book],
+  const booksAuthors = await AuthorModel?.findAll({
+    include: [BookModel],
   });
 
   res.status(httpStatus?.OK).json({ booksAuthors });
@@ -70,7 +70,7 @@ export const postAuthor = async (req: Request, res: Response) => {
       });
     }
 
-    const newAuthor = Author?.build(body);
+    const newAuthor = AuthorModel?.build(body);
     await newAuthor?.save();
 
     res.status(httpStatus?.OK).json(newAuthor);
@@ -89,7 +89,7 @@ export const putAuthor = async (req: Request, res: Response) => {
   } = req;
 
   try {
-    const author = await Author?.findByPk(id);
+    const author = await AuthorModel?.findByPk(id);
     if (!author) {
       return res.status(httpStatus?.NOT_FOUND).json({
         msg: `author not found: ${id}`,
@@ -110,7 +110,7 @@ export const putAuthor = async (req: Request, res: Response) => {
 export const deleteAuthor = async (req: Request, res: Response) => {
   const { id } = req?.params;
 
-  const author = await Author?.findByPk(id);
+  const author = await AuthorModel?.findByPk(id);
   if (!author) {
     return res.status(httpStatus?.NOT_FOUND).json({
       msg: `author not found: ${id}`,

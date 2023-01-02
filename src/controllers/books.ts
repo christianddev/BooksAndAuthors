@@ -6,7 +6,7 @@ import {
   createABookWithAuthors,
   findAllBooksMin,
 } from "../helpers/database";
-import { Author as AuthorModel, Book as BookModel } from "../models";
+import { AuthorModel, BookModel } from "../models";
 import { CreateBookRequest } from "../typings/book";
 
 export const getBooks = async (req: Request, res: Response) => {

@@ -16,7 +16,7 @@ const bookId: string =
 const authorId: string =
   (process.env.DATABASE_BOOK_AUTHORS_AUTHOR_ID as string) ?? "";
 
-export const BooksAuthors = database.define(
+export const BooksAuthorsModel = database.define(
   modelName,
   {
     [bookId]: {
@@ -51,4 +51,4 @@ export const BooksAuthors = database.define(
   }
 );
 
-export default BooksAuthors;
+export default BooksAuthorsModel;

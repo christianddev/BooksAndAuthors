@@ -1,7 +1,7 @@
 import {
-  Author as AuthorModel,
-  Book as BookModel,
-  BooksAuthors,
+  AuthorModel,
+  BookModel,
+  BooksAuthorsModel,
 } from "../models";
 import type { OperationResponse } from "../typings/api";
 import type { Author, CreateAuthorRequest } from "../typings/author";
@@ -43,7 +43,7 @@ export const findOneAuthorByNameAndCountry = async ({
   });
 
 export const findBooksAuthorsByBookId = async (bookId: string) =>
-  await BooksAuthors.findAll({
+  await BooksAuthorsModel.findAll({
     where: {
       bookId,
     },
@@ -126,7 +126,7 @@ export const createBookAuthor = async (
     };
   }
 
-  const bookAuthor = await BooksAuthors.findOne({
+  const bookAuthor = await BooksAuthorsModel.findOne({
     where: {
       bookId,
       authorId,
@@ -151,7 +151,7 @@ export const createBookAuthor = async (
     };
   }
 
-  const newBookAuthor = await BooksAuthors.create({
+  const newBookAuthor = await BooksAuthorsModel.create({
     bookId,
     authorId,
   });

@@ -2,9 +2,9 @@ import { DataTypes } from "sequelize";
 import database from "../database/connection";
 
 const modelName: string =
-  (process.env.DATABASE_BOOK_MODEL_NAME as string) ?? "";
+  (process.env.DATABASE_AUTHORS_MODEL_NAME as string) ?? "";
 
-export const Book = database.define(
+export const AuthorModel = database.define(
   modelName,
   {
     id: {
@@ -13,8 +13,12 @@ export const Book = database.define(
       autoIncrement: true,
       allowNull: false,
     },
-    title: {
+    name: {
       type: DataTypes.STRING(150),
+      allowNull: false,
+    },
+    country: {
+      type: DataTypes.STRING(5),
       allowNull: false,
     },
     isDeleted: {
@@ -26,7 +30,7 @@ export const Book = database.define(
       type: DataTypes.DATE,
       allowNull: false,
       field: "created_at",
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       type: DataTypes.DATE,
@@ -39,4 +43,4 @@ export const Book = database.define(
   }
 );
 
-export default Book;
+export default AuthorModel;
