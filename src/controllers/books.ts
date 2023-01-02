@@ -5,9 +5,11 @@ import {
   createBook,
   createABookWithAuthors,
   findAllBooksMin,
+  findBookById,
+  findOneBookByISBN,
 } from "../helpers/database";
 import { AuthorModel, BookModel } from "../models";
-import { CreateBookRequest } from "../typings/book";
+import { BookRequest } from "../typings/book";
 
 export const getBooks = async (req: Request, res: Response) => {
   try {
@@ -33,7 +35,7 @@ export const getBook = async (req: Request, res: Response) => {
       });
     }
 
-    const book = await BookModel.findByPk(id);
+    const book = await findBookById(id);
 
     if (book) {
       return res.status(httpStatus.OK).json(book);
@@ -61,17 +63,31 @@ export const getAllBooksAuthorsGroupByBook = async (
 };
 
 export const postBook = async (req: Request, res: Response) => {
-  const rawBook = req?.body as CreateBookRequest;
-
-  if (!rawBook?.isbn || !rawBook?.title) {
-    return res.status(httpStatus.BAD_REQUEST).json({
-      msg: `check the book isbn '${rawBook?.isbn}' & title '${rawBook?.title}'`,
-    });
-  }
-
   try {
+    const rawBook = req?.body as BookRequest;
+
+    // add to middleware
+
+    if (!rawBook?.isbn || !rawBook?.title) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        msg: `check the book isbn '${rawBook?.isbn}' & title '${rawBook?.title}'`,
+      });
+    }
+
+    // add to middleware
+    const book = await findOneBookByISBN(rawBook?.isbn);
+
+    if (book) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        error: {
+          message: `there is a book with the isbn '${book?.dataValues?.isbn}', id '${book?.dataValues?.id}' & title '${book?.dataValues?.title}'`,
+        },
+      });
+    }
+
     const newBook = await createBook(rawBook);
     // TODO: check this return, disable if middleware nos run for this request
+
     return res.status(httpStatus.OK).json(newBook);
   } catch (error) {
     console.trace(error);
@@ -81,7 +97,7 @@ export const postBook = async (req: Request, res: Response) => {
   }
 };
 export const postBookWithAuthors = async (req: Request, res: Response) => {
-  const rawBook = req?.body as CreateBookRequest;
+  const rawBook = req?.body as BookRequest;
 
   if (!rawBook?.title) {
     res.status(httpStatus.BAD_REQUEST).json({

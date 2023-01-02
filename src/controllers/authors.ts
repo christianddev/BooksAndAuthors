@@ -1,8 +1,13 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
 
-import { findAllAuthorsMin, findOneAuthorByNameAndCountry } from "../helpers";
+import {
+  createAuthor,
+  findAllAuthorsMin,
+  findOneAuthorByNameAndCountry,
+} from "../helpers";
 import { AuthorModel, BookModel } from "../models/";
+import { AuthorRequest } from "../typings/author";
 
 export const getAuthors = async (req: Request, res: Response) => {
   try {
@@ -56,24 +61,33 @@ export const getAllBooksAuthorsGroupByAuthor = async (
 };
 
 export const postAuthor = async (req: Request, res: Response) => {
-  const { body } = req;
-
   try {
+    const rawAuthor: AuthorRequest = req?.body;
+
+    // add to middleware
+    if (!rawAuthor?.name || !rawAuthor?.country) {
+      return res.status(httpStatus?.NOT_FOUND).json({
+        error: {
+          msg: `check the author name '${rawAuthor?.name}' & country '${rawAuthor?.country}'`,
+        },
+      });
+    }
+
+    // add to middleware
     const author = await findOneAuthorByNameAndCountry({
-      name: body?.name,
-      country: body?.country,
+      name: rawAuthor?.name,
+      country: rawAuthor?.country,
     });
 
     if (author) {
       return res.status(httpStatus?.NOT_FOUND).json({
-        msg: `a authors exists with the name ${body?.name} & country ${body?.country}`,
+        msg: `a authors exists with the name '${rawAuthor?.name}' & country '${rawAuthor?.country}'`,
       });
     }
 
-    const newAuthor = AuthorModel?.build(body);
-    await newAuthor?.save();
+    const newAuthor = createAuthor(rawAuthor);
 
-    res.status(httpStatus?.OK).json(newAuthor);
+    return res.status(httpStatus?.OK).json(newAuthor);
   } catch (error) {
     console.trace(error);
     res.status(httpStatus?.INTERNAL_SERVER_ERROR).json({

@@ -1,8 +1,5 @@
-export interface Book {
-  title: string;
-}
-
-export interface CreateBookRequest {
+export interface BookRequest {
+  id?: string
   isbn: string;
   title: string;
   authors?: string[];
