@@ -110,22 +110,23 @@ export const createBookWithAuthors = async (rawBook: BookRequest) => {
   }
 };
 
-const updateBookFromModel = async (rawBook: BookRequest) =>
+const updateBookFromModel = async ({
+  id,
+  isbn,
+  title,
+  isDeleted,
+}: BookRequest) =>
   await BookModel.update(
-    {
-      ...(rawBook?.isbn && { isbn: rawBook?.isbn }),
-      ...(rawBook?.title && { title: rawBook?.title }),
-      ...(rawBook?.isDeleted && { isDeleted: rawBook?.isDeleted }),
-    },
+    { isbn, title, isDeleted },
     {
       where: {
-        id: rawBook?.id,
+        id,
       },
     }
   );
 
-export const updateBook = async (rawBook: BookRequest) => {
-  const updatedBook = await updateBookFromModel(rawBook);
+export const updateBook = async ({ id, isbn, title }: BookRequest) => {
+  const updatedBook = await updateBookFromModel({ id, isbn, title });
 
   return {
     data: { affectedRows: updatedBook },

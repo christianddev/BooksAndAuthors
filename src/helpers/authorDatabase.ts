@@ -109,16 +109,21 @@ export const createAuthorWithBooks = async (rawAuthor: AuthorRequest) => {
   }
 };
 
-const updateAuthorFromModel = async (rawAuthor: AuthorRequest) =>
-  await BookModel.update(
+const updateAuthorFromModel = async ({
+  id,
+  name,
+  country,
+  isDeleted,
+}: AuthorRequest) =>
+  await AuthorModel.update(
     {
-      ...(rawAuthor?.name && { isbn: rawAuthor?.name }),
-      ...(rawAuthor?.country && { title: rawAuthor?.country }),
-      ...(rawAuthor?.isDeleted && { isDeleted: rawAuthor?.isDeleted }),
+      name,
+      country,
+      isDeleted
     },
     {
       where: {
-        id: rawAuthor?.id,
+        id,
       },
     }
   );
