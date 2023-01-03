@@ -1,6 +1,7 @@
-export interface AuthorRequest {
-  id?: number
-  name: string;
-  country: string;
+import { BaseModel } from "./api";
+
+export interface AuthorRequest extends BaseModel {
+  name?: string;
+  country?: string;
   books?: string[];
 }

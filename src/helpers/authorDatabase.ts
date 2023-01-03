@@ -1,6 +1,9 @@
 import { AuthorModel, BookModel } from "../models";
 import type { AuthorRequest } from "../typings/author";
-import { createBooksAuthorsByAuthor } from "./bookAuthorDatabase";
+import {
+  createBooksAuthorsByAuthor,
+  deleteBooksAuthorsByAuthorId,
+} from "./bookAuthorDatabase";
 import {
   EXCLUDE_ORM_FIELDS,
   EXCLUDE_TEMPORARY_DELETED,
@@ -106,11 +109,12 @@ export const createAuthorWithBooks = async (rawAuthor: AuthorRequest) => {
   }
 };
 
-export const updateAuthor = async (rawAuthor: AuthorRequest) => {
-  const updatedAuthor = await AuthorModel.update(
+const updateAuthorFromModel = async (rawAuthor: AuthorRequest) =>
+  await BookModel.update(
     {
-      name: rawAuthor?.name,
-      country: rawAuthor?.country,
+      ...(rawAuthor?.name && { isbn: rawAuthor?.name }),
+      ...(rawAuthor?.country && { title: rawAuthor?.country }),
+      ...(rawAuthor?.isDeleted && { isDeleted: rawAuthor?.isDeleted }),
     },
     {
       where: {
@@ -119,22 +123,20 @@ export const updateAuthor = async (rawAuthor: AuthorRequest) => {
     }
   );
 
+export const updateAuthor = async ({ id, name, country }: AuthorRequest) => {
+  const updatedAuthor = await updateAuthorFromModel({ id, name, country });
+
   return {
     data: { affectedRows: updatedAuthor },
   };
 };
 
 export const deleteAuthorTemporary = async (id: number, isDeleted: boolean) => {
-  const updatedAuthor = await AuthorModel.update(
-    { isDeleted },
-    {
-      where: {
-        id,
-      },
-    }
-  );
+  const deletedBooksAuthors = await deleteBooksAuthorsByAuthorId(id);
+
+  const deletedBook = await updateAuthorFromModel({ id, isDeleted });
 
   return {
-    data: { affectedRows: updatedAuthor },
+    data: { affectedRows: { deletedBooksAuthors, deletedBook } },
   };
 };

@@ -19,3 +19,8 @@ export interface OperationResponse<D = Model<any, any>, E = ErrorOperation> {
 export interface ErrorOperation {
   message?: string;
 }
+
+export interface BaseModel {
+  id?: number;
+  isDeleted?: boolean;
+}

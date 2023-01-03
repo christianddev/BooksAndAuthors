@@ -1,7 +1,10 @@
-import { AuthorModel, BookModel } from "../models";
+import { AuthorModel, BookModel, BooksAuthorsModel } from "../models";
 import type { OperationResponse } from "../typings/api";
 import type { BookRequest } from "../typings/book";
-import { createBooksAuthorsByBook } from "./bookAuthorDatabase";
+import {
+  createBooksAuthorsByBook,
+  deleteBooksAuthorsByBookId,
+} from "./bookAuthorDatabase";
 import {
   EXCLUDE_ORM_FIELDS,
   EXCLUDE_TEMPORARY_DELETED,
@@ -37,7 +40,7 @@ export const findOneBookById = async (
   });
 
 export const findOneBookByISBN = async (
-  isbn: string,
+  isbn?: string,
   excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
@@ -107,11 +110,12 @@ export const createBookWithAuthors = async (rawBook: BookRequest) => {
   }
 };
 
-export const updateBook = async (rawBook: BookRequest) => {
-  const updatedBook = await BookModel.update(
+const updateBookFromModel = async (rawBook: BookRequest) =>
+  await BookModel.update(
     {
-      isbn: rawBook?.isbn,
-      title: rawBook?.title,
+      ...(rawBook?.isbn && { isbn: rawBook?.isbn }),
+      ...(rawBook?.title && { title: rawBook?.title }),
+      ...(rawBook?.isDeleted && { isDeleted: rawBook?.isDeleted }),
     },
     {
       where: {
@@ -120,22 +124,20 @@ export const updateBook = async (rawBook: BookRequest) => {
     }
   );
 
+export const updateBook = async (rawBook: BookRequest) => {
+  const updatedBook = await updateBookFromModel(rawBook);
+
   return {
     data: { affectedRows: updatedBook },
   };
 };
 
 export const deleteBookTemporary = async (id: number, isDeleted: boolean) => {
-  const updatedBook = await BookModel.update(
-    { isDeleted },
-    {
-      where: {
-        id,
-      },
-    }
-  );
+  const deletedBooksAuthors = await deleteBooksAuthorsByBookId(id);
+
+  const deletedBook = await updateBookFromModel({ id, isDeleted });
 
   return {
-    data: { affectedRows: updatedBook },
+    data: { affectedRows: { deletedBooksAuthors, deletedBook } },
   };
 };

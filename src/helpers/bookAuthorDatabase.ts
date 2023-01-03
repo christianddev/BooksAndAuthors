@@ -142,3 +142,17 @@ export const createBooksAuthorsByAuthor = async (
       reject(error);
     }
   });
+
+export const deleteBooksAuthorsByBookId = async (bookId: number) =>
+  await BooksAuthorsModel.destroy({
+    where: {
+      bookId,
+    },
+  });
+
+export const deleteBooksAuthorsByAuthorId = async (authorId: number) =>
+  await BooksAuthorsModel.destroy({
+    where: {
+      bookId: authorId,
+    },
+  });

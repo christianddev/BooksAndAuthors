@@ -93,7 +93,7 @@ export const putBook = async (req: Request, res: Response) => {
       params: { id },
     } = req;
 
-    const response = updateBook({ id, isbn, title });
+    const response = await updateBook({ id: Number(id), isbn, title });
     return res.status(httpStatus.OK).json(response);
   } catch (error) {
     console.trace(error);
@@ -109,7 +109,7 @@ export const deleteBook = async (req: Request, res: Response) => {
       params: { id },
     } = req;
 
-    const response = deleteBookTemporary(Number(id), true);
+    const response = await deleteBookTemporary(Number(id), true);
     return res.status(httpStatus.OK).json(response);
   } catch (error) {
     console.trace(error);
