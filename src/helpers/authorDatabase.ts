@@ -87,7 +87,6 @@ export const createAuthor = async (rawAuthor: AuthorRequest) => {
   };
 };
 
-// TODO: check response  and catch
 export const createAuthorWithBooks = async ({
   name,
   country,

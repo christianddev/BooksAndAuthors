@@ -8,7 +8,7 @@
 
 ### TODO
 
-- add pagination for some `GET` request use headers
+- add pagination for some `GET`, use headers from request
   - `api/authors`
   - `api/authors/all/books`
   - `api/book`

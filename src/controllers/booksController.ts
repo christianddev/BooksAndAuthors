@@ -15,7 +15,6 @@ import { BookRequest } from "../typings/book";
 
 export const getBooks = async (req: Request, res: Response) => {
   try {
-    // TODO: add pagination
     const books = await findAllBooks();
 
     return res.status(httpStatus.OK).json({ books });
@@ -50,7 +49,6 @@ export const getAllBooksAuthorsGroupByBook = async (
   req: Request,
   res: Response
 ) => {
-  // TODO: add pagination
   const booksAuthors = await findAllBooksAuthorsGroupByBook();
 
   return res.status(httpStatus.OK).json({ booksAuthors });

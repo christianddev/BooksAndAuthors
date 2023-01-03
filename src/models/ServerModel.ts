@@ -27,7 +27,7 @@ class ServerModel {
       await database.authenticate();
       console.log("Database online");
     } catch (error) {
-      // TODO: manage this
+      console.trace("error when connecting to the db: ", error);
       throw error;
     }
   }
