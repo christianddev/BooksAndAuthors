@@ -1,4 +1,4 @@
-import { BookModel } from "../models";
+import { AuthorModel, BookModel } from "../models";
 import type { OperationResponse } from "../typings/api";
 import type { BookRequest } from "../typings/book";
 import { createAuthorsBooks } from "./bookAuthorDatabase";
@@ -8,25 +8,29 @@ import {
   SEQUELIZE_FIELDS,
 } from "./constants";
 
-
 export const findAllBooks = async (
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS,
   excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED
 ) =>
   await BookModel.findAll({
     where: {
-      isDeleted: excludeTemporaryDeleted,
+      ...(excludeTemporaryDeleted && { isDeleted: false }),
     },
     attributes: {
       exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
     },
   });
 
-export const findBookById = async (
+export const findOneBookById = async (
   id: string,
+  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
-  await BookModel.findByPk(id, {
+  await BookModel.findOne({
+    where: {
+      id,
+      ...(excludeTemporaryDeleted && { isDeleted: false }),
+    },
     attributes: {
       exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
     },
@@ -34,24 +38,48 @@ export const findBookById = async (
 
 export const findOneBookByISBN = async (
   isbn: string,
+  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
   await BookModel.findOne({
     where: {
       isbn,
+      ...(excludeTemporaryDeleted && { isDeleted: false }),
     },
     attributes: {
       exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
     },
   });
 
+export const findAllBooksAuthorsGroupByBook = async (
+  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
+) =>
+  await BookModel?.findAll({
+    where: {
+      ...(excludeTemporaryDeleted && { isDeleted: false }),
+    },
+    attributes: {
+      exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
+    },
+    include: [AuthorModel],
+  });
+
+const createBookFromModel = async ({ isbn, title }: BookRequest) =>
+  await BookModel.create({
+    isbn,
+    title,
+  });
+
 export const createBook = async (
   rawBook: BookRequest
 ): Promise<OperationResponse<BookRequest>> => {
-  const { dataValues }: { dataValues: BookRequest } = await BookModel.create({
-    isbn: rawBook?.isbn,
-    title: rawBook?.title,
-  });
+  const { dataValues }: { dataValues: BookRequest } = await createBookFromModel(
+    {
+      isbn: rawBook?.isbn,
+      title: rawBook?.title,
+    }
+  );
 
   return {
     data: {
@@ -64,19 +92,12 @@ export const createBook = async (
 
 // TODO: check response
 export const createABookWithAuthors = async (rawBook: BookRequest) => {
-  if (!rawBook?.authors?.length) {
-    return { error: { message: `check authors data` } };
-  }
-
   try {
-    const newBook = await createBook(rawBook);
-    if (newBook?.error?.message) {
-      return { error: newBook?.error };
-    }
+    const newBook = await createBookFromModel(rawBook);
 
     const booksAuthors = await createAuthorsBooks(
-      newBook?.data?.id,
-      rawBook?.authors
+      newBook?.dataValues?.id,
+      rawBook?.authors ?? [""]
     );
 
     return booksAuthors;

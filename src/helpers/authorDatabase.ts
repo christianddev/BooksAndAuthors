@@ -7,48 +7,57 @@ import {
 } from "./constants";
 
 export const findAllAuthors = async (
-  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS,
-  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED
+  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
   await AuthorModel?.findAll({
     where: {
-      isDeleted: excludeTemporaryDeleted,
+      ...(excludeTemporaryDeleted && { isDeleted: false }),
     },
     attributes: {
       exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
     },
   });
 
-export const findAuthorById = async (
+export const finOneAuthorById = async (
   id: string,
-  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS,
-  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED
+  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
   await AuthorModel.findOne({
     where: {
       id,
-      isDeleted: excludeTemporaryDeleted,
+      ...(excludeTemporaryDeleted && { isDeleted: false }),
     },
     attributes: {
       exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
     },
   });
 
-export const findOneAuthorByNameAndCountry = async ({
-  name = "",
-  country = "",
-}: AuthorRequest) =>
+export const findOneAuthorByNameAndCountry = async (
+  { name = "", country = "" }: AuthorRequest,
+  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
+  excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
+) =>
   await AuthorModel.findOne({
     where: {
       name,
       country,
+      ...(excludeTemporaryDeleted && { isDeleted: false }),
+    },
+    attributes: {
+      exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
     },
   });
 
 export const findAllBooksAuthorsGroupByAuthor = async (
+  excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
   await AuthorModel?.findAll({
+    where: {
+      ...(excludeTemporaryDeleted && { isDeleted: false }),
+    },
     attributes: {
       exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
     },

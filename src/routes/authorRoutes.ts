@@ -6,7 +6,7 @@ import {
   putAuthor,
   deleteAuthor,
   getAllBooksAuthorsGroupByAuthor,
-} from "../controllers/";
+} from "../controllers";
 import {
   validateAuthorById,
   validateAuthorByNameAndCountry,
@@ -14,8 +14,8 @@ import {
   validateCountry,
   validateId,
   validateName,
-  validateNameAndCountry,
-} from "../middlewares/";
+  validateNameAndCountryNotFalsy,
+} from "../middlewares";
 
 export const authorRouter = Router();
 
@@ -29,12 +29,17 @@ authorRouter.post(
 );
 authorRouter.post(
   "/books",
-  [validateName, validateCountry, validateBookIDs],
+  [
+    validateName,
+    validateCountry,
+    validateAuthorByNameAndCountry,
+    validateBookIDs,
+  ],
   postAuthor
 );
 authorRouter.put(
   "/:id",
-  [validateId, validateAuthorById, validateNameAndCountry],
+  [validateId, validateAuthorById, validateNameAndCountryNotFalsy],
   putAuthor
 );
 authorRouter.delete("/:id", [validateId, validateAuthorById], deleteAuthor);

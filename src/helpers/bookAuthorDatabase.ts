@@ -1,6 +1,7 @@
 import { BooksAuthorsModel } from "../models";
 import type { OperationResponse } from "../typings/api";
-import { findAuthorById } from "./authorDatabase";
+import { finOneAuthorById } from "./authorDatabase";
+import { findOneBookById } from "./bookDatabase";
 import {
   EXCLUDE_ORM_FIELDS,
   EXCLUDE_TEMPORARY_DELETED,
@@ -16,8 +17,8 @@ export interface BookAuthorQuery {
 export const findBookAuthorByIds = async ({
   bookId,
   authorId,
-  excludeTemporaryDeleted = EXCLUDE_TEMPORARY_DELETED,
   excludeORMFields = EXCLUDE_ORM_FIELDS,
+  excludeTemporaryDeleted = EXCLUDE_TEMPORARY_DELETED,
 }: BookAuthorQuery) =>
   await BooksAuthorsModel.findOne({
     where: {
@@ -47,6 +48,27 @@ export const createBookAuthor = async (
     };
   }
 
+  const book = await findOneBookById(bookId, true);
+
+  if (!book) {
+    return {
+      error: {
+        message: `book with id '${bookId}' not found`,
+      },
+    };
+  }
+
+  const author = await finOneAuthorById(authorId, true);
+
+  if (!author) {
+    return {
+      error: {
+        message: `author with id '${authorId}' not found`,
+      },
+    };
+  }
+
+  // TODO: move to another function
   const bookAuthor = await BooksAuthorsModel.findOne({
     where: {
       bookId,
@@ -58,16 +80,6 @@ export const createBookAuthor = async (
     return {
       error: {
         message: `there is an author with the bookId '${bookId}' & authorId '${authorId}'`,
-      },
-    };
-  }
-
-  const author = await findAuthorById(authorId);
-
-  if (!author) {
-    return {
-      error: {
-        message: `no author related to ID '${authorId}'`,
       },
     };
   }

@@ -5,10 +5,10 @@ import {
   createBook,
   createABookWithAuthors,
   findAllBooks,
-  findBookById,
-  findOneBookByISBN,
+  findOneBookById,
+  findAllBooksAuthorsGroupByBook,
 } from "../helpers/bookDatabase";
-import { AuthorModel, BookModel } from "../models";
+import { BookModel } from "../models";
 import { BookRequest } from "../typings/book";
 
 export const getBooks = async (req: Request, res: Response) => {
@@ -28,20 +28,13 @@ export const getBooks = async (req: Request, res: Response) => {
 export const getBook = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-
-    if (!id) {
-      return res.status(httpStatus?.BAD_REQUEST).json({
-        msg: "check book id",
-      });
-    }
-
-    const book = await findBookById(id);
+    const book = await findOneBookById(id);
 
     if (book) {
       return res.status(httpStatus.OK).json(book);
     }
     return res.status(httpStatus?.NOT_FOUND).json({
-      msg: `book not found: ${id}`,
+      msg: `book with id '${id}' not found`,
     });
   } catch (error) {
     console.trace(error);
@@ -56,9 +49,7 @@ export const getAllBooksAuthorsGroupByBook = async (
   res: Response
 ) => {
   // TODO: add pagination
-  const booksAuthors = await BookModel.findAll({
-    include: [AuthorModel],
-  });
+  const booksAuthors = await findAllBooksAuthorsGroupByBook();
 
   return res.status(httpStatus.OK).json({ booksAuthors });
 };
@@ -66,25 +57,6 @@ export const getAllBooksAuthorsGroupByBook = async (
 export const postBook = async (req: Request, res: Response) => {
   try {
     const rawBook = req?.body as BookRequest;
-
-    // add to middleware
-
-    if (!rawBook?.isbn || !rawBook?.title) {
-      return res.status(httpStatus.BAD_REQUEST).json({
-        msg: `check the book isbn '${rawBook?.isbn}' & title '${rawBook?.title}'`,
-      });
-    }
-
-    // add to middleware
-    const book = await findOneBookByISBN(rawBook?.isbn);
-
-    if (book) {
-      return res.status(httpStatus.BAD_REQUEST).json({
-        error: {
-          message: `there is a book with the isbn '${book?.dataValues?.isbn}', id '${book?.dataValues?.id}' & title '${book?.dataValues?.title}'`,
-        },
-      });
-    }
 
     const newBook = await createBook(rawBook);
     // TODO: check this return, disable if middleware nos run for this request
@@ -100,25 +72,9 @@ export const postBook = async (req: Request, res: Response) => {
 export const postBookWithAuthors = async (req: Request, res: Response) => {
   const rawBook = req?.body as BookRequest;
 
-  if (!rawBook?.title) {
-    res.status(httpStatus.BAD_REQUEST).json({
-      msg: "check the book data",
-    });
-  }
-
-  if (!rawBook?.authors?.length) {
-    return { error: { message: `check authors data` } };
-  }
-
   try {
-    if (rawBook?.authors?.length) {
-      const newBook = await createABookWithAuthors(rawBook);
-      // TODO: error by code
-      // TODO: check this return, disable if middleware nos run for this request
-      return res.status(httpStatus.OK).json(newBook);
-    }
-
-    const newBook = await createBook(rawBook);
+    const newBook = await createABookWithAuthors(rawBook);
+    // TODO: process object (is an array), error and success full operations
     // TODO: check this return, disable if middleware nos run for this request
     return res.status(httpStatus.OK).json(newBook);
   } catch (error) {

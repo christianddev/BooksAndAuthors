@@ -6,7 +6,7 @@ import {
   deleteAuthorTemporary,
   findAllAuthors,
   findAllBooksAuthorsGroupByAuthor,
-  findAuthorById,
+  finOneAuthorById,
   updateAuthor,
 } from "../helpers";
 import { AuthorRequest } from "../typings/author";
@@ -28,8 +28,7 @@ export const getAuthors = async (req: Request, res: Response) => {
 export const getAuthor = async (req: Request, res: Response) => {
   try {
     const { id } = req?.params;
-
-    const author = await findAuthorById(id);
+    const author = await finOneAuthorById(id);
 
     if (author) {
       return res.status(httpStatus?.OK).json(author);

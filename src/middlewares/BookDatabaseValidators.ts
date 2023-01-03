@@ -1,21 +1,21 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 
-import { finOneAuthorById, findOneAuthorByNameAndCountry } from "../helpers";
-import type { AuthorRequest } from "../typings/author";
+import { findOneBookById, findOneBookByISBN } from "../helpers";
+import { BookRequest } from "../typings/book";
 
-export const validateAuthorById = async (
+export const validateBookById = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const id = req?.params?.id;
-    const author = await finOneAuthorById(id);
+    const book = await findOneBookById(id);
 
-    if (!author) {
+    if (!book) {
       return res.status(httpStatus?.NOT_FOUND).json({
-        msg: `author with id '${id}' not found`,
+        msg: `book with id '${id}' not found`,
       });
     }
 
@@ -28,21 +28,18 @@ export const validateAuthorById = async (
   }
 };
 
-export const validateAuthorByNameAndCountry = async (
+export const validateBookByISBN = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const rawAuthor: AuthorRequest = req?.body;
-    const author = await findOneAuthorByNameAndCountry({
-      name: rawAuthor?.name,
-      country: rawAuthor?.country,
-    });
+    const rawBook: BookRequest = req?.body;
+    const book = await findOneBookByISBN(rawBook?.isbn);
 
-    if (author) {
+    if (book) {
       return res.status(httpStatus?.NOT_FOUND).json({
-        msg: `a authors exists with the name '${rawAuthor?.name}' & country '${rawAuthor?.country}'`,
+        msg: `a book exists with the isbn '${rawBook?.isbn}', id '${book?.dataValues?.id}' & title '${book?.dataValues?.title}'`,
       });
     }
     next();
