@@ -2,7 +2,7 @@ import { AuthorModel, BookModel, BooksAuthorsModel } from "../models";
 import type { OperationResponse } from "../typings/api";
 import type { BookRequest } from "../typings/book";
 import {
-  createBooksAuthorsByBook,
+  createBooksAuthorsByBookId,
   deleteBooksAuthorsByBookId,
 } from "./bookAuthorDatabase";
 import {
@@ -25,7 +25,7 @@ export const findAllBooks = async (
   });
 
 export const findOneBookById = async (
-  id: string,
+  id: number,
   excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
@@ -93,14 +93,17 @@ export const createBook = async (
   };
 };
 
-// TODO: check response  and catch
-export const createBookWithAuthors = async (rawBook: BookRequest) => {
+export const createBookWithAuthors = async ({
+  isbn,
+  title,
+  authors,
+}: BookRequest) => {
   try {
-    const newBook = await createBookFromModel(rawBook);
+    const newBook = await createBookFromModel({ isbn, title });
 
-    const booksAuthors = await createBooksAuthorsByBook(
+    const booksAuthors = await createBooksAuthorsByBookId(
       newBook?.dataValues?.id,
-      rawBook?.authors ?? [""]
+      authors
     );
 
     return booksAuthors;

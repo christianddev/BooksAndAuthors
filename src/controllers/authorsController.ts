@@ -9,6 +9,7 @@ import {
   finOneAuthorById,
   updateAuthor,
   createAuthorWithBooks,
+  setBooksAuthorsFromAuthorId,
 } from "../helpers";
 import { AuthorRequest } from "../typings/author";
 
@@ -29,7 +30,7 @@ export const getAuthors = async (req: Request, res: Response) => {
 export const getAuthor = async (req: Request, res: Response) => {
   try {
     const { id } = req?.params;
-    const author = await finOneAuthorById(id);
+    const author = await finOneAuthorById(Number(id));
 
     if (author) {
       return res.status(httpStatus?.OK).json(author);
@@ -74,8 +75,6 @@ export const postAuthorWithBooks = async (req: Request, res: Response) => {
   try {
     const rawAuthor: AuthorRequest = req?.body;
     const newAuthor = await createAuthorWithBooks(rawAuthor);
-    // TODO: process object (is an array), error and success full operations
-    // TODO: check this return, disable if middleware nos run for this request
 
     return res.status(httpStatus?.OK).json(newAuthor);
   } catch (error) {
@@ -99,6 +98,24 @@ export const putAuthor = async (req: Request, res: Response) => {
   } catch (error) {
     console.trace(error);
     return res.status(httpStatus?.INTERNAL_SERVER_ERROR).json({
+      msg: "contact with the administrator",
+    });
+  }
+};
+
+export const putAuthorWithBooks = async (req: Request, res: Response) => {
+  try {
+    const {
+      body: { books },
+      params: { id },
+    } = req;
+
+    const response = await setBooksAuthorsFromAuthorId(Number(id), books);
+
+    return res.status(httpStatus?.OK).json(response);
+  } catch (error) {
+    console.trace(error);
+    res.status(httpStatus?.INTERNAL_SERVER_ERROR).json({
       msg: "contact with the administrator",
     });
   }

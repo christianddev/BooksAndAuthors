@@ -6,8 +6,8 @@ import { findOneBookById } from "./bookDatabase";
 import { EXCLUDE_ORM_FIELDS, SEQUELIZE_FIELDS } from "./constants";
 
 export interface BookAuthorQuery {
-  bookId: string;
-  authorId: string;
+  bookId: number;
+  authorId: number;
   excludeTemporaryDeleted?: boolean;
   excludeORMFields?: boolean;
 }
@@ -26,26 +26,33 @@ export const findOneBookAuthorByIds = async ({
     },
   });
 
-export const findBooksAuthorsByBookId = async (bookId: string) =>
+export const findBooksAuthorsByBookId = async (bookId?: number) =>
   await BooksAuthorsModel.findAll({
     where: {
       bookId,
     },
   });
 
-const createBookAuthorFromModel = async (bookId: string, authorId: string) =>
+export const findBooksAuthorsByAuthorId = async (authorId?: number) =>
+  await BooksAuthorsModel.findAll({
+    where: {
+      authorId,
+    },
+  });
+
+const createBookAuthorFromModel = async (bookId: number, authorId: number) =>
   await BooksAuthorsModel.create({
     bookId,
     authorId,
   });
 
 export const createBookAuthor = async (
-  bookId: string = "",
-  authorId: string = ""
+  bookId: number,
+  authorId: number
 ): Promise<OperationResponse> => {
-  if (!bookId || !authorId) {
+  if (bookId <= 0 || authorId <= 0) {
     return {
-      error: { message: `check bookId '${bookId}' and authorId ${bookId}` },
+      error: { message: `check bookId '${bookId}' and authorId '${bookId}'` },
     };
   }
 
@@ -87,9 +94,9 @@ export const createBookAuthor = async (
   return { data: newBookAuthor };
 };
 
-export const createBooksAuthorsByBook = async (
-  bookId: string = "",
-  authorsIds: string[]
+const createBooksAuthorsByIds = (
+  bookIds: number[],
+  authorsIds: number[]
 ): Promise<OperationResponse<Model<any, any>[], ErrorOperation[]>> =>
   new Promise(async (resolve, reject) => {
     try {
@@ -100,48 +107,35 @@ export const createBooksAuthorsByBook = async (
         data: [],
         error: [],
       };
-      for (let i = 0; i < authorsIds?.length; i++) {
-        const newAuthor = await createBookAuthor(bookId, authorsIds[i]);
-        if (newAuthor?.error?.message) {
-          booksAuthorResult?.error?.push(newAuthor?.error);
-        } else {
-          booksAuthorResult?.data?.push(newAuthor?.data?.dataValues);
+
+      for (let a = 0; a < bookIds?.length; a++) {
+        for (let i = 0; i < authorsIds?.length; i++) {
+          const newAuthor = await createBookAuthor(bookIds[a], authorsIds[i]);
+          if (newAuthor?.error?.message) {
+            booksAuthorResult?.error?.push(newAuthor?.error);
+          } else {
+            booksAuthorResult?.data?.push(newAuthor?.data?.dataValues);
+          }
         }
       }
       resolve(booksAuthorResult);
     } catch (error) {
-      console.trace("createBooksAuthorsByBook: ", error);
+      console.trace("createBooksAuthorsByIds: ", error);
       reject(error);
     }
   });
 
-export const createBooksAuthorsByAuthor = async (
-  authorId: string = "",
-  booksIds: string[]
+export const createBooksAuthorsByBookId = async (
+  bookId: number,
+  authorsIds: number[] = []
 ): Promise<OperationResponse<Model<any, any>[], ErrorOperation[]>> =>
-  new Promise(async (resolve, reject) => {
-    try {
-      const booksAuthorResult: OperationResponse<
-        Model<any, any>[],
-        ErrorOperation[]
-      > = {
-        data: [],
-        error: [],
-      };
-      for (let i = 0; i < booksIds?.length; i++) {
-        const newAuthor = await createBookAuthor(booksIds[i], authorId);
-        if (newAuthor?.error?.message) {
-          booksAuthorResult?.error?.push(newAuthor?.error);
-        } else {
-          booksAuthorResult?.data?.push(newAuthor?.data?.dataValues);
-        }
-      }
-      resolve(booksAuthorResult);
-    } catch (error) {
-      console.trace("createBooksAuthorsByAuthor: ", error);
-      reject(error);
-    }
-  });
+  await createBooksAuthorsByIds([bookId], authorsIds);
+
+export const createBooksAuthorsByAuthorId = async (
+  authorId: number,
+  booksIds: number[] = []
+): Promise<OperationResponse<Model<any, any>[], ErrorOperation[]>> =>
+  await createBooksAuthorsByIds(booksIds, [authorId]);
 
 export const deleteBooksAuthorsByBookId = async (bookId: number) =>
   await BooksAuthorsModel.destroy({
@@ -156,3 +150,17 @@ export const deleteBooksAuthorsByAuthorId = async (authorId: number) =>
       bookId: authorId,
     },
   });
+
+export const setBooksAuthorsFromBookId = async (
+  id: number,
+  authors: number[]
+) => {
+  try {
+    const booksAuthors = await createBooksAuthorsByBookId(id, authors);
+
+    return booksAuthors;
+  } catch (error) {
+    console.trace("error createABookWithAuthors: ", error);
+    throw new Error("createABookWithAuthors");
+  }
+};

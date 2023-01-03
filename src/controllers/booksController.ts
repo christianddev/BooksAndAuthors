@@ -9,6 +9,7 @@ import {
   findAllBooksAuthorsGroupByBook,
   updateBook,
   deleteBookTemporary,
+  setBooksAuthorsFromBookId,
 } from "../helpers/";
 import { BookRequest } from "../typings/book";
 
@@ -29,7 +30,7 @@ export const getBooks = async (req: Request, res: Response) => {
 export const getBook = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const book = await findOneBookById(id);
+    const book = await findOneBookById(Number(id));
 
     if (book) {
       return res.status(httpStatus.OK).json(book);
@@ -60,7 +61,6 @@ export const postBook = async (req: Request, res: Response) => {
     const rawBook = req?.body as BookRequest;
 
     const newBook = await createBook(rawBook);
-    // TODO: check this return, disable if middleware nos run for this request
 
     return res.status(httpStatus.OK).json(newBook);
   } catch (error) {
@@ -75,8 +75,25 @@ export const postBookWithAuthors = async (req: Request, res: Response) => {
 
   try {
     const newBook = await createBookWithAuthors(rawBook);
-    // TODO: process object (is an array), error and success full operations
-    // TODO: check this return, disable if middleware nos run for this request
+
+    return res.status(httpStatus.OK).json(newBook);
+  } catch (error) {
+    console.trace(error);
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+      msg: "contact with the administrator",
+    });
+  }
+};
+
+export const putBookWithAuthors = async (req: Request, res: Response) => {
+  try {
+    const {
+      body: { authors },
+      params: { id },
+    } = req;
+
+    const newBook = await setBooksAuthorsFromBookId(Number(id), authors);
+
     return res.status(httpStatus.OK).json(newBook);
   } catch (error) {
     console.trace(error);

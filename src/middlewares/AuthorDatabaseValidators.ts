@@ -11,7 +11,7 @@ export const validateAuthorByIdDataBase = async (
 ) => {
   try {
     const id = req?.params?.id;
-    const author = await finOneAuthorById(id);
+    const author = await finOneAuthorById(Number(id));
 
     if (!author) {
       return res.status(httpStatus?.NOT_FOUND).json({

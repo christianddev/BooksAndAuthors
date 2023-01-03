@@ -11,7 +11,7 @@ export const validateBookByIdDataBase = async (
 ) => {
   try {
     const id = req?.params?.id;
-    const book = await findOneBookById(id);
+    const book = await findOneBookById(Number(id));
 
     if (!book) {
       return res.status(httpStatus?.NOT_FOUND).json({

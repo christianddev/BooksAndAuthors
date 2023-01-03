@@ -5,5 +5,5 @@ export interface BookRequest extends BaseModel {
   isbn?: string;
   title?: string;
   isDeleted?: boolean;
-  authors?: string[];
+  authors?: number[];
 }

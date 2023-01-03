@@ -1,7 +1,7 @@
 import { AuthorModel, BookModel } from "../models";
 import type { AuthorRequest } from "../typings/author";
 import {
-  createBooksAuthorsByAuthor,
+  createBooksAuthorsByAuthorId,
   deleteBooksAuthorsByAuthorId,
 } from "./bookAuthorDatabase";
 import {
@@ -24,7 +24,7 @@ export const findAllAuthors = async (
   });
 
 export const finOneAuthorById = async (
-  id: string,
+  id: number,
   excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) =>
@@ -88,24 +88,40 @@ export const createAuthor = async (rawAuthor: AuthorRequest) => {
 };
 
 // TODO: check response  and catch
-export const createAuthorWithBooks = async (rawAuthor: AuthorRequest) => {
+export const createAuthorWithBooks = async ({
+  name,
+  country,
+  books,
+}: AuthorRequest) => {
   try {
     const newAuthor = await createBookFromModel({
-      name: rawAuthor?.name,
-      country: rawAuthor?.country,
+      name,
+      country,
     });
 
-    const booksAuthors = await createBooksAuthorsByAuthor(
+    const booksAuthors = await createBooksAuthorsByAuthorId(
       newAuthor?.dataValues?.id,
-      rawAuthor?.books ?? [""]
+      books ?? []
     );
 
-    // TODO: process object (is an array), error and success full operations
-    // TODO: check this return, disable if middleware nos run for this request
     return booksAuthors;
   } catch (error) {
-    console.trace("error createABookWithAuthors: ", error);
-    throw new Error("createABookWithAuthors");
+    console.trace("error createAuthorWithBooks: ", error);
+    throw new Error("createAuthorWithBooks");
+  }
+};
+
+export const setBooksAuthorsFromAuthorId = async (
+  id: number,
+  books: number[]
+) => {
+  try {
+    const booksAuthors = await createBooksAuthorsByAuthorId(id, books);
+
+    return booksAuthors;
+  } catch (error) {
+    console.trace("error setBooksAuthorsFromAuthorId: ", error);
+    throw new Error("setBooksAuthorsFromAuthorId");
   }
 };
 
@@ -119,7 +135,7 @@ const updateAuthorFromModel = async ({
     {
       name,
       country,
-      isDeleted
+      isDeleted,
     },
     {
       where: {

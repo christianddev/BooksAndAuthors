@@ -7,6 +7,7 @@ import {
   deleteAuthor,
   getAllBooksAuthorsGroupByAuthor,
   postAuthorWithBooks,
+  putAuthorWithBooks,
 } from "../controllers";
 import {
   validateAuthorByIdDataBase,
@@ -42,6 +43,11 @@ authorRouter.put(
   "/:id",
   [validateId, validateNameAndCountryNotFalsy, validateAuthorByIdDataBase],
   putAuthor
+);
+authorRouter.put(
+  "/:id/books",
+  [validateId, validateBookIDs, validateAuthorByIdDataBase],
+  putAuthorWithBooks
 );
 authorRouter.delete(
   "/:id",
