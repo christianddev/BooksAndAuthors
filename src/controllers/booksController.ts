@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 
 import {
   createBook,
-  createABookWithAuthors,
+  createBookWithAuthors,
   findAllBooks,
   findOneBookById,
   findAllBooksAuthorsGroupByBook,
@@ -73,7 +73,7 @@ export const postBookWithAuthors = async (req: Request, res: Response) => {
   const rawBook = req?.body as BookRequest;
 
   try {
-    const newBook = await createABookWithAuthors(rawBook);
+    const newBook = await createBookWithAuthors(rawBook);
     // TODO: process object (is an array), error and success full operations
     // TODO: check this return, disable if middleware nos run for this request
     return res.status(httpStatus.OK).json(newBook);

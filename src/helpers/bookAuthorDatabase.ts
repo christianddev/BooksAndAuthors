@@ -1,30 +1,25 @@
+import { Model } from "sequelize";
 import { BooksAuthorsModel } from "../models";
-import type { OperationResponse } from "../typings/api";
+import type { ErrorOperation, OperationResponse } from "../typings/api";
 import { finOneAuthorById } from "./authorDatabase";
 import { findOneBookById } from "./bookDatabase";
-import {
-  EXCLUDE_ORM_FIELDS,
-  EXCLUDE_TEMPORARY_DELETED,
-  SEQUELIZE_FIELDS,
-} from "./constants";
+import { EXCLUDE_ORM_FIELDS, SEQUELIZE_FIELDS } from "./constants";
 
 export interface BookAuthorQuery {
   bookId: string;
   authorId: string;
-  excludeTemporaryDeleted: boolean;
-  excludeORMFields: boolean;
+  excludeTemporaryDeleted?: boolean;
+  excludeORMFields?: boolean;
 }
-export const findBookAuthorByIds = async ({
+export const findOneBookAuthorByIds = async ({
   bookId,
   authorId,
   excludeORMFields = EXCLUDE_ORM_FIELDS,
-  excludeTemporaryDeleted = EXCLUDE_TEMPORARY_DELETED,
 }: BookAuthorQuery) =>
   await BooksAuthorsModel.findOne({
     where: {
       bookId,
       authorId,
-      isDeleted: excludeTemporaryDeleted,
     },
     attributes: {
       exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
@@ -36,6 +31,12 @@ export const findBooksAuthorsByBookId = async (bookId: string) =>
     where: {
       bookId,
     },
+  });
+
+const createBookAuthorFromModel = async (bookId: string, authorId: string) =>
+  await BooksAuthorsModel.create({
+    bookId,
+    authorId,
   });
 
 export const createBookAuthor = async (
@@ -68,12 +69,9 @@ export const createBookAuthor = async (
     };
   }
 
-  // TODO: move to another function
-  const bookAuthor = await BooksAuthorsModel.findOne({
-    where: {
-      bookId,
-      authorId,
-    },
+  const bookAuthor = await findOneBookAuthorByIds({
+    bookId,
+    authorId,
   });
 
   if (bookAuthor) {
@@ -84,28 +82,63 @@ export const createBookAuthor = async (
     };
   }
 
-  const newBookAuthor = await BooksAuthorsModel.create({
-    bookId,
-    authorId,
-  });
+  const newBookAuthor = await createBookAuthorFromModel(bookId, authorId);
 
   return { data: newBookAuthor };
 };
 
-export const createAuthorsBooks = async (
+export const createBooksAuthorsByBook = async (
   bookId: string = "",
   authorsIds: string[]
-): Promise<Array<OperationResponse>> =>
+): Promise<OperationResponse<Model<any, any>[], ErrorOperation[]>> =>
   new Promise(async (resolve, reject) => {
     try {
-      const booksAuthorResult = [];
+      const booksAuthorResult: OperationResponse<
+        Model<any, any>[],
+        ErrorOperation[]
+      > = {
+        data: [],
+        error: [],
+      };
       for (let i = 0; i < authorsIds?.length; i++) {
         const newAuthor = await createBookAuthor(bookId, authorsIds[i]);
-        booksAuthorResult.push(newAuthor);
+        if (newAuthor?.error?.message) {
+          booksAuthorResult?.error?.push(newAuthor?.error);
+        } else {
+          booksAuthorResult?.data?.push(newAuthor?.data?.dataValues);
+        }
       }
       resolve(booksAuthorResult);
     } catch (error) {
-      console.trace("createAuthorsBooks: ", error);
+      console.trace("createBooksAuthorsByBook: ", error);
+      reject(error);
+    }
+  });
+
+export const createBooksAuthorsByAuthor = async (
+  authorId: string = "",
+  booksIds: string[]
+): Promise<OperationResponse<Model<any, any>[], ErrorOperation[]>> =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const booksAuthorResult: OperationResponse<
+        Model<any, any>[],
+        ErrorOperation[]
+      > = {
+        data: [],
+        error: [],
+      };
+      for (let i = 0; i < booksIds?.length; i++) {
+        const newAuthor = await createBookAuthor(booksIds[i], authorId);
+        if (newAuthor?.error?.message) {
+          booksAuthorResult?.error?.push(newAuthor?.error);
+        } else {
+          booksAuthorResult?.data?.push(newAuthor?.data?.dataValues);
+        }
+      }
+      resolve(booksAuthorResult);
+    } catch (error) {
+      console.trace("createBooksAuthorsByAuthor: ", error);
       reject(error);
     }
   });

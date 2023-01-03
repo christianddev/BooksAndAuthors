@@ -10,12 +10,12 @@ import {
 } from "../controllers";
 import {
   validateId,
-  validateBookById,
+  validateBookByIdDataBase,
   validateTitle,
   validateISBNAndTitleNotFalsy,
   validateISBN,
   validateAuthorIDs,
-  validateBookByISBN,
+  validateBookByISBNDataBase,
 } from "../middlewares/";
 
 export const bookRouter = Router();
@@ -25,17 +25,17 @@ bookRouter.get("/:id", [validateId], getBook);
 bookRouter.get("/all/authors", getAllBooksAuthorsGroupByBook);
 bookRouter.post(
   "/",
-  [validateISBN, validateTitle, validateBookByISBN],
+  [validateISBN, validateTitle, validateBookByISBNDataBase],
   postBook
 );
 bookRouter.post(
   "/authors",
-  [validateISBN, validateTitle, validateBookByISBN, validateAuthorIDs],
+  [validateISBN, validateTitle, validateAuthorIDs, validateBookByISBNDataBase],
   postBookWithAuthors
 );
 bookRouter.put(
   "/:id",
-  [validateId, validateBookById, validateISBNAndTitleNotFalsy],
+  [validateId, validateISBNAndTitleNotFalsy, validateBookByIdDataBase],
   putBook
 );
-bookRouter.delete("/:id", [validateId, validateBookById], deleteBook);
+bookRouter.delete("/:id", [validateId, validateBookByIdDataBase], deleteBook);

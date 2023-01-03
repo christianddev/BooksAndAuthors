@@ -6,10 +6,11 @@ import {
   putAuthor,
   deleteAuthor,
   getAllBooksAuthorsGroupByAuthor,
+  postAuthorWithBooks,
 } from "../controllers";
 import {
-  validateAuthorById,
-  validateAuthorByNameAndCountry,
+  validateAuthorByIdDataBase,
+  validateAuthorByNameAndCountryDataBase,
   validateBookIDs,
   validateCountry,
   validateId,
@@ -24,7 +25,7 @@ authorRouter.get("/:id", [validateId], getAuthor);
 authorRouter.get("/all/books", getAllBooksAuthorsGroupByAuthor);
 authorRouter.post(
   "/",
-  [validateName, validateCountry, validateAuthorByNameAndCountry],
+  [validateName, validateCountry, validateAuthorByNameAndCountryDataBase],
   postAuthor
 );
 authorRouter.post(
@@ -32,14 +33,18 @@ authorRouter.post(
   [
     validateName,
     validateCountry,
-    validateAuthorByNameAndCountry,
+    validateAuthorByNameAndCountryDataBase,
     validateBookIDs,
   ],
-  postAuthor
+  postAuthorWithBooks
 );
 authorRouter.put(
   "/:id",
-  [validateId, validateAuthorById, validateNameAndCountryNotFalsy],
+  [validateId, validateNameAndCountryNotFalsy, validateAuthorByIdDataBase],
   putAuthor
 );
-authorRouter.delete("/:id", [validateId, validateAuthorById], deleteAuthor);
+authorRouter.delete(
+  "/:id",
+  [validateId, validateAuthorByIdDataBase],
+  deleteAuthor
+);

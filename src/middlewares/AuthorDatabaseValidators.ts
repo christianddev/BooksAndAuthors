@@ -4,7 +4,7 @@ import httpStatus from "http-status";
 import { finOneAuthorById, findOneAuthorByNameAndCountry } from "../helpers";
 import type { AuthorRequest } from "../typings/author";
 
-export const validateAuthorById = async (
+export const validateAuthorByIdDataBase = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -28,7 +28,7 @@ export const validateAuthorById = async (
   }
 };
 
-export const validateAuthorByNameAndCountry = async (
+export const validateAuthorByNameAndCountryDataBase = async (
   req: Request,
   res: Response,
   next: NextFunction

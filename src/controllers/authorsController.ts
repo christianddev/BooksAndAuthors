@@ -8,6 +8,7 @@ import {
   findAllBooksAuthorsGroupByAuthor,
   finOneAuthorById,
   updateAuthor,
+  createAuthorWithBooks,
 } from "../helpers";
 import { AuthorRequest } from "../typings/author";
 
@@ -49,6 +50,7 @@ export const getAllBooksAuthorsGroupByAuthor = async (
   req: Request,
   res: Response
 ) => {
+  // TODO: add pagination
   const booksAuthors = await findAllBooksAuthorsGroupByAuthor();
 
   res.status(httpStatus?.OK).json({ booksAuthors });
@@ -58,6 +60,22 @@ export const postAuthor = async (req: Request, res: Response) => {
   try {
     const rawAuthor: AuthorRequest = req?.body;
     const newAuthor = await createAuthor(rawAuthor);
+
+    return res.status(httpStatus?.OK).json(newAuthor);
+  } catch (error) {
+    console.trace(error);
+    res.status(httpStatus?.INTERNAL_SERVER_ERROR).json({
+      msg: "contact with the administrator",
+    });
+  }
+};
+
+export const postAuthorWithBooks = async (req: Request, res: Response) => {
+  try {
+    const rawAuthor: AuthorRequest = req?.body;
+    const newAuthor = await createAuthorWithBooks(rawAuthor);
+    // TODO: process object (is an array), error and success full operations
+    // TODO: check this return, disable if middleware nos run for this request
 
     return res.status(httpStatus?.OK).json(newAuthor);
   } catch (error) {

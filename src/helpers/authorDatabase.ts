@@ -1,5 +1,6 @@
 import { AuthorModel, BookModel } from "../models";
 import type { AuthorRequest } from "../typings/author";
+import { createBooksAuthorsByAuthor } from "./bookAuthorDatabase";
 import {
   EXCLUDE_ORM_FIELDS,
   EXCLUDE_TEMPORARY_DELETED,
@@ -64,10 +65,16 @@ export const findAllBooksAuthorsGroupByAuthor = async (
     include: [BookModel],
   });
 
+const createBookFromModel = async ({ name, country }: AuthorRequest) =>
+  await AuthorModel.create({
+    name,
+    country,
+  });
+
 export const createAuthor = async (rawAuthor: AuthorRequest) => {
   const {
     dataValues: { id, name, country },
-  }: { dataValues: AuthorRequest } = await AuthorModel.create({
+  }: { dataValues: AuthorRequest } = await createBookFromModel({
     name: rawAuthor?.name,
     country: rawAuthor?.country,
   });
@@ -75,6 +82,28 @@ export const createAuthor = async (rawAuthor: AuthorRequest) => {
   return {
     data: { id, name, country },
   };
+};
+
+// TODO: check response  and catch
+export const createAuthorWithBooks = async (rawAuthor: AuthorRequest) => {
+  try {
+    const newAuthor = await createBookFromModel({
+      name: rawAuthor?.name,
+      country: rawAuthor?.country,
+    });
+
+    const booksAuthors = await createBooksAuthorsByAuthor(
+      newAuthor?.dataValues?.id,
+      rawAuthor?.books ?? [""]
+    );
+
+    // TODO: process object (is an array), error and success full operations
+    // TODO: check this return, disable if middleware nos run for this request
+    return booksAuthors;
+  } catch (error) {
+    console.trace("error createABookWithAuthors: ", error);
+    throw new Error("createABookWithAuthors");
+  }
 };
 
 export const updateAuthor = async (rawAuthor: AuthorRequest) => {

@@ -1,7 +1,7 @@
 import { AuthorModel, BookModel } from "../models";
 import type { OperationResponse } from "../typings/api";
 import type { BookRequest } from "../typings/book";
-import { createAuthorsBooks } from "./bookAuthorDatabase";
+import { createBooksAuthorsByBook } from "./bookAuthorDatabase";
 import {
   EXCLUDE_ORM_FIELDS,
   EXCLUDE_TEMPORARY_DELETED,
@@ -90,12 +90,12 @@ export const createBook = async (
   };
 };
 
-// TODO: check response
-export const createABookWithAuthors = async (rawBook: BookRequest) => {
+// TODO: check response  and catch
+export const createBookWithAuthors = async (rawBook: BookRequest) => {
   try {
     const newBook = await createBookFromModel(rawBook);
 
-    const booksAuthors = await createAuthorsBooks(
+    const booksAuthors = await createBooksAuthorsByBook(
       newBook?.dataValues?.id,
       rawBook?.authors ?? [""]
     );

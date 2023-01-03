@@ -4,7 +4,7 @@ import httpStatus from "http-status";
 import { findOneBookById, findOneBookByISBN } from "../helpers";
 import { BookRequest } from "../typings/book";
 
-export const validateBookById = async (
+export const validateBookByIdDataBase = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -28,7 +28,7 @@ export const validateBookById = async (
   }
 };
 
-export const validateBookByISBN = async (
+export const validateBookByISBNDataBase = async (
   req: Request,
   res: Response,
   next: NextFunction
