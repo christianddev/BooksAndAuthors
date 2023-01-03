@@ -7,8 +7,9 @@ import {
   findAllBooks,
   findOneBookById,
   findAllBooksAuthorsGroupByBook,
-} from "../helpers/bookDatabase";
-import { BookModel } from "../models";
+  updateBook,
+  deleteBookTemporary,
+} from "../helpers/";
 import { BookRequest } from "../typings/book";
 
 export const getBooks = async (req: Request, res: Response) => {
@@ -86,20 +87,14 @@ export const postBookWithAuthors = async (req: Request, res: Response) => {
 };
 
 export const putBook = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { body } = req;
-
   try {
-    const book = await BookModel.findByPk(id);
-    if (!book) {
-      return res.status(httpStatus?.NOT_FOUND).json({
-        msg: `book not found: ${id}`,
-      });
-    }
+    const {
+      body: { isbn, title },
+      params: { id },
+    } = req;
 
-    await book.update(body);
-
-    return res.status(httpStatus.OK).json(book);
+    const response = updateBook({ id, isbn, title });
+    return res.status(httpStatus.OK).json(response);
   } catch (error) {
     console.trace(error);
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
@@ -110,25 +105,12 @@ export const putBook = async (req: Request, res: Response) => {
 
 export const deleteBook = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    if (!id) {
-      return res.status(httpStatus?.BAD_REQUEST).json({
-        msg: "check book id",
-      });
-    }
-    const book = await BookModel.findByPk(id);
-    if (!book) {
-      return res.status(httpStatus?.NOT_FOUND).json({
-        msg: `book not found: ${id}`,
-      });
-    }
+    const {
+      params: { id },
+    } = req;
 
-    await book.update({ isDeleted: true });
-    console.log("book", book);
-
-    return res
-      .status(httpStatus.OK)
-      .json({ id: book?.toJSON()?.id, title: book?.toJSON()?.title });
+    const response = deleteBookTemporary(Number(id), true);
+    return res.status(httpStatus.OK).json(response);
   } catch (error) {
     console.trace(error);
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({

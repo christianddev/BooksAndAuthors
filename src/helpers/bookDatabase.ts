@@ -106,3 +106,36 @@ export const createBookWithAuthors = async (rawBook: BookRequest) => {
     throw new Error("createABookWithAuthors");
   }
 };
+
+export const updateBook = async (rawBook: BookRequest) => {
+  const updatedBook = await BookModel.update(
+    {
+      isbn: rawBook?.isbn,
+      title: rawBook?.title,
+    },
+    {
+      where: {
+        id: rawBook?.id,
+      },
+    }
+  );
+
+  return {
+    data: { affectedRows: updatedBook },
+  };
+};
+
+export const deleteBookTemporary = async (id: number, isDeleted: boolean) => {
+  const updatedBook = await BookModel.update(
+    { isDeleted },
+    {
+      where: {
+        id,
+      },
+    }
+  );
+
+  return {
+    data: { affectedRows: updatedBook },
+  };
+};
