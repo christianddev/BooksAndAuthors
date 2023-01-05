@@ -1,10 +1,5 @@
 import type { Model } from "sequelize";
 
-export interface ApiResponse<T> {
-  data?: T;
-  error?: T;
-}
-
 export interface ErrorResponse {
   code: number;
   message: string;
@@ -17,7 +12,9 @@ export interface OperationResponse<D = Model<any, any>, E = ErrorOperation> {
 }
 
 export interface ErrorOperation {
+  status?: number;
   message?: string;
+  errors?: string[] | object[];
 }
 
 export interface BaseModel {

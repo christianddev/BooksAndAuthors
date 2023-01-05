@@ -1,4 +1,5 @@
 import { DataTypes } from "sequelize";
+
 import database from "../database/connection";
 import {
   AUTHOR_ID_FIELD,

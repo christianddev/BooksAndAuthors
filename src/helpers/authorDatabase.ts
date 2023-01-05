@@ -1,5 +1,5 @@
 import { AuthorModel, BookModel } from "../models";
-import type { AuthorRequest } from "../typings/author";
+
 import {
   createBooksAuthorsByAuthorId,
   deleteBooksAuthorsByAuthorId,
@@ -9,6 +9,8 @@ import {
   EXCLUDE_TEMPORARY_DELETED,
   SEQUELIZE_FIELDS,
 } from "./constants";
+
+import type { AuthorRequest } from "../typings/author";
 
 export const findAllAuthors = async (
   excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,

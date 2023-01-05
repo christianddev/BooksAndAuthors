@@ -1,6 +1,5 @@
-import { AuthorModel, BookModel, BooksAuthorsModel } from "../models";
-import type { OperationResponse } from "../typings/api";
-import type { BookRequest } from "../typings/book";
+import { AuthorModel, BookModel } from "../models";
+
 import {
   createBooksAuthorsByBookId,
   deleteBooksAuthorsByBookId,
@@ -10,6 +9,9 @@ import {
   EXCLUDE_TEMPORARY_DELETED,
   SEQUELIZE_FIELDS,
 } from "./constants";
+
+import type { OperationResponse } from "../typings/api";
+import type { BookRequest } from "../typings/book";
 
 export const findAllBooks = async (
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS,

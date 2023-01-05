@@ -1,9 +1,12 @@
 import { Model } from "sequelize";
+
 import { BooksAuthorsModel } from "../models";
-import type { ErrorOperation, OperationResponse } from "../typings/api";
+
 import { finOneAuthorById } from "./authorDatabase";
 import { findOneBookById } from "./bookDatabase";
 import { EXCLUDE_ORM_FIELDS, SEQUELIZE_FIELDS } from "./constants";
+
+import type { ErrorOperation, OperationResponse } from "../typings/api";
 
 export interface BookAuthorQuery {
   bookId: number;

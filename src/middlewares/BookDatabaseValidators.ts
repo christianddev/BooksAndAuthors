@@ -2,7 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 
 import { findOneBookById, findOneBookByISBN } from "../helpers";
-import { BookRequest } from "../typings/book";
+import { defaultErrorResponse } from "../utils";
+
+import type { ErrorOperation } from "../typings/api";
+import type { BookRequest } from "../typings/book";
 
 export const validateBookByIdDataBase = async (
   req: Request,
@@ -14,17 +17,18 @@ export const validateBookByIdDataBase = async (
     const book = await findOneBookById(Number(id));
 
     if (!book) {
-      return res.status(httpStatus?.NOT_FOUND).json({
-        msg: `book with id '${id}' not found`,
-      });
+      const error: ErrorOperation = {
+        status: httpStatus?.NOT_FOUND,
+        message: `book with id '${id}' not found`,
+      };
+      return res.status(httpStatus?.NOT_FOUND).json({ error });
     }
 
     next();
-  } catch (error) {
-    console.trace(error);
-    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-      msg: "contact with the administrator",
-    });
+  } catch (err) {
+    console.trace(err);
+
+    return defaultErrorResponse(res);
   }
 };
 
@@ -35,18 +39,19 @@ export const validateBookByISBNDataBase = async (
 ) => {
   try {
     const rawBook: BookRequest = req?.body;
-    const book = await findOneBookByISBN(rawBook?.isbn);
+    const book = await findOneBookByISBN(rawBook?.isbn, false);
 
     if (book) {
-      return res.status(httpStatus?.NOT_FOUND).json({
-        msg: `a book exists with the isbn '${rawBook?.isbn}', id '${book?.dataValues?.id}' & title '${book?.dataValues?.title}'`,
-      });
+      const error: ErrorOperation = {
+        status: httpStatus?.BAD_REQUEST,
+        message: `a book exists with the isbn '${rawBook?.isbn}', id '${book?.dataValues?.id}' & title '${book?.dataValues?.title}'`,
+      };
+      return res.status(httpStatus?.BAD_REQUEST).json({ error });
     }
     next();
-  } catch (error) {
-    console.trace(error);
-    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-      msg: "contact with the administrator",
-    });
+  } catch (err) {
+    console.trace(err);
+
+    return defaultErrorResponse(res);
   }
 };
