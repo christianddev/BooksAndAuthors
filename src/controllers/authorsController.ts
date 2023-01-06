@@ -23,9 +23,7 @@ export const getAuthors = async (req: Request, res: Response) => {
 
     res.status(httpStatus?.OK).json({ data: { authors } });
   } catch (err) {
-    console.trace(err);
-
-    return defaultErrorResponse(res);
+    return defaultErrorResponse(err, res);
   }
 };
 
@@ -45,9 +43,7 @@ export const getAuthor = async (req: Request, res: Response) => {
 
     return res.status(httpStatus?.NOT_FOUND).json({ error });
   } catch (err) {
-    console.trace(err);
-
-    return defaultErrorResponse(res);
+    return defaultErrorResponse(err, res);
   }
 };
 
@@ -60,9 +56,7 @@ export const getAllBooksAuthorsGroupByAuthor = async (
 
     res.status(httpStatus?.OK).json({ data: { booksAuthors } });
   } catch (err) {
-    console.trace(err);
-
-    return defaultErrorResponse(res);
+    return defaultErrorResponse(err, res);
   }
 };
 
@@ -75,9 +69,7 @@ export const postAuthor = async (req: Request, res: Response) => {
       .status(httpStatus?.OK)
       .json({ data: { author: newAuthor?.data } });
   } catch (err) {
-    console.trace(err);
-
-    return defaultErrorResponse(res);
+    return defaultErrorResponse(err, res);
   }
 };
 
@@ -85,11 +77,9 @@ export const postAuthorWithBooks = async (req: Request, res: Response) => {
   try {
     const rawAuthor: AuthorRequest = req?.body;
     const newAuthor = await createAuthorWithBooks(rawAuthor);
-    return res.status(httpStatus?.OK).json(newAuthor);
+    return res.status(httpStatus?.OK).json({ data: newAuthor });
   } catch (err) {
-    console.trace(err);
-
-    return defaultErrorResponse(res);
+    return defaultErrorResponse(err, res);
   }
 };
 
@@ -104,9 +94,7 @@ export const putAuthor = async (req: Request, res: Response) => {
 
     return res.status(httpStatus?.OK).json(response);
   } catch (err) {
-    console.trace(err);
-
-    return defaultErrorResponse(res);
+    return defaultErrorResponse(err, res);
   }
 };
 
@@ -124,9 +112,7 @@ export const putAuthorWithBooks = async (req: Request, res: Response) => {
 
     return res.status(httpStatus?.BAD_REQUEST).json({ error: response?.error });
   } catch (err) {
-    console.trace(err);
-
-    return defaultErrorResponse(res);
+    return defaultErrorResponse(err, res);
   }
 };
 
@@ -138,8 +124,6 @@ export const deleteAuthor = async (req: Request, res: Response) => {
 
     return res.status(httpStatus?.OK).json(response);
   } catch (err) {
-    console.trace(err);
-
-    return defaultErrorResponse(res);
+    return defaultErrorResponse(err, res);
   }
 };

@@ -26,9 +26,7 @@ export const validateAuthorByIdDataBase = async (
 
     next();
   } catch (err) {
-    console.trace(err);
-
-    return defaultErrorResponse(res);
+    return defaultErrorResponse(err, res);
   }
 };
 
@@ -56,8 +54,6 @@ export const validateAuthorByNameAndCountryDataBase = async (
     }
     next();
   } catch (err) {
-    console.trace(err);
-
-    return defaultErrorResponse(res);
+    return defaultErrorResponse(err, res);
   }
 };
