@@ -71,7 +71,9 @@ export const postAuthor = async (req: Request, res: Response) => {
     const rawAuthor: AuthorRequest = req?.body;
     const newAuthor = await createAuthor(rawAuthor);
 
-    return res.status(httpStatus?.OK).json(newAuthor);
+    return res
+      .status(httpStatus?.OK)
+      .json({ data: { author: newAuthor?.data } });
   } catch (err) {
     console.trace(err);
 
@@ -83,8 +85,6 @@ export const postAuthorWithBooks = async (req: Request, res: Response) => {
   try {
     const rawAuthor: AuthorRequest = req?.body;
     const newAuthor = await createAuthorWithBooks(rawAuthor);
-
-    // TODO: is data is empty , return error code
     return res.status(httpStatus?.OK).json(newAuthor);
   } catch (err) {
     console.trace(err);
@@ -117,10 +117,12 @@ export const putAuthorWithBooks = async (req: Request, res: Response) => {
       params: { id },
     } = req;
 
-    // TODO: is data is empty , return error code
     const response = await setBooksAuthorsFromAuthorId(Number(id), books);
+    if (response?.data?.length) {
+      return res.status(httpStatus?.OK).json(response);
+    }
 
-    return res.status(httpStatus?.OK).json(response);
+    return res.status(httpStatus?.BAD_REQUEST).json({ error: response?.error });
   } catch (err) {
     console.trace(err);
 

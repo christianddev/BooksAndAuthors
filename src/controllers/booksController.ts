@@ -71,7 +71,7 @@ export const postBook = async (req: Request, res: Response) => {
 
     const newBook = await createBook(rawBook);
 
-    return res.status(httpStatus.OK).json({ data: { book: newBook } });
+    return res.status(httpStatus.OK).json({ data: { book: newBook?.data } });
   } catch (err) {
     console.trace(err);
 
@@ -100,10 +100,12 @@ export const putBookWithAuthors = async (req: Request, res: Response) => {
       params: { id },
     } = req;
 
-    // TODO: is data is empty , return error code
-    const newBook = await setBooksAuthorsFromBookId(Number(id), authors);
+    const response = await setBooksAuthorsFromBookId(Number(id), authors);
+    if (response?.data?.length) {
+      return res.status(httpStatus.OK).json(response);
+    }
 
-    return res.status(httpStatus.OK).json(newBook);
+    return res.status(httpStatus?.BAD_REQUEST).json({ error: response?.error });
   } catch (err) {
     console.trace(err);
 

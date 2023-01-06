@@ -105,7 +105,7 @@ export const createAuthorWithBooks = async ({
       books ?? []
     );
 
-    return booksAuthors;
+    return {author: newAuthor, booksAuthors };
   } catch (error) {
     console.trace("error createAuthorWithBooks: ", error);
     throw new Error("createAuthorWithBooks");
