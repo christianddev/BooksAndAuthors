@@ -44,13 +44,22 @@ export const BOOK_AUTHOR_MODEL_NAME: string =
 export const BOOK_MODEL_NAME: string =
   (process?.env?.DATABASE_BOOK_MODEL_NAME as string) ?? "";
 
+// URL
 export const BOOKS_PATH = `${(process?.env?.SERVER_BASE_URL as string) ?? ""}${
-  (process?.env?.SERVER_URL_BOOKS as string) ?? ""
-}`;
+  (process?.env?.SERVER_API_VERSION_URL as string) ?? ""
+}${(process?.env?.SERVER_URL_BOOKS as string) ?? ""}`;
 
 export const AUTHORS_PATH = `${
   (process?.env?.SERVER_BASE_URL as string) ?? ""
-}${(process?.env?.SERVER_URL_AUTHORS as string) ?? ""}`;
+}${(process?.env?.SERVER_API_VERSION_URL as string) ?? ""}${
+  (process?.env?.SERVER_URL_AUTHORS as string) ?? ""
+}`;
+
+export const DOCUMENTATION_PATH = `${
+  (process?.env?.SERVER_BASE_URL as string) ?? ""
+}${(process?.env?.SERVER_API_VERSION_URL as string) ?? ""}${
+  (process?.env?.SERVER_DOCUMENTATION_URL as string) ?? ""
+}`;
 
 export const SEQUELIZE_FIELDS = [
   "isDeleted",

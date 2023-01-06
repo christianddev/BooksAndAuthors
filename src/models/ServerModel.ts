@@ -1,9 +1,11 @@
 import express, { Application } from "express";
 import cors from "cors";
+import swaggerUi from "swagger-ui-express";
+import swaggerSetup from "../docs/swagger";
 
 import { bookRouter, authorRouter } from "../v1/routes";
 import database from "../database/connection";
-import { AUTHORS_PATH, BOOKS_PATH } from "../helpers/";
+import { AUTHORS_PATH, BOOKS_PATH, DOCUMENTATION_PATH } from "../helpers/";
 
 class ServerModel {
   private app: Application;
@@ -11,6 +13,7 @@ class ServerModel {
   private apiPaths = {
     books: BOOKS_PATH,
     authors: AUTHORS_PATH,
+    documentation: DOCUMENTATION_PATH,
   };
 
   constructor() {
@@ -43,6 +46,11 @@ class ServerModel {
   routes() {
     this.app.use(this.apiPaths.authors, authorRouter);
     this.app.use(this.apiPaths.books, bookRouter);
+    this.app.use(
+      this.apiPaths.documentation,
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerSetup)
+    );
   }
 
   listen() {
