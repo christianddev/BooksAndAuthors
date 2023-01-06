@@ -66,7 +66,7 @@ export const postAuthor = async (req: Request, res: Response) => {
     const newAuthor = await createAuthor(rawAuthor);
 
     return res
-      .status(httpStatus?.OK)
+      .status(httpStatus?.CREATED)
       .json({ data: { author: newAuthor?.data } });
   } catch (err) {
     return defaultErrorResponse(err, res);
@@ -77,7 +77,7 @@ export const postAuthorWithBooks = async (req: Request, res: Response) => {
   try {
     const rawAuthor: AuthorRequest = req?.body;
     const newAuthor = await createAuthorWithBooks(rawAuthor);
-    return res.status(httpStatus?.OK).json({ data: newAuthor });
+    return res.status(httpStatus?.CREATED).json({ data: newAuthor });
   } catch (err) {
     return defaultErrorResponse(err, res);
   }
