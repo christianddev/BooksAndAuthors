@@ -1,7 +1,7 @@
 import express, { Application } from "express";
 import cors from "cors";
 
-import { bookRouter, authorRouter } from "../routes";
+import { bookRouter, authorRouter } from "../v1/routes";
 import database from "../database/connection";
 import { AUTHORS_PATH, BOOKS_PATH } from "../helpers/";
 

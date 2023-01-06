@@ -9,7 +9,7 @@ import {
   getAllBooksAuthorsGroupByBook,
   postBookWithAuthors,
   putBookWithAuthors,
-} from "../controllers";
+} from "../../controllers";
 import {
   validateId,
   validateBookByIdDataBase,
@@ -18,7 +18,7 @@ import {
   validateISBN,
   validateAuthorIDs,
   validateBookByISBNDataBase,
-} from "../middlewares/";
+} from "../../middlewares";
 
 export const bookRouter = Router();
 

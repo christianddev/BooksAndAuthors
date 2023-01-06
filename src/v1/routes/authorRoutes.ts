@@ -9,7 +9,7 @@ import {
   getAllBooksAuthorsGroupByAuthor,
   postAuthorWithBooks,
   putAuthorWithBooks,
-} from "../controllers";
+} from "../../controllers";
 import {
   validateAuthorByIdDataBase,
   validateAuthorByNameAndCountryDataBase,
@@ -18,7 +18,7 @@ import {
   validateId,
   validateName,
   validateNameAndCountryNotFalsy,
-} from "../middlewares";
+} from "../../middlewares";
 
 export const authorRouter = Router();
 
