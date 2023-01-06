@@ -36,11 +36,17 @@ export const findOneBookAuthorByIds = async ({
   }
 };
 
-export const findBooksAuthorsByBookId = async (bookId?: number) => {
+export const findBooksAuthorsByBookId = async (
+  bookId: number,
+  excludeORMFields: boolean
+) => {
   try {
     const bookAuthors = await BooksAuthorsModel.findAll({
       where: {
         bookId,
+      },
+      attributes: {
+        exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
       },
     });
     return bookAuthors;
@@ -49,11 +55,17 @@ export const findBooksAuthorsByBookId = async (bookId?: number) => {
   }
 };
 
-export const findBooksAuthorsByAuthorId = async (authorId?: number) => {
+export const findBooksAuthorsByAuthorId = async (
+  authorId: number,
+  excludeORMFields: boolean
+) => {
   try {
     const bookAuthors = await BooksAuthorsModel.findAll({
       where: {
         authorId,
+      },
+      attributes: {
+        exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
       },
     });
     return bookAuthors;
@@ -74,48 +86,54 @@ const createBookAuthorFromModel = async (bookId: number, authorId: number) => {
   }
 };
 
+const validateBookAuthorData = async (bookId: number, authorId: number) => {
+  if (bookId <= 0 || authorId <= 0) {
+    return {
+      error: { message: `check bookId '${bookId}' and authorId '${bookId}'` },
+    };
+  }
+  const book = await findOneBookById(bookId, true);
+
+  if (!book) {
+    return {
+      error: {
+        message: `book with id '${bookId}' not found`,
+      },
+    };
+  }
+
+  const author = await finOneAuthorById(authorId, true);
+
+  if (!author) {
+    return {
+      error: {
+        message: `author with id '${authorId}' not found`,
+      },
+    };
+  }
+
+  const bookAuthor = await findOneBookAuthorByIds({
+    bookId,
+    authorId,
+  });
+
+  if (bookAuthor) {
+    return {
+      error: {
+        message: `there is an author with the bookId '${bookId}' & authorId '${authorId}'`,
+      },
+    };
+  }
+};
+
 export const createBookAuthor = async (
   bookId: number,
   authorId: number
 ): Promise<OperationResponse> => {
   try {
-    if (bookId <= 0 || authorId <= 0) {
-      return {
-        error: { message: `check bookId '${bookId}' and authorId '${bookId}'` },
-      };
-    }
-
-    const book = await findOneBookById(bookId, true);
-
-    if (!book) {
-      return {
-        error: {
-          message: `book with id '${bookId}' not found`,
-        },
-      };
-    }
-
-    const author = await finOneAuthorById(authorId, true);
-
-    if (!author) {
-      return {
-        error: {
-          message: `author with id '${authorId}' not found`,
-        },
-      };
-    }
-
-    const bookAuthor = await findOneBookAuthorByIds({
-      bookId,
-      authorId,
-    });
-
-    if (bookAuthor) {
-      return {
-        error: {
-          message: `there is an author with the bookId '${bookId}' & authorId '${authorId}'`,
-        },
-      };
+    const response = await validateBookAuthorData(bookId, authorId);
+    if (response?.error) {
+      return response;
     }
 
     const newBookAuthor = await createBookAuthorFromModel(bookId, authorId);
