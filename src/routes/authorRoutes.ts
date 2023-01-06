@@ -42,7 +42,12 @@ authorRouter.post(
 );
 authorRouter.put(
   "/:id",
-  [validateId, validateNameAndCountryNotFalsy, validateAuthorByIdDataBase],
+  [
+    validateId,
+    validateNameAndCountryNotFalsy,
+    validateAuthorByIdDataBase,
+    validateAuthorByNameAndCountryDataBase,
+  ],
   putAuthor
 );
 authorRouter.put(

@@ -88,7 +88,19 @@ export const findAllBooksAuthorsGroupByAuthor = async (
       attributes: {
         exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
       },
-      include: [BookModel],
+      include: [
+        {
+          model: BookModel,
+          attributes: {
+            exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
+          },
+          through: {
+            attributes: {
+              exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
+            },
+          },
+        },
+      ],
     });
     return authors;
   } catch (error) {
@@ -131,17 +143,24 @@ export const createAuthorWithBooks = async ({
   books,
 }: AuthorRequest) => {
   try {
-    const newAuthor = await createBookFromModel({
+    const { dataValues } = await createBookFromModel({
       name,
       country,
     });
 
     const booksAuthors = await createBooksAuthorsByAuthorId(
-      newAuthor?.dataValues?.id,
+      dataValues?.id,
       books ?? []
     );
 
-    return { author: newAuthor, booksAuthors };
+    return {
+      author: {
+        id: dataValues?.id,
+        name: dataValues?.name,
+        country: dataValues?.country,
+      },
+      booksAuthors,
+    };
   } catch (error) {
     return setError("createAuthorWithBooks", error);
   }

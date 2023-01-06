@@ -87,7 +87,19 @@ export const findAllBooksAuthorsGroupByBook = async (
       attributes: {
         exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
       },
-      include: [AuthorModel],
+      include: [
+        {
+          model: AuthorModel,
+          attributes: {
+            exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
+          },
+          through: {
+            attributes: {
+              exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
+            },
+          },
+        },
+      ],
     });
     return book;
   } catch (error) {

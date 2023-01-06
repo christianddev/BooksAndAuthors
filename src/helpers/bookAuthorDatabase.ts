@@ -204,7 +204,7 @@ export const deleteBooksAuthorsByAuthorId = async (authorId: number) => {
   try {
     const response = await BooksAuthorsModel.destroy({
       where: {
-        bookId: authorId,
+        authorId,
       },
     });
     return response;

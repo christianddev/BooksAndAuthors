@@ -52,4 +52,9 @@ export const AUTHORS_PATH = `${
   (process?.env?.SERVER_BASE_URL as string) ?? ""
 }${(process?.env?.SERVER_URL_AUTHORS as string) ?? ""}`;
 
-export const SEQUELIZE_FIELDS = ["isDeleted", "createdAt", "updatedAt"];
+export const SEQUELIZE_FIELDS = [
+  "isDeleted",
+  "createdAt",
+  "updatedAt",
+  "booksauthors",
+];

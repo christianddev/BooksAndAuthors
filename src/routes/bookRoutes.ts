@@ -37,7 +37,12 @@ bookRouter.post(
 );
 bookRouter.put(
   "/:id",
-  [validateId, validateISBNAndTitleNotFalsy, validateBookByIdDataBase],
+  [
+    validateId,
+    validateISBNAndTitleNotFalsy,
+    validateBookByIdDataBase,
+    validateBookByISBNDataBase,
+  ],
   putBook
 );
 
