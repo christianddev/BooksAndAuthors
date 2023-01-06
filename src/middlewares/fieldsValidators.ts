@@ -6,7 +6,7 @@ import type { ErrorOperation } from "../typings/api";
 export const validateId = (req: Request, res: Response, next: NextFunction) => {
   if (!req?.params?.id) {
     const error: ErrorOperation = {
-      status: httpStatus?.NOT_FOUND,
+      status: httpStatus?.BAD_REQUEST,
       message: "check 'id' field",
     };
     return res.status(httpStatus?.BAD_REQUEST).json({ error });
@@ -21,7 +21,7 @@ export const validateName = (
 ) => {
   if (!req?.body?.name) {
     const error: ErrorOperation = {
-      status: httpStatus?.NOT_FOUND,
+      status: httpStatus?.BAD_REQUEST,
       message: "check 'name' field",
     };
     return res.status(httpStatus?.BAD_REQUEST).json({ error });
@@ -36,7 +36,7 @@ export const validateCountry = (
 ) => {
   if (!req?.body?.country) {
     const error: ErrorOperation = {
-      status: httpStatus?.NOT_FOUND,
+      status: httpStatus?.BAD_REQUEST,
       message: "check 'country' field",
     };
     return res.status(httpStatus?.BAD_REQUEST).json({ error });
@@ -51,7 +51,7 @@ export const validateNameAndCountryNotFalsy = (
 ) => {
   if (!req?.body?.name && !req?.body?.country) {
     const error: ErrorOperation = {
-      status: httpStatus?.NOT_FOUND,
+      status: httpStatus?.BAD_REQUEST,
       message: "check 'name' & 'country' field",
     };
     return res.status(httpStatus?.BAD_REQUEST).json({ error });
@@ -66,7 +66,7 @@ export const validateISBN = (
 ) => {
   if (!req?.body?.isbn) {
     const error: ErrorOperation = {
-      status: httpStatus?.NOT_FOUND,
+      status: httpStatus?.BAD_REQUEST,
       message: "check 'isbn' field",
     };
     return res.status(httpStatus?.BAD_REQUEST).json({ error });
@@ -81,7 +81,7 @@ export const validateTitle = (
 ) => {
   if (!req?.body?.title) {
     const error: ErrorOperation = {
-      status: httpStatus?.NOT_FOUND,
+      status: httpStatus?.BAD_REQUEST,
       message: "check 'title' field",
     };
     return res.status(httpStatus?.BAD_REQUEST).json({ error });
@@ -96,7 +96,7 @@ export const validateISBNAndTitleNotFalsy = (
 ) => {
   if (!req?.body?.isbn && !req?.body?.title) {
     const error: ErrorOperation = {
-      status: httpStatus?.NOT_FOUND,
+      status: httpStatus?.BAD_REQUEST,
       message: "check 'isbn' & 'title' field",
     };
     return res.status(httpStatus?.BAD_REQUEST).json({ error });
@@ -111,7 +111,7 @@ export const validateAuthorIDs = (
 ) => {
   if (!req?.body?.authors) {
     const error: ErrorOperation = {
-      status: httpStatus?.NOT_FOUND,
+      status: httpStatus?.BAD_REQUEST,
       message: "check 'authors' field",
     };
     return res.status(httpStatus?.BAD_REQUEST).json({ error });
@@ -126,7 +126,7 @@ export const validateBookIDs = (
 ) => {
   if (!req?.body?.books) {
     const error: ErrorOperation = {
-      status: httpStatus?.NOT_FOUND,
+      status: httpStatus?.BAD_REQUEST,
       message: "check 'books' field",
     };
     return res.status(httpStatus?.BAD_REQUEST).json({ error });
