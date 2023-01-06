@@ -1,11 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 
+import type { ErrorOperation } from "../typings/api";
+
 export const validateId = (req: Request, res: Response, next: NextFunction) => {
   if (!req?.params?.id) {
-    return res.status(httpStatus?.BAD_REQUEST).json({
-      msg: "check 'id' field",
-    });
+    const error: ErrorOperation = {
+      status: httpStatus?.NOT_FOUND,
+      message: "check 'id' field",
+    };
+    return res.status(httpStatus?.BAD_REQUEST).json({ error });
   }
   next();
 };
@@ -16,9 +20,11 @@ export const validateName = (
   next: NextFunction
 ) => {
   if (!req?.body?.name) {
-    return res.status(httpStatus?.BAD_REQUEST).json({
-      msg: "check 'name' field",
-    });
+    const error: ErrorOperation = {
+      status: httpStatus?.NOT_FOUND,
+      message: "check 'name' field",
+    };
+    return res.status(httpStatus?.BAD_REQUEST).json({ error });
   }
   next();
 };
@@ -29,9 +35,11 @@ export const validateCountry = (
   next: NextFunction
 ) => {
   if (!req?.body?.country) {
-    return res.status(httpStatus?.BAD_REQUEST).json({
-      msg: "check 'country' field",
-    });
+    const error: ErrorOperation = {
+      status: httpStatus?.NOT_FOUND,
+      message: "check 'country' field",
+    };
+    return res.status(httpStatus?.BAD_REQUEST).json({ error });
   }
   next();
 };
@@ -42,9 +50,11 @@ export const validateNameAndCountryNotFalsy = (
   next: NextFunction
 ) => {
   if (!req?.body?.name && !req?.body?.country) {
-    return res.status(httpStatus?.BAD_REQUEST).json({
-      msg: "check 'name' & 'country' field",
-    });
+    const error: ErrorOperation = {
+      status: httpStatus?.NOT_FOUND,
+      message: "check 'name' & 'country' field",
+    };
+    return res.status(httpStatus?.BAD_REQUEST).json({ error });
   }
   next();
 };
@@ -55,9 +65,11 @@ export const validateISBN = (
   next: NextFunction
 ) => {
   if (!req?.body?.isbn) {
-    return res.status(httpStatus?.BAD_REQUEST).json({
-      msg: "check 'isbn' field",
-    });
+    const error: ErrorOperation = {
+      status: httpStatus?.NOT_FOUND,
+      message: "check 'isbn' field",
+    };
+    return res.status(httpStatus?.BAD_REQUEST).json({ error });
   }
   next();
 };
@@ -68,9 +80,11 @@ export const validateTitle = (
   next: NextFunction
 ) => {
   if (!req?.body?.title) {
-    return res.status(httpStatus?.BAD_REQUEST).json({
-      msg: "check 'title' field",
-    });
+    const error: ErrorOperation = {
+      status: httpStatus?.NOT_FOUND,
+      message: "check 'title' field",
+    };
+    return res.status(httpStatus?.BAD_REQUEST).json({ error });
   }
   next();
 };
@@ -81,9 +95,11 @@ export const validateISBNAndTitleNotFalsy = (
   next: NextFunction
 ) => {
   if (!req?.body?.isbn && !req?.body?.title) {
-    return res.status(httpStatus?.BAD_REQUEST).json({
-      msg: "check 'isbn' & 'title' field",
-    });
+    const error: ErrorOperation = {
+      status: httpStatus?.NOT_FOUND,
+      message: "check 'isbn' & 'title' field",
+    };
+    return res.status(httpStatus?.BAD_REQUEST).json({ error });
   }
   next();
 };
@@ -94,9 +110,11 @@ export const validateAuthorIDs = (
   next: NextFunction
 ) => {
   if (!req?.body?.authors) {
-    return res.status(httpStatus?.BAD_REQUEST).json({
-      msg: "check 'authors' field",
-    });
+    const error: ErrorOperation = {
+      status: httpStatus?.NOT_FOUND,
+      message: "check 'authors' field",
+    };
+    return res.status(httpStatus?.BAD_REQUEST).json({ error });
   }
   next();
 };
@@ -107,9 +125,11 @@ export const validateBookIDs = (
   next: NextFunction
 ) => {
   if (!req?.body?.books) {
-    return res.status(httpStatus?.BAD_REQUEST).json({
-      msg: "check 'books' field",
-    });
+    const error: ErrorOperation = {
+      status: httpStatus?.NOT_FOUND,
+      message: "check 'books' field",
+    };
+    return res.status(httpStatus?.BAD_REQUEST).json({ error });
   }
   next();
 };
