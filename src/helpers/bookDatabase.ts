@@ -1,4 +1,5 @@
 import { AuthorModel, BookModel } from "../models";
+import { setError } from "../utils";
 
 import {
   createBooksAuthorsByBookId,
@@ -16,83 +17,117 @@ import type { BookRequest } from "../typings/book";
 export const findAllBooks = async (
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS,
   excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED
-) =>
-  await BookModel.findAll({
-    where: {
-      ...(excludeTemporaryDeleted && { isDeleted: false }),
-    },
-    attributes: {
-      exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
-    },
-  });
+) => {
+  try {
+    const books = await BookModel.findAll({
+      where: {
+        ...(excludeTemporaryDeleted && { isDeleted: false }),
+      },
+      attributes: {
+        exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
+      },
+    });
+    return books;
+  } catch (error) {
+    return setError("findAllBooks", error);
+  }
+};
 
 export const findOneBookById = async (
   id: number,
   excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
-) =>
-  await BookModel.findOne({
-    where: {
-      id,
-      ...(excludeTemporaryDeleted && { isDeleted: false }),
-    },
-    attributes: {
-      exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
-    },
-  });
+) => {
+  try {
+    const book = await BookModel.findOne({
+      where: {
+        id,
+        ...(excludeTemporaryDeleted && { isDeleted: false }),
+      },
+      attributes: {
+        exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
+      },
+    });
+    return book;
+  } catch (error) {
+    return setError("findOneBookById", error);
+  }
+};
 
 export const findOneBookByISBN = async (
   isbn?: string,
   excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
-) =>
-  await BookModel.findOne({
-    where: {
-      isbn,
-      ...(excludeTemporaryDeleted && { isDeleted: false }),
-    },
-    attributes: {
-      exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
-    },
-  });
+) => {
+  try {
+    const book = await BookModel.findOne({
+      where: {
+        isbn,
+        ...(excludeTemporaryDeleted && { isDeleted: false }),
+      },
+      attributes: {
+        exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
+      },
+    });
+    return book;
+  } catch (error) {
+    return setError("findOneBookByISBN", error);
+  }
+};
 
 export const findAllBooksAuthorsGroupByBook = async (
   excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
-) =>
-  await BookModel?.findAll({
-    where: {
-      ...(excludeTemporaryDeleted && { isDeleted: false }),
-    },
-    attributes: {
-      exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
-    },
-    include: [AuthorModel],
-  });
+) => {
+  try {
+    const book = await BookModel?.findAll({
+      where: {
+        ...(excludeTemporaryDeleted && { isDeleted: false }),
+      },
+      attributes: {
+        exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
+      },
+      include: [AuthorModel],
+    });
+    return book;
+  } catch (error) {
+    return setError("findAllBooksAuthorsGroupByBook", error);
+  }
+};
 
-const createBookFromModel = async ({ isbn, title }: BookRequest) =>
-  await BookModel.create({
-    isbn,
-    title,
-  });
+const createBookFromModel = async ({ isbn, title }: BookRequest) => {
+  try {
+    const book = await BookModel.create({
+      isbn,
+      title,
+    });
+    return book;
+  } catch (error) {
+    return setError("createBookFromModel", error);
+  }
+};
 
 export const createBook = async (
   rawBook: BookRequest
 ): Promise<OperationResponse<BookRequest>> => {
-  const { dataValues }: { dataValues: BookRequest } = await createBookFromModel(
-    {
+  try {
+    const {
+      dataValues: { id, isbn, title },
+    }: { dataValues: BookRequest } = await createBookFromModel({
       isbn: rawBook?.isbn,
       title: rawBook?.title,
-    }
-  );
+    });
 
-  return {
-    data: {
-      id: dataValues?.id,
-      isbn: dataValues?.isbn,
-      title: dataValues?.title,
-    },
-  };
+    return {
+      data: {
+        id,
+        isbn,
+        title,
+      },
+    };
+  } catch (error) {
+    return setError("createBook", error);
+  }
 };
 
 export const createBookWithAuthors = async ({
@@ -108,10 +143,9 @@ export const createBookWithAuthors = async ({
       authors
     );
 
-    return booksAuthors;
+    return { book: newBook, booksAuthors };
   } catch (error) {
-    console.trace("error createABookWithAuthors: ", error);
-    throw new Error("createABookWithAuthors");
+    return setError("createBookWithAuthors", error);
   }
 };
 
@@ -120,30 +154,44 @@ const updateBookFromModel = async ({
   isbn,
   title,
   isDeleted,
-}: BookRequest) =>
-  await BookModel.update(
-    { isbn, title, isDeleted },
-    {
-      where: {
-        id,
-      },
-    }
-  );
+}: BookRequest) => {
+  try {
+    const response = await BookModel.update(
+      { isbn, title, isDeleted },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    return setError("updateBookFromModel", error);
+  }
+};
 
 export const updateBook = async ({ id, isbn, title }: BookRequest) => {
-  const updatedBook = await updateBookFromModel({ id, isbn, title });
+  try {
+    const updatedBook = await updateBookFromModel({ id, isbn, title });
 
-  return {
-    data: { affectedRows: updatedBook },
-  };
+    return {
+      data: { affectedRows: updatedBook },
+    };
+  } catch (error) {
+    return setError("updateBook", error);
+  }
 };
 
 export const deleteBookTemporary = async (id: number, isDeleted: boolean) => {
-  const deletedBooksAuthors = await deleteBooksAuthorsByBookId(id);
+  try {
+    const deletedBooksAuthors = await deleteBooksAuthorsByBookId(id);
 
-  const deletedBook = await updateBookFromModel({ id, isDeleted });
+    const deletedBook = await updateBookFromModel({ id, isDeleted });
 
-  return {
-    data: { affectedRows: { deletedBooksAuthors, deletedBook } },
-  };
+    return {
+      data: { affectedRows: { deletedBooksAuthors, deletedBook } },
+    };
+  } catch (error) {
+    return setError("deleteBookTemporary", error);
+  }
 };

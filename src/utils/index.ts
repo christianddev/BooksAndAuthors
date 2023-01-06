@@ -13,3 +13,8 @@ export const defaultErrorResponse = (error: unknown, res: Response) => {
 
   res.status(httpStatus?.INTERNAL_SERVER_ERROR).json({ error: customError });
 };
+
+export const setError = (message: string, error: unknown) => {
+  console.trace(`${message}: `, error);
+  throw new Error(message);
+};

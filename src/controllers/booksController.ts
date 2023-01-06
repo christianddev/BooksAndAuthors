@@ -76,8 +76,7 @@ export const postBookWithAuthors = async (req: Request, res: Response) => {
   try {
     const newBook = await createBookWithAuthors(rawBook);
 
-    // TODO: is data is empty , return error code
-    return res.status(httpStatus.OK).json(newBook);
+    return res.status(httpStatus.OK).json({ data: newBook });
   } catch (err) {
     return defaultErrorResponse(err, res);
   }

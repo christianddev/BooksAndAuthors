@@ -106,7 +106,7 @@ export const putAuthorWithBooks = async (req: Request, res: Response) => {
     } = req;
 
     const response = await setBooksAuthorsFromAuthorId(Number(id), books);
-    if (response?.data?.length) {
+    if (response?.data?.booksAuthors?.length) {
       return res.status(httpStatus?.OK).json(response);
     }
 

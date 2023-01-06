@@ -1,9 +1,10 @@
 import { Model } from "sequelize";
 
 import { BooksAuthorsModel } from "../models";
-
 import { finOneAuthorById } from "./authorDatabase";
 import { findOneBookById } from "./bookDatabase";
+import { setError } from "../utils";
+
 import { EXCLUDE_ORM_FIELDS, SEQUELIZE_FIELDS } from "./constants";
 
 import type { ErrorOperation, OperationResponse } from "../typings/api";
@@ -18,83 +19,111 @@ export const findOneBookAuthorByIds = async ({
   bookId,
   authorId,
   excludeORMFields = EXCLUDE_ORM_FIELDS,
-}: BookAuthorQuery) =>
-  await BooksAuthorsModel.findOne({
-    where: {
+}: BookAuthorQuery) => {
+  try {
+    const bookAuthor = await BooksAuthorsModel.findOne({
+      where: {
+        bookId,
+        authorId,
+      },
+      attributes: {
+        exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
+      },
+    });
+    return bookAuthor;
+  } catch (error) {
+    return setError("findOneBookAuthorByIds", error);
+  }
+};
+
+export const findBooksAuthorsByBookId = async (bookId?: number) => {
+  try {
+    const bookAuthors = await BooksAuthorsModel.findAll({
+      where: {
+        bookId,
+      },
+    });
+    return bookAuthors;
+  } catch (error) {
+    return setError("findBooksAuthorsByBookId", error);
+  }
+};
+
+export const findBooksAuthorsByAuthorId = async (authorId?: number) => {
+  try {
+    const bookAuthors = await BooksAuthorsModel.findAll({
+      where: {
+        authorId,
+      },
+    });
+    return bookAuthors;
+  } catch (error) {
+    return setError("findBooksAuthorsByAuthorId", error);
+  }
+};
+
+const createBookAuthorFromModel = async (bookId: number, authorId: number) => {
+  try {
+    const bookAuthor = await BooksAuthorsModel.create({
       bookId,
       authorId,
-    },
-    attributes: {
-      exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
-    },
-  });
-
-export const findBooksAuthorsByBookId = async (bookId?: number) =>
-  await BooksAuthorsModel.findAll({
-    where: {
-      bookId,
-    },
-  });
-
-export const findBooksAuthorsByAuthorId = async (authorId?: number) =>
-  await BooksAuthorsModel.findAll({
-    where: {
-      authorId,
-    },
-  });
-
-const createBookAuthorFromModel = async (bookId: number, authorId: number) =>
-  await BooksAuthorsModel.create({
-    bookId,
-    authorId,
-  });
+    });
+    return bookAuthor;
+  } catch (error) {
+    return setError("createBookAuthorFromModel", error);
+  }
+};
 
 export const createBookAuthor = async (
   bookId: number,
   authorId: number
 ): Promise<OperationResponse> => {
-  if (bookId <= 0 || authorId <= 0) {
-    return {
-      error: { message: `check bookId '${bookId}' and authorId '${bookId}'` },
-    };
+  try {
+    if (bookId <= 0 || authorId <= 0) {
+      return {
+        error: { message: `check bookId '${bookId}' and authorId '${bookId}'` },
+      };
+    }
+
+    const book = await findOneBookById(bookId, true);
+
+    if (!book) {
+      return {
+        error: {
+          message: `book with id '${bookId}' not found`,
+        },
+      };
+    }
+
+    const author = await finOneAuthorById(authorId, true);
+
+    if (!author) {
+      return {
+        error: {
+          message: `author with id '${authorId}' not found`,
+        },
+      };
+    }
+
+    const bookAuthor = await findOneBookAuthorByIds({
+      bookId,
+      authorId,
+    });
+
+    if (bookAuthor) {
+      return {
+        error: {
+          message: `there is an author with the bookId '${bookId}' & authorId '${authorId}'`,
+        },
+      };
+    }
+
+    const newBookAuthor = await createBookAuthorFromModel(bookId, authorId);
+
+    return { data: newBookAuthor };
+  } catch (error) {
+    return setError("createBookAuthorFromModel", error);
   }
-
-  const book = await findOneBookById(bookId, true);
-
-  if (!book) {
-    return {
-      error: {
-        message: `book with id '${bookId}' not found`,
-      },
-    };
-  }
-
-  const author = await finOneAuthorById(authorId, true);
-
-  if (!author) {
-    return {
-      error: {
-        message: `author with id '${authorId}' not found`,
-      },
-    };
-  }
-
-  const bookAuthor = await findOneBookAuthorByIds({
-    bookId,
-    authorId,
-  });
-
-  if (bookAuthor) {
-    return {
-      error: {
-        message: `there is an author with the bookId '${bookId}' & authorId '${authorId}'`,
-      },
-    };
-  }
-
-  const newBookAuthor = await createBookAuthorFromModel(bookId, authorId);
-
-  return { data: newBookAuthor };
 };
 
 const createBooksAuthorsByIds = (
@@ -140,19 +169,31 @@ export const createBooksAuthorsByAuthorId = async (
 ): Promise<OperationResponse<Model<any, any>[], ErrorOperation[]>> =>
   await createBooksAuthorsByIds(booksIds, [authorId]);
 
-export const deleteBooksAuthorsByBookId = async (bookId: number) =>
-  await BooksAuthorsModel.destroy({
-    where: {
-      bookId,
-    },
-  });
+export const deleteBooksAuthorsByBookId = async (bookId: number) => {
+  try {
+    const response = await BooksAuthorsModel.destroy({
+      where: {
+        bookId,
+      },
+    });
+    return response;
+  } catch (error) {
+    return setError("deleteBooksAuthorsByBookId", error);
+  }
+};
 
-export const deleteBooksAuthorsByAuthorId = async (authorId: number) =>
-  await BooksAuthorsModel.destroy({
-    where: {
-      bookId: authorId,
-    },
-  });
+export const deleteBooksAuthorsByAuthorId = async (authorId: number) => {
+  try {
+    const response = await BooksAuthorsModel.destroy({
+      where: {
+        bookId: authorId,
+      },
+    });
+    return response;
+  } catch (error) {
+    return setError("deleteBooksAuthorsByAuthorId", error);
+  }
+};
 
 export const setBooksAuthorsFromBookId = async (
   id: number,
@@ -163,7 +204,6 @@ export const setBooksAuthorsFromBookId = async (
 
     return booksAuthors;
   } catch (error) {
-    console.trace("error createABookWithAuthors: ", error);
-    throw new Error("createABookWithAuthors");
+    return setError("setBooksAuthorsFromBookId", error);
   }
 };
