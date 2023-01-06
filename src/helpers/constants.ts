@@ -5,6 +5,12 @@ dotenv.config();
 
 export const SERVER_PORT = (process.env.SERVER_PORT as string) ?? "";
 
+export const DEVELOPMENT_SERVER =
+  (process.env.DEVELOPMENT_SERVER as string) ?? "";
+
+export const PRODUCTION_SERVER =
+  (process.env.PRODUCTION_SERVER as string) ?? "";
+
 export const EXCLUDE_ORM_FIELDS =
   process.env?.DATABASE_DEFAULT_EXCLUDE_ORM_FIELDS == "true";
 
