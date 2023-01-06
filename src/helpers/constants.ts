@@ -3,6 +3,8 @@ import { Dialect } from "sequelize";
 
 dotenv.config();
 
+export const SERVER_PORT = (process.env.SERVER_PORT as string) ?? "";
+
 export const EXCLUDE_ORM_FIELDS =
   process.env?.DATABASE_DEFAULT_EXCLUDE_ORM_FIELDS == "true";
 
@@ -61,9 +63,4 @@ export const DOCUMENTATION_PATH = `${
   (process?.env?.SERVER_DOCUMENTATION_URL as string) ?? ""
 }`;
 
-export const SEQUELIZE_FIELDS = [
-  "isDeleted",
-  "createdAt",
-  "updatedAt",
-  "booksauthors",
-];
+export const SEQUELIZE_FIELDS = ["isDeleted", "createdAt", "updatedAt"];

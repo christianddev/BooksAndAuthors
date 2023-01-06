@@ -3,9 +3,14 @@ import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import swaggerSetup from "../docs/swagger";
 
-import { bookRouter, authorRouter } from "../v1/routes";
+import { bookRouter, authorRouter } from "../routes/v1";
 import database from "../database/connection";
-import { AUTHORS_PATH, BOOKS_PATH, DOCUMENTATION_PATH } from "../helpers/";
+import {
+  AUTHORS_PATH,
+  BOOKS_PATH,
+  DOCUMENTATION_PATH,
+  SERVER_PORT,
+} from "../helpers/";
 
 class ServerModel {
   private app: Application;
@@ -18,7 +23,7 @@ class ServerModel {
 
   constructor() {
     this.app = express();
-    this.port = (process.env.SERVER_PORT as string) ?? "";
+    this.port = SERVER_PORT;
 
     this.dbConnection();
     this.middlewares();
