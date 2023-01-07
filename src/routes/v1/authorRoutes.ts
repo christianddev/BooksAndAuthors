@@ -34,9 +34,9 @@ export const authorRouter = Router();
  *      description: "returns a list of authors, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
  *        '200':
- *          $ref: "#/components/responses/authorsResponse"
+ *          $ref: "#/components/responses/authorsList"
  *        '500':
- *          $ref: "#/components/responses/defaultErrorResponse"
+ *          $ref: "#/components/responses/defaultError"
  *      security:
  *       - jwtAuth: []
  */
@@ -56,20 +56,20 @@ authorRouter.get("/", getAuthors);
  *      description: "Returns the information of an author, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
  *        '200':
- *          $ref: "#/components/responses/authorResponse"
+ *          $ref: "#/components/responses/author"
  *        '400':
- *          $ref: "#/components/responses/badRequestErrorResponse"
+ *          $ref: "#/components/responses/badRequestDefault"
  *        '404':
- *          $ref: "#/components/responses/notFoundRequestErrorResponse"
+ *          $ref: "#/components/responses/defaultNotFound"
  *        '500':
- *          $ref: "#/components/responses/defaultErrorResponse"
+ *          $ref: "#/components/responses/defaultError"
  *      security:
  *       - jwtAuth: []
  */
 authorRouter.get("/:id", [validateId], getAuthor);
 
 /**
- * Get all Authors
+ * Get all authors and his books
  * @openapi
  * /api/v1/authors/all/books:
  *    get:
@@ -80,11 +80,11 @@ authorRouter.get("/:id", [validateId], getAuthor);
  *      description: "Get all authors and their books that may be associated with them,<br><br> - if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, <br> - if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
  *        '200':
- *          $ref: "#/components/responses/authorWithBooksResponse"
+ *          $ref: "#/components/responses/authorWithBooksList"
  *        '400':
- *          $ref: "#/components/responses/badRequestErrorResponse"
+ *          $ref: "#/components/responses/defaultBadRequest"
  *        '500':
- *          $ref: "#/components/responses/defaultErrorResponse"
+ *          $ref: "#/components/responses/defaultError"
  *      security:
  *       - jwtAuth: []
  */
@@ -108,11 +108,11 @@ authorRouter.get("/all/books", getAllBooksAuthorsGroupByAuthor);
  *                $ref: "#/components/schemas/authorRequest"
  *      responses:
  *        '201':
- *          $ref: "#/components/responses/authorResponse"
+ *          $ref: "#/components/responses/author"
  *        '400':
- *          $ref: "#/components/responses/authorPostBadRequestErrorResponse"
+ *          $ref: "#/components/responses/authorPostBadRequest"
  *        '500':
- *          $ref: "#/components/responses/defaultErrorResponse"
+ *          $ref: "#/components/responses/defaultError"
  *      security:
  *       - jwtAuth: []
  */
@@ -140,11 +140,11 @@ authorRouter.post(
  *                $ref: "#/components/schemas/authorWithBooksRequest"
  *      responses:
  *        '201':
- *          $ref: "#/components/responses/authorsWithBooksResponse"
+ *          $ref: "#/components/responses/authorsWithBooks"
  *        '400':
- *          $ref: "#/components/responses/authorWithBooksPostBadRequestErrorResponse"
+ *          $ref: "#/components/responses/authorWithBooksPostBadRequest"
  *        '500':
- *          $ref: "#/components/responses/defaultErrorResponse"
+ *          $ref: "#/components/responses/defaultError"
  *      security:
  *       - jwtAuth: []
  */
@@ -179,11 +179,11 @@ authorRouter.post(
  *                $ref: "#/components/schemas/authorUpdateRequest"
  *      responses:
  *        '200':
- *          $ref: "#/components/responses/defaultUpdateResponse"
+ *          $ref: "#/components/responses/authorUpdated"
  *        '400':
- *          $ref: "#/components/responses/authorPatchBadRequestErrorResponse"
+ *          $ref: "#/components/responses/authorPatchBadRequest"
  *        '500':
- *          $ref: "#/components/responses/defaultErrorResponse"
+ *          $ref: "#/components/responses/defaultError"
  *      security:
  *       - jwtAuth: []
  */
@@ -197,7 +197,6 @@ authorRouter.patch(
   ],
   patchAuthor
 );
-
 
 /**
  * Set Books
@@ -219,11 +218,13 @@ authorRouter.patch(
  *                $ref: "#/components/schemas/authorBooksUpdateRequest"
  *      responses:
  *        '200':
- *          $ref: "#/components/responses/defaultUpdateResponse"
+ *          $ref: "#/components/responses/authorBooksUpdated"
  *        '400':
- *          $ref: "#/components/responses/authorPatchBadRequestErrorResponse"
+ *          $ref: "#/components/responses/authorPatchBadRequest"
+ *        '404':
+ *          $ref: "#/components/responses/defaultNotFound"
  *        '500':
- *          $ref: "#/components/responses/defaultErrorResponse"
+ *          $ref: "#/components/responses/defaultError"
  *      security:
  *       - jwtAuth: []
  */
