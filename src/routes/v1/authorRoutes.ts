@@ -68,6 +68,27 @@ authorRouter.get("/", getAuthors);
  */
 authorRouter.get("/:id", [validateId], getAuthor);
 
+
+/**
+ * Get all Authors
+ * @openapi
+ * /api/v1/authors/all/books:
+ *    get:
+ *      tags:
+ *        - Authors
+ *      summary: "Get all authors and his books"
+ *      operationId: getAllAuthors
+ *      description: "Get all authors and their books that may be associated with them,<br><br> - if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, <br> - if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
+ *      responses:
+ *        '200':
+ *          $ref: "#/components/responses/authorWithBooksResponse"
+ *        '400':
+ *          $ref: "#/components/responses/badRequestErrorResponse"
+ *        '500':
+ *          $ref: "#/components/responses/defaultErrorResponse"
+ *      security:
+ *       - jwtAuth: []
+ */
 authorRouter.get("/all/books", getAllBooksAuthorsGroupByAuthor);
 
 /**
@@ -139,7 +160,36 @@ authorRouter.post(
   postAuthorWithBooks
 );
 
-authorRouter.put(
+
+/**
+ * Update Author
+ * @openapi
+ * /api/v1/authors/{id}:
+ *    patch:
+ *      tags:
+ *        - Authors
+ *      summary: "Update Author"
+ *      operationId: updateAuthor
+ *      parameters:
+ *        - $ref: "#/components/parameters/id"
+ *      description: "Update the author's name or country, the new data must be unique in combination."
+ *      requestBody:
+ *          required: true
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: "#/components/schemas/authorUpdateRequest"
+ *      responses:
+ *        '200':
+ *          $ref: "#/components/responses/defaultUpdateResponse"
+ *        '400':
+ *          $ref: "#/components/responses/authorPatchBadRequestErrorResponse"
+ *        '500':
+ *          $ref: "#/components/responses/defaultErrorResponse"
+ *      security:
+ *       - jwtAuth: []
+ */
+authorRouter.patch(
   "/:id",
   [
     validateId,
@@ -150,7 +200,7 @@ authorRouter.put(
   putAuthor
 );
 
-authorRouter.put(
+authorRouter.patch(
   "/:id/books",
   [validateId, validateBookIDs, validateAuthorByIdDataBase],
   putAuthorWithBooks

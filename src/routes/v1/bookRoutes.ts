@@ -60,7 +60,7 @@ bookRouter.post(
   [validateISBN, validateTitle, validateAuthorIDs, validateBookByISBNDataBase],
   postBookWithAuthors
 );
-bookRouter.put(
+bookRouter.patch(
   "/:id",
   [
     validateId,
@@ -71,7 +71,7 @@ bookRouter.put(
   putBook
 );
 
-bookRouter.put(
+bookRouter.patch(
   "/:id/authors",
   [validateId, validateAuthorIDs, validateBookByIdDataBase],
   putBookWithAuthors

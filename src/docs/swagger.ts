@@ -103,7 +103,27 @@ const swaggerDefinition: OAS3Definition = {
           books: [1, 2],
         },
       },
-
+      authorUpdateRequest: {
+        type: "object",
+        properties: {
+          name: {
+            type: "string",
+            description:
+              "author's name, in **combination** with the **country** field (ISO Code) is used to identify an author, the name & country field must be unique.",
+            example: "Patrick Rothfuss",
+          },
+          country: {
+            type: "string",
+            description:
+              "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+            example: "USA",
+          },
+        },
+        example: {
+          name: "Patrick Rothfuss",
+          country: "USA",
+        },
+      },
       authorsWithBooksResponse: {
         type: "object",
         required: ["data"],
@@ -295,6 +315,127 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
+      authorWhitBookResponse: {
+        type: "object",
+        required: ["data"],
+        properties: {
+          data: {
+            type: "object",
+            required: ["booksAuthors"],
+            properties: {
+              booksAuthors: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    id: {
+                      type: "number",
+                      description:
+                        "assigned by the database, is used to identify the ledger in database queries",
+                    },
+                    name: {
+                      type: "string",
+                      description:
+                        "author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
+                    },
+                    country: {
+                      type: "string",
+                      description:
+                        "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+                    },
+                    books: {
+                      type: "array",
+                      description: "Books associated with the author",
+                      items: {
+                        type: "object",
+                        properties: {
+                          id: {
+                            type: "number",
+                            description:
+                              "assigned by the database, is used to identify the ledger in database queries",
+                          },
+                          isbn: {
+                            type: "string",
+                            description:
+                              "the ISBN must be unique, this field allows to identify the book when performing some operations in the database.",
+                          },
+                          title: {
+                            type: "string",
+                            description:
+                              "field associated with an ISBN, several books can have the same title.",
+                          },
+                          booksauthors: {
+                            type: "object",
+                            properties: {
+                              bookId: {
+                                type: "number",
+                                description:
+                                  "assigned by the database, is used to identify the ledger in database queries",
+                              },
+                              authorId: {
+                                type: "number",
+                                description:
+                                  "author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        example: {
+          data: {
+            booksAuthors: [
+              {
+                id: 1,
+                name: "Patrick Rothfuss",
+                country: "USA",
+                books: [
+                  {
+                    id: 1,
+                    isbn: "978-0-7564-0407-9",
+                    title: "The Name of the Wind, 2007",
+                    booksauthors: {
+                      bookId: 1,
+                      authorId: 1,
+                    },
+                  },
+                ],
+              },
+              {
+                id: 2,
+                name: "Santiago Posteguillo",
+                country: "ESP",
+                books: [
+                  {
+                    id: 2,
+                    isbn: "9788408234494",
+                    title: "YO, JULIA",
+                    booksauthors: {
+                      bookId: 2,
+                      authorId: 2,
+                    },
+                  },
+                  {
+                    id: 3,
+                    isbn: "Las legiones malditas ",
+                    title: "978-84-666-3768-8",
+                    booksauthors: {
+                      bookId: 3,
+                      authorId: 2,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      },
       defaultErrorResponse: {
         type: "object",
         required: ["error"],
@@ -330,6 +471,26 @@ const swaggerDefinition: OAS3Definition = {
               message: {
                 type: "string",
                 description: "description related to the error",
+              },
+            },
+          },
+        },
+      },
+
+      defaultUpdateResponse: {
+        type: "object",
+        required: ["data"],
+        properties: {
+          data: {
+            type: "object",
+            required: ["affectedRows"],
+            properties: {
+              affectedRows: {
+                type: "array",
+                items: {
+                  type: "number",
+                  description: "number of records affected",
+                },
               },
             },
           },
@@ -435,6 +596,40 @@ const swaggerDefinition: OAS3Definition = {
         },
         links: {
           getAuthorById: { $ref: "#/components/links/getAuthorById" },
+        },
+      },
+      authorWithBooksResponse: {
+        description:
+          "Returns the information of an author, taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS` and `EXCLUDE_TEMPORARY_DELETED`.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/authorWhitBookResponse",
+            },
+          },
+        },
+      },
+      defaultUpdateResponse: {
+        description:
+          "Update the author's name or country,, taking into account the setting of environment variables `EXCLUDE_TEMPORARY_DELETED`.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/defaultUpdateResponse",
+            },
+          },
+        },
+      },
+
+      authorPatchBadRequestErrorResponse: {
+        description:
+          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null,<br><br> - if the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.<br> - if you do not send both fields, it will return an error message similar to `check 'name' & 'country' field`.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/defaultErrorResponse",
+            },
+          },
         },
       },
     },
