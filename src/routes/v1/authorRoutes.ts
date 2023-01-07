@@ -29,7 +29,7 @@ export const authorRouter = Router();
  *    get:
  *      tags:
  *        - Authors
- *      operationId: getAuthors
+ *      operationId: getAllAuthors
  *      summary: "Get list of Authors"
  *      description: "returns a list of authors, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
@@ -76,7 +76,7 @@ authorRouter.get("/:id", [validateId], getAuthor);
  *      tags:
  *        - Authors
  *      summary: "Get all authors and his books"
- *      operationId: getAllAuthors
+ *      operationId: getAllAuthorsWithBooks
  *      description: "Get all authors and their books that may be associated with them,<br><br> - if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, <br> - if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
  *        '200':
@@ -220,7 +220,7 @@ authorRouter.patch(
  *        '200':
  *          $ref: "#/components/responses/authorBooksUpdated"
  *        '400':
- *          $ref: "#/components/responses/authorPatchBadRequest"
+ *          $ref: "#/components/responses/authorBookPatchBadRequest"
  *        '404':
  *          $ref: "#/components/responses/defaultNotFound"
  *        '500':
@@ -234,6 +234,28 @@ authorRouter.patch(
   patchAuthorWithBooks
 );
 
+/**
+ * Delete Author
+ * @openapi
+ * /api/v1/authors/{id}:
+ *    delete:
+ *      tags:
+ *        - Authors
+ *      summary: "Delete Author"
+ *      operationId: deleteAuthor
+ *      parameters:
+ *        - $ref: "#/components/parameters/id"
+ *      description: "Deletes a user's record, `by default records are not permanently deleted`, deleting a record means deleting its relationship with books in the **booksauthors** table, and updating the author table with the **isDeleted** property set to true."
+ *      responses:
+ *        '200':
+ *          $ref: "#/components/responses/authorDeleted"
+ *        '404':
+ *          $ref: "#/components/responses/defaultNotFound"
+ *        '500':
+ *          $ref: "#/components/responses/defaultError"
+ *      security:
+ *       - jwtAuth: []
+ */
 authorRouter.delete(
   "/:id",
   [validateId, validateAuthorByIdDataBase],

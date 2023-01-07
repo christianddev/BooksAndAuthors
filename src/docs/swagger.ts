@@ -89,7 +89,7 @@ const swaggerDefinition: OAS3Definition = {
           books: {
             type: "array",
             description:
-              "Refers to the IDs set by the database to identify a record, if the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.",
+              "Refers to the IDs set by the database to identify a record,<br><br> if the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.",
             items: {
               type: "number",
               description: "ID of the books to be associated with this author",
@@ -179,7 +179,6 @@ const swaggerDefinition: OAS3Definition = {
                     type: "array",
                     items: {
                       type: "object",
-                      required: ["data", "error"],
                       properties: {
                         createdAt: {
                           type: "string",
@@ -513,6 +512,158 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
+      authorDelete: {
+        type: "object",
+        required: ["data"],
+        properties: {
+          data: {
+            type: "object",
+            required: ["affectedRows"],
+            properties: {
+              affectedRows: {
+                type: "object",
+                required: ["deletedBooksAuthors", "deletedBook"],
+                properties: {
+                  deletedBooksAuthors: {
+                    type: "number",
+                    description:
+                      "number of author associations and books that have been permanently deleted from the **booksauthors** table",
+                  },
+                  deletedBook: {
+                    type: "array",
+                    description:
+                      "number of records in the authors table that have been temporarily deleted",
+                    items: {
+                      types: "number",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        example: {
+          data: {
+            affectedRows: {
+              deletedBooksAuthors: 5,
+              deletedBook: [1],
+            },
+          },
+        },
+      },
+      authorBooksUpdateSuccess: {
+        type: "object",
+        required: ["data"],
+        properties: {
+          data: {
+            type: "object",
+            required: ["booksAuthors", "error"],
+            properties: {
+              booksAuthors: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    properties: {
+                      createdAt: {
+                        type: "string",
+                        description: "date of creation of the registry",
+                      },
+                      bookId: {
+                        type: "number",
+                        description: "Id associated with the book",
+                      },
+                      authorId: {
+                        type: "number",
+                        description: "Id associated with the author",
+                      },
+                    },
+                  },
+                },
+              },
+              error: {
+                type: "array",
+                items: {
+                  type: "object",
+                  required: ["message"],
+                  properties: {
+                    message: {
+                      type: "string",
+                      description:
+                        "description related to the error, return message error similar to `book with id '##' not found` ",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        example: {
+          data: {
+            booksAuthors: [
+              {
+                createdAt: "2023-01-07T21:27:02.183Z",
+                bookId: 2,
+                authorId: 2,
+              },
+              {
+                createdAt: "2023-01-07T21:27:02.183Z",
+                bookId: 3,
+                authorId: 2,
+              },
+            ],
+          },
+          error: [
+            {
+              message: "book with id '1' not found",
+            },
+          ],
+        },
+      },
+      authorBooksUpdateBadRequest: {
+        type: "object",
+        required: ["error"],
+        properties: {
+          error: {
+            type: "object",
+            required: ["status", "errors"],
+            properties: {
+              status: {
+                type: "number",
+                description: "status code associated with the error",
+              },
+              errors: {
+                type: "array",
+                items: {
+                  type: "object",
+                  required: ["message"],
+                  properties: {
+                    message: {
+                      type: "string",
+                      description:
+                        "description related to the error, return message error similar to `book with id '##' not found` ",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        example: {
+          error: {
+            status: 400,
+            errors: [
+              {
+                message:
+                  "there is an author with the bookId '1' & authorId '1'",
+              },
+              {
+                message: "book with id '1' not found",
+              },
+            ],
+          },
+        },
+      },
     },
     parameters: {
       id: {
@@ -643,7 +794,7 @@ const swaggerDefinition: OAS3Definition = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/authorUpdate",
+              $ref: "#/components/schemas/authorBooksUpdateSuccess",
             },
           },
         },
@@ -655,6 +806,27 @@ const swaggerDefinition: OAS3Definition = {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/defaultError",
+            },
+          },
+        },
+      },
+      authorBookPatchBadRequest: {
+        description:
+          "Bad Request.<br>If the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.<br><br> if the relationship between the author and the book has been made previously, an error message is returned similar to `there is an author with the bookId '##' & authorId '##'`.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/authorBooksUpdateBadRequest",
+            },
+          },
+        },
+      },
+      authorDeleted: {
+        description: "Delete a record temporarily.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/authorDelete",
             },
           },
         },
