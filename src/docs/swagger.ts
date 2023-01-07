@@ -78,11 +78,13 @@ const swaggerDefinition: OAS3Definition = {
             type: "string",
             description:
               "author's name, in **combination** with the **country** field (ISO Code) is used to identify an author, the name & country field must be unique.",
+            example: "Patrick Rothfuss",
           },
           country: {
             type: "string",
             description:
               "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+            example: "USA",
           },
           books: {
             type: "array",
@@ -92,6 +94,7 @@ const swaggerDefinition: OAS3Definition = {
               type: "string",
               description: "ID of the books to be associated with this author",
             },
+            example: [1, 2],
           },
         },
         example: {
@@ -389,8 +392,7 @@ const swaggerDefinition: OAS3Definition = {
         },
       },
       notFoundRequestErrorResponse: {
-        description:
-          "Not Found, Error related to the request data.",
+        description: "Not Found, Error related to the request data.",
         content: {
           "application/json": {
             schema: {
@@ -430,6 +432,19 @@ const swaggerDefinition: OAS3Definition = {
               $ref: "#/components/schemas/authorResponse",
             },
           },
+        },
+        links: {
+          getAuthorById: { $ref: "#/components/links/getAuthorById" },
+        },
+      },
+    },
+    links: {
+      getAuthorById: {
+        operationId: "getAuthor",
+        description:
+          "The `id` value returned in the response can be used as  the Id` parameter in `GET api/v1/authors/{id}`.",
+        parameters: {
+          id: "$request.path.id",
         },
       },
     },

@@ -49,8 +49,8 @@ authorRouter.get("/", getAuthors);
  *    get:
  *      tags:
  *        - Authors
- *      operationId: getAuthor
  *      summary: "Get Author"
+ *      operationId: getAuthor
  *      parameters:
  *        - $ref: "#/components/parameters/id"
  *      description: "Returns the information of an author, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
@@ -78,8 +78,10 @@ authorRouter.get("/all/books", getAllBooksAuthorsGroupByAuthor);
  *      tags:
  *        - Authors
  *      summary: "Create Author"
+ *      operationId: createAuthor
  *      description: "This endpoint is used to register a **Author**"
  *      requestBody:
+ *          required: true
  *          content:
  *            application/json:
  *              schema:
@@ -108,8 +110,10 @@ authorRouter.post(
  *      tags:
  *        - Authors
  *      summary: "Create Author  with Books"
+ *      operationId: createAuthorWithBooks
  *      description: "This endpoint will add a new record to the authors table, in case this registration process is completed correctly, it will try to add to the **booksauthors** table the relation with the IDs of the **books** field, in case a book is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (**isDeleted** equals true) an error message will be returned: example: `book with id '##' not found`."
  *      requestBody:
+ *          required: true
  *          content:
  *            application/json:
  *              schema:
