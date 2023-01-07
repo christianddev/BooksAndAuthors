@@ -85,10 +85,10 @@ authorRouter.get("/all/books", getAllBooksAuthorsGroupByAuthor);
  *              schema:
  *                $ref: "#/components/schemas/authorRequest"
  *      responses:
- *        '200':
+ *        '201':
  *          $ref: "#/components/responses/authorResponse"
  *        '400':
- *          $ref: "#/components/responses/badRequestErrorResponse"
+ *          $ref: "#/components/responses/authorPostBadRequestErrorResponse"
  *        '500':
  *          $ref: "#/components/responses/defaultErrorResponse"
  *      security:
@@ -108,17 +108,17 @@ authorRouter.post(
  *      tags:
  *        - Authors
  *      summary: "Create Author  with Books"
- *      description: "This endpoint will add a new record to the authors table, in case this registration process is completed correctly, it will try to add to the booksauthors table the relation with the IDs of the **books** field, in case a book is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (isDeleted equals true) an error message will be returned: example: `book with id '##' not found`."
+ *      description: "This endpoint will add a new record to the authors table, in case this registration process is completed correctly, it will try to add to the **booksauthors** table the relation with the IDs of the **books** field, in case a book is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (**isDeleted** equals true) an error message will be returned: example: `book with id '##' not found`."
  *      requestBody:
  *          content:
  *            application/json:
  *              schema:
  *                $ref: "#/components/schemas/authorWithBooksRequest"
  *      responses:
- *        '200':
- *          $ref: "#/components/responses/authorResponse"
+ *        '201':
+ *          $ref: "#/components/responses/authorsWithBooksResponse"
  *        '400':
- *          $ref: "#/components/responses/badRequestErrorResponse"
+ *          $ref: "#/components/responses/authorWithBooksPostBadRequestErrorResponse"
  *        '500':
  *          $ref: "#/components/responses/defaultErrorResponse"
  *      security:
