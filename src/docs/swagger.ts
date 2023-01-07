@@ -91,7 +91,7 @@ const swaggerDefinition: OAS3Definition = {
             description:
               "Refers to the IDs set by the database to identify a record, if the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.",
             items: {
-              type: "string",
+              type: "number",
               description: "ID of the books to be associated with this author",
             },
             example: [1, 2],
@@ -122,6 +122,24 @@ const swaggerDefinition: OAS3Definition = {
         example: {
           name: "Patrick Rothfuss",
           country: "USA",
+        },
+      },
+      authorBooksUpdateRequest: {
+        type: "object",
+        required: ["books"],
+        properties: {
+          books: {
+            type: "array",
+            description:
+              "Refers to the IDs set by the database to identify a record, if the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.",
+            items: {
+              type: "number",
+              description: "ID of the books to be associated with this author",
+            },
+          },
+        },
+        example: {
+          books: [2, 3],
         },
       },
       authorsWithBooksResponse: {

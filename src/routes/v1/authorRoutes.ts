@@ -4,11 +4,11 @@ import {
   getAuthor,
   getAuthors,
   postAuthor,
-  putAuthor,
+  patchAuthor,
   deleteAuthor,
   getAllBooksAuthorsGroupByAuthor,
   postAuthorWithBooks,
-  putAuthorWithBooks,
+  patchAuthorWithBooks,
 } from "../../controllers";
 import {
   validateAuthorByIdDataBase,
@@ -67,7 +67,6 @@ authorRouter.get("/", getAuthors);
  *       - jwtAuth: []
  */
 authorRouter.get("/:id", [validateId], getAuthor);
-
 
 /**
  * Get all Authors
@@ -160,7 +159,6 @@ authorRouter.post(
   postAuthorWithBooks
 );
 
-
 /**
  * Update Author
  * @openapi
@@ -197,13 +195,42 @@ authorRouter.patch(
     validateAuthorByIdDataBase,
     validateAuthorByNameAndCountryDataBase,
   ],
-  putAuthor
+  patchAuthor
 );
 
+
+/**
+ * Set Books
+ * @openapi
+ * /api/v1/authors/{id}/books:
+ *    patch:
+ *      tags:
+ *        - Authors
+ *      summary: "Set Books"
+ *      operationId: setBooks
+ *      parameters:
+ *        - $ref: "#/components/parameters/id"
+ *      description: "Associates books with an author, If the author exists, it will try to add to the **booksauthors** table the relation with the IDs of the **books** field, in case a book is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (**isDeleted** equals true) an error message will be returned: example: `book with id '##' not found`. <br><br>if a relationship between an author and a book already exists, it will return a message similar to `there is an author with the bookId '##' & authorId '##'`."
+ *      requestBody:
+ *          required: true
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: "#/components/schemas/authorBooksUpdateRequest"
+ *      responses:
+ *        '200':
+ *          $ref: "#/components/responses/defaultUpdateResponse"
+ *        '400':
+ *          $ref: "#/components/responses/authorPatchBadRequestErrorResponse"
+ *        '500':
+ *          $ref: "#/components/responses/defaultErrorResponse"
+ *      security:
+ *       - jwtAuth: []
+ */
 authorRouter.patch(
   "/:id/books",
   [validateId, validateBookIDs, validateAuthorByIdDataBase],
-  putAuthorWithBooks
+  patchAuthorWithBooks
 );
 
 authorRouter.delete(

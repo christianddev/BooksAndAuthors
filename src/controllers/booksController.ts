@@ -84,7 +84,21 @@ export const postBookWithAuthors = async (req: Request, res: Response) => {
   }
 };
 
-export const putBookWithAuthors = async (req: Request, res: Response) => {
+export const patchBook = async (req: Request, res: Response) => {
+  try {
+    const {
+      body: { isbn, title },
+      params: { id },
+    } = req;
+
+    const response = await updateBook({ id: Number(id), isbn, title });
+    return res.status(httpStatus.OK).json(response);
+  } catch (err) {
+    return defaultErrorResponse(err, res);
+  }
+};
+
+export const patchBookWithAuthors = async (req: Request, res: Response) => {
   try {
     const {
       body: { authors },
@@ -96,21 +110,12 @@ export const putBookWithAuthors = async (req: Request, res: Response) => {
       return res.status(httpStatus.OK).json(response);
     }
 
-    return res.status(httpStatus?.BAD_REQUEST).json({ error: response?.error });
-  } catch (err) {
-    return defaultErrorResponse(err, res);
-  }
-};
+    const error: ErrorOperation = {
+      status: httpStatus?.BAD_REQUEST,
+      errors: response?.error,
+    };
 
-export const putBook = async (req: Request, res: Response) => {
-  try {
-    const {
-      body: { isbn, title },
-      params: { id },
-    } = req;
-
-    const response = await updateBook({ id: Number(id), isbn, title });
-    return res.status(httpStatus.OK).json(response);
+    return res.status(httpStatus?.BAD_REQUEST).json({ error });
   } catch (err) {
     return defaultErrorResponse(err, res);
   }

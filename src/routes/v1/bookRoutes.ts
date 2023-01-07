@@ -4,11 +4,11 @@ import {
   getBook,
   getBooks,
   postBook,
-  putBook,
+  patchBook,
   deleteBook,
   getAllBooksAuthorsGroupByBook,
   postBookWithAuthors,
-  putBookWithAuthors,
+  patchBookWithAuthors,
 } from "../../controllers";
 import {
   validateId,
@@ -68,12 +68,12 @@ bookRouter.patch(
     validateBookByIdDataBase,
     validateBookByISBNDataBase,
   ],
-  putBook
+  patchBook
 );
 
 bookRouter.patch(
   "/:id/authors",
   [validateId, validateAuthorIDs, validateBookByIdDataBase],
-  putBookWithAuthors
+  patchBookWithAuthors
 );
 bookRouter.delete("/:id", [validateId, validateBookByIdDataBase], deleteBook);

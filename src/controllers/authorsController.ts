@@ -83,7 +83,7 @@ export const postAuthorWithBooks = async (req: Request, res: Response) => {
   }
 };
 
-export const putAuthor = async (req: Request, res: Response) => {
+export const patchAuthor = async (req: Request, res: Response) => {
   const {
     body: { name, country },
     params: { id },
@@ -98,7 +98,7 @@ export const putAuthor = async (req: Request, res: Response) => {
   }
 };
 
-export const putAuthorWithBooks = async (req: Request, res: Response) => {
+export const patchAuthorWithBooks = async (req: Request, res: Response) => {
   try {
     const {
       body: { books },
@@ -110,7 +110,12 @@ export const putAuthorWithBooks = async (req: Request, res: Response) => {
       return res.status(httpStatus?.OK).json(response);
     }
 
-    return res.status(httpStatus?.BAD_REQUEST).json({ error: response?.error });
+    const error: ErrorOperation = {
+      status: httpStatus?.BAD_REQUEST,
+      errors: response?.error,
+    };
+
+    return res.status(httpStatus?.BAD_REQUEST).json({ error });
   } catch (err) {
     return defaultErrorResponse(err, res);
   }
