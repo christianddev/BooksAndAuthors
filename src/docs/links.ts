@@ -11,7 +11,7 @@ const swaggerDefinition: OAS3Definition = {
       authorId: {
         operationId: "getAuthor",
         description:
-          "The `id` value returned in the response can be used as the Id parameter in:<br><br> - `GET api/v1/authors/{id}`<br> - `PATCH api/v1/authors/{id}`<br> - `PATCH api/v1/authors/{id}/books`<br> - `DELETE api/v1/authors/{id}`.",
+          "The `id` value returned in the response can be used as the Id parameter in:<br><br> - `GET`<br>api/v1/authors/{id}<br> - `PATCH`<br>api/v1/authors/{id}<br> - `PATCH`<br>api/v1/authors/{id}/books<br> - `DELETE`<br>api/v1/authors/{id}.",
         parameters: {
           id: "$request.path.id",
         },

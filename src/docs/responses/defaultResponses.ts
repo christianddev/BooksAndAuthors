@@ -16,6 +16,12 @@ const swaggerDefinition: OAS3Definition = {
             schema: {
               $ref: "#/components/schemas/internalServerError",
             },
+            example: {
+              error: {
+                status: 500,
+                message: "Contact with the administrator",
+              },
+            },
           },
         },
       },
@@ -26,6 +32,12 @@ const swaggerDefinition: OAS3Definition = {
             schema: {
               $ref: "#/components/schemas/internalServerError",
             },
+            example: {
+              error: {
+                status: 400,
+                message: "Message related to the error",
+              },
+            },
           },
         },
       },
@@ -35,6 +47,13 @@ const swaggerDefinition: OAS3Definition = {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/internalServerError",
+            },
+            example: {
+              error: {
+                status: 404,
+                message:
+                  "Message related with the data of the request or the resource you are trying to access",
+              },
             },
           },
         },

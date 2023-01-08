@@ -24,7 +24,7 @@ const swaggerDefinition: OAS3Definition = {
       },
       postAuthorBadRequest: {
         description:
-          "Bad Request, Error related to the request data, **name** and **country** fields must not be null, if you do not send some of these fields, an error similar to `check **####** field` will be returned.",
+          "Bad Request, Error related to the request data, **name** and **country** fields must not be null, if you do not send some of these fields, an error similar to `check **####** field` will be returned.<br><br>If the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.",
         content: {
           "application/json": {
             schema: {
@@ -53,7 +53,8 @@ const swaggerDefinition: OAS3Definition = {
               },
               authorsExists: {
                 summary: "Authors exists",
-                description: "The combination of **name** and **country** must be unique.",
+                description:
+                  "The combination of **name** and **country** must be unique.",
                 value: {
                   error: {
                     status: 400,
@@ -68,7 +69,7 @@ const swaggerDefinition: OAS3Definition = {
       },
       postAuthorsWithBooks: {
         description:
-          "Returns the information of the new record in the field **author**, in the **booksAuthors** field it returns information related to the association between the author and his books, in case some of the books are not available, an error message will be sent, <br><br>the response of this endpoint takes into account the setting of environment variables `EXCLUDE_ORM_FIELDS` and `EXCLUDE_TEMPORARY_DELETED`.",
+          "Returns the information of the new record in the field **author**, in the **booksAuthors** field it returns information related to the association between the author and his books, in case some of the books are not available, an error message will be sent.<br><br>the response of this endpoint takes into account the setting of environment variables `EXCLUDE_ORM_FIELDS` and `EXCLUDE_TEMPORARY_DELETED`.<br><br>If the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.",
         content: {
           "application/json": {
             schema: {
@@ -79,7 +80,7 @@ const swaggerDefinition: OAS3Definition = {
       },
       postAuthorWithBooksBadRequest: {
         description:
-          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null, if you do not send some of these fields, an error similar to `check **####** field` will be returned.<br><br>if the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.",
+          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null, if you do not send some of these fields, an error similar to `check **####** field` will be returned.<br><br>If the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.",
         content: {
           "application/json": {
             schema: {
@@ -113,6 +114,22 @@ const swaggerDefinition: OAS3Definition = {
           authorId: { $ref: "#/components/links/authorId" },
         },
       },
+      getAuthorNotFound: {
+        description: "Not Found, Error related to the request data.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/internalServerError",
+            },
+            example: {
+              error: {
+                status: 404,
+                message: "author with id '21' not found",
+              },
+            },
+          },
+        },
+      },
       getAuthorsAndHisBooks: {
         description:
           "Returns the information of an author, taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS` and `EXCLUDE_TEMPORARY_DELETED`.",
@@ -137,7 +154,7 @@ const swaggerDefinition: OAS3Definition = {
       },
       patchAuthorBadRequest: {
         description:
-          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null,<br><br> - if the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.<br> - if you do not send both fields, it will return an error message similar to `check 'name' & 'country' field`.",
+          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null,<br><br>If the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.<br> - if you do not send both fields, it will return an error message similar to `check 'name' & 'country' field`.",
         content: {
           "application/json": {
             schema: {
