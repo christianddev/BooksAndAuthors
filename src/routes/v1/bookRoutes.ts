@@ -94,17 +94,19 @@ bookRouter.get("/all/authors", getAllBooksAuthorsGroupByBook);
  *      tags:
  *        - Books
  *      summary: "Create Book"
- *      description: "This endpoint is used to register a book, the ISBN must be unique."
+ *      operationId: createBook
+ *      description: "This endpoint will add a new record to the **books** table.<br><br>**isbn** and **title** fields must be unique"
  *      requestBody:
+ *          required: true
  *          content:
  *            application/json:
  *              schema:
- *                $ref: "#/components/schemas/bodyBookRequest"
+ *                $ref: "#/components/schemas/bookRequest"
  *      responses:
- *        '200':
- *          description: returns information related to the book that has been created, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the fields **isDeleted**, **createdAt** and **updatedAt** are displayed.
+ *        '201':
+ *          $ref: "#/components/responses/postBook"
  *        '400':
- *          $ref: "#/components/responses/badRequest"
+ *          $ref: "#/components/responses/postBookBadRequest"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:

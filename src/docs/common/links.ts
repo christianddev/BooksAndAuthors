@@ -16,6 +16,14 @@ const swaggerDefinition: OAS3Definition = {
           id: "$request.path.id",
         },
       },
+      bookId: {
+        operationId: "getBook",
+        description:
+          "The `id` value returned in the response can be used as the Id parameter in:<br><br> - `GET`<br>api/v1/books/{id}<br> - `PATCH`<br>api/v1/books/{id}<br> - `PATCH`<br>api/v1/books/{id}/books<br> - `DELETE`<br>api/v1/books/{id}.",
+        parameters: {
+          id: "$request.path.id",
+        },
+      },
     },
   },
 };

@@ -8,7 +8,7 @@ const swaggerDefinition: OAS3Definition = {
   },
   components: {
     examples: {
-      nameFIeld: {
+      nameField: {
         summary: "Name field validation",
         description: "The **name** field is required.",
         value: {

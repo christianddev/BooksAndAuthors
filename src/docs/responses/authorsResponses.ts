@@ -10,7 +10,7 @@ const swaggerDefinition: OAS3Definition = {
     responses: {
       postAuthor: {
         description:
-          "Returns the information of an author, taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS`.",
+          "Returns the information of an author.<br><br>Taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS`.",
         content: {
           "application/json": {
             schema: {
@@ -29,15 +29,15 @@ const swaggerDefinition: OAS3Definition = {
       },
       postAuthorBadRequest: {
         description:
-          "Bad Request, Error related to the request data, **name** and **country** fields must not be null, if you do not send some of these fields, an error similar to `check **####** field` will be returned.<br><br>If the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.",
+          "Bad Request, Error related to the request data.<br><br>**name** and **country** fields must not be null, if you do not send some of these fields, an error similar to `check **####** field` will be returned.<br><br>If the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.",
         content: {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/authorBadRequest",
             },
             examples: {
-              nameFIeld: {
-                $ref: "#/components/examples/nameFIeld",
+              nameField: {
+                $ref: "#/components/examples/nameField",
               },
               countryField: {
                 $ref: "#/components/examples/countryField",
@@ -77,8 +77,8 @@ const swaggerDefinition: OAS3Definition = {
               $ref: "#/components/schemas/internalServerError",
             },
             examples: {
-              nameFIeld: {
-                $ref: "#/components/examples/nameFIeld",
+              nameField: {
+                $ref: "#/components/examples/nameField",
               },
               countryField: {
                 $ref: "#/components/examples/countryField",
@@ -177,8 +177,8 @@ const swaggerDefinition: OAS3Definition = {
               $ref: "#/components/schemas/internalServerError",
             },
             examples: {
-              nameFIeld: {
-                $ref: "#/components/examples/nameFIeld",
+              nameField: {
+                $ref: "#/components/examples/nameField",
               },
               countryField: {
                 $ref: "#/components/examples/countryField",
@@ -235,6 +235,9 @@ const swaggerDefinition: OAS3Definition = {
               },
             },
           },
+        },
+        links: {
+          authorId: { $ref: "#/components/links/authorId" },
         },
       },
     },

@@ -8,30 +8,30 @@ const swaggerDefinition: OAS3Definition = {
   },
   components: {
     examples: {
-      nameFIeld: {
-        summary: "Name field validation",
-        description: "The **name** field is required.",
+      isbnField: {
+        summary: "ISBN field validation",
+        description: "The **isbn** field is required.",
         value: {
           error: {
             status: 400,
-            message: "check 'name' field",
+            message: "check 'isbn' field",
           },
         },
       },
-      countryField: {
-        summary: "Country field validation",
-        description: "The **country** field is required.",
+      titleField: {
+        summary: "Title field validation",
+        description: "The **title** field is required.",
         value: {
           error: {
             status: 400,
-            message: "check 'country' field",
+            message: "check 'title' field",
           },
         },
       },
       booksExists: {
         summary: "Books exists",
         description:
-          "The combination of **ISBN** and **title** must be unique.",
+          "The **isbn** must be unique",
         value: {
           error: {
             status: 400,
@@ -54,7 +54,7 @@ const swaggerDefinition: OAS3Definition = {
         description: "",
         value: {
           data: {
-            author: {
+            book: {
               id: 1,
               isbn: "978-0-7564-0407-9",
               title: "The Name of the Wind, 2007",
@@ -233,7 +233,6 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-
       patchBookWithAuthorsSomeErrors: {
         summary: "Book with authors and errors",
         description:
