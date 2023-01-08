@@ -392,7 +392,7 @@ const swaggerDefinition: OAS3Definition = {
                   deletedBook: {
                     type: "array",
                     description:
-                      "number of records in the authors table that have been temporarily deleted",
+                      "number of records in the **authors** table that have been **temporarily** or **permanently** deleted.",
                     items: {
                       types: "number",
                     },

@@ -254,10 +254,10 @@ export const removeAuthor = async (id: number) => {
       };
     }
 
-    const deletedBook = await destroyAuthorFromModel(id);
+    const deletedAuthor = await destroyAuthorFromModel(id);
 
     return {
-      data: { affectedRows: { deletedBooksAuthors, deletedBook } },
+      data: { affectedRows: { deletedBooksAuthors, deletedAuthor } },
     };
   } catch (error) {
     return setError("deleteAuthorTemporary", error);
