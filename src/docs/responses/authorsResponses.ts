@@ -211,15 +211,15 @@ const swaggerDefinition: OAS3Definition = {
       },
       patchAuthorBookBadRequest: {
         description:
-          "Bad Request.<br>If the record associated to an ID does not exist or the `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.<br><br> If the relationship between the author and the book has been made previously, an error message is returned similar to `there is an author with the bookId '##' & authorId '##'`.<br><br>**All associations between book and author have returned some type of error.**",
+          "Bad Request.<br>If the record associated to an ID does not exist or the `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.<br><br> If the relationship between the author and the book has been made previously, an error message is returned similar to:<br>`there is an author with the bookId '##' & authorId '##'`.<br><br>**All associations between author and book have returned some type of error.**",
         content: {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/authorBooksUpdateBadRequest",
             },
             examples: {
-              booksAuthorsExist: {
-                $ref: "#/components/examples/booksAuthorsErrors",
+              authorBooksErrors: {
+                $ref: "#/components/examples/authorBooksErrors",
               },
             },
           },

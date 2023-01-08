@@ -127,7 +127,7 @@ authorRouter.post(
  *        - Authors
  *      summary: "Create Author with Books"
  *      operationId: createAuthorWithBooks
- *      description: "This endpoint will add a new record to the **authors** table.<br><br>In case this registration process is completed correctly, it will try to add to the **booksauthors** table the relation with the IDs of the **books** field.<br><br>In case a **book** is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (**isDeleted** field equals true), an error message will be returned: example: `book with id '##' not found`."
+ *      description: "This endpoint will add a new record to the **authors** table.<br><br>In case this registration process is completed correctly, it will try to add to the **booksauthors** table the relation with the IDs of the **books** field.<br><br>In case a **book** is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (**isDeleted** field equals true), an error message will be returned:<br>example: `book with id '##' not found`."
  *      requestBody:
  *          required: true
  *          content:
@@ -207,7 +207,7 @@ authorRouter.patch(
  *      operationId: setBooks
  *      parameters:
  *        - $ref: "#/components/parameters/id"
- *      description: "Associates books with an author, If the author exists, it will try to add to the **booksauthors** table the relation with the IDs of the **books** field.<br><br>In case a **book** is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (**isDeleted** equals true), an error message will be returned: example: `book with id '##' not found`.<br><br>if a relationship between an author and a book already exists, it will return a message similar to `there is an author with the bookId '##' & authorId '##'`."
+ *      description: "Associates an author with books.<br><br>If the author exists, it will try to add to the **booksauthors** table the relation with the IDs of the **books** field.<br><br>In case a **book** is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (**isDeleted** equals true), an error message will be returned:<br>example: `book with id '##' not found`.<br><br>if a relationship between an author and a book already exists, it will return a message similar to `there is an author with the bookId '##' & authorId '##'`."
  *      requestBody:
  *          required: true
  *          content:

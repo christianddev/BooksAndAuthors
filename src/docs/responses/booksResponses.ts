@@ -193,17 +193,17 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      patchBooksAuthors: {
+      patchBookAuthors: {
         description:
-          "Updates the register of books associated with an author, taking into account the setting of environment variables `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.<br><br>**At least one of the author-books partnerships has been completed successfully**.",
+          "Updates the register of authors associated with an book, taking into account the setting of environment variables `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.<br><br>**At least one of the book-authors partnerships has been completed successfully**.",
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/authorBooksUpdateSuccess",
+              $ref: "#/components/schemas/bookAuthorsUpdateSuccess",
             },
             examples: {
-              patchAuthorWithBooksSomeErrors: {
-                $ref: "#/components/examples/patchAuthorWithBooksSomeErrors",
+              patchBookWithAuthorsSomeErrors: {
+                $ref: "#/components/examples/patchBookWithAuthorsSomeErrors",
               },
             },
           },
@@ -215,11 +215,11 @@ const swaggerDefinition: OAS3Definition = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/authorBooksUpdateBadRequest",
+              $ref: "#/components/schemas/bookAuthorsUpdateBadRequest",
             },
             examples: {
-              booksAuthorsExist: {
-                $ref: "#/components/examples/booksAuthorsErrors",
+              bookAuthorsErrors: {
+                $ref: "#/components/examples/bookAuthorsErrors",
               },
             },
           },

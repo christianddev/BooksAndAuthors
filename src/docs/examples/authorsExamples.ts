@@ -196,7 +196,7 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      booksAuthorsErrors: {
+      authorBooksErrors: {
         summary: "Errors when associating books",
         description:
           "The association between authors and books may return different error messages.",

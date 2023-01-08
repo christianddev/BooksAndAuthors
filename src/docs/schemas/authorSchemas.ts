@@ -109,7 +109,7 @@ const swaggerDefinition: OAS3Definition = {
           books: {
             type: "array",
             description:
-              "Refers to the IDs set by the database to identify a record, if the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.",
+              "Refers to the IDs set by the database to identify a record.<br><br>If the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.",
             items: {
               type: "number",
               description: "ID of the books to be associated with this author",
@@ -182,7 +182,7 @@ const swaggerDefinition: OAS3Definition = {
                         message: {
                           type: "string",
                           description:
-                            "Description related to the error, return message error similar to `book with id '##' not found` ",
+                            "Description related to the error.<br>Return message error similar to `book with id '##' not found` ",
                         },
                       },
                     },
@@ -397,37 +397,41 @@ const swaggerDefinition: OAS3Definition = {
             required: ["booksAuthors", "error"],
             properties: {
               booksAuthors: {
-                type: "array",
-                items: {
-                  type: "object",
-                  properties: {
-                    properties: {
-                      createdAt: {
-                        type: "string",
-                        description: "Date of creation of the registry",
-                      },
-                      bookId: {
-                        type: "number",
-                        description: "Id associated with the book",
-                      },
-                      authorId: {
-                        type: "number",
-                        description: "Id associated with the author",
+                type: "object",
+                properties: {
+                  data: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      required: ["createdAt", "bookId", "authorId"],
+                      properties: {
+                        createdAt: {
+                          type: "string",
+                          description: "Date of creation of the registry.",
+                        },
+                        bookId: {
+                          type: "number",
+                          description: "Id associated with the book.",
+                        },
+                        authorId: {
+                          type: "number",
+                          description: "Id associated with the author.",
+                        },
                       },
                     },
                   },
-                },
-              },
-              error: {
-                type: "array",
-                items: {
-                  type: "object",
-                  required: ["message"],
-                  properties: {
-                    message: {
-                      type: "string",
-                      description:
-                        "Description related to the error, return message error similar to `book with id '##' not found` ",
+                  error: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      required: ["message"],
+                      properties: {
+                        message: {
+                          type: "string",
+                          description:
+                            "Description related to the error.<br>Return message error similar to `book with id '##' not found`.",
+                        },
+                      },
                     },
                   },
                 },
@@ -457,7 +461,7 @@ const swaggerDefinition: OAS3Definition = {
                     message: {
                       type: "string",
                       description:
-                        "Description related to the error, return message error similar to `book with id '##' not found` ",
+                        "Description related to the error.<br>Return message error similar to `book with id '##' not found` ",
                     },
                   },
                 },

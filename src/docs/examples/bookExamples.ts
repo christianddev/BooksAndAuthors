@@ -30,8 +30,7 @@ const swaggerDefinition: OAS3Definition = {
       },
       booksExists: {
         summary: "Books exists",
-        description:
-          "The **isbn** must be unique.",
+        description: "The **isbn** must be unique.",
         value: {
           error: {
             status: 400,
@@ -201,10 +200,10 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      booksAuthorsErrors: {
-        summary: "Errors when associating books",
+      bookAuthorsErrors: {
+        summary: "Errors when associating authors",
         description:
-          "The association between authors and books may return different error messages.",
+          "The association between books and authors may return different error messages.",
         value: {
           error: {
             status: 400,
@@ -214,7 +213,7 @@ const swaggerDefinition: OAS3Definition = {
                   "there is an author with the bookId '1' & authorId '1'",
               },
               {
-                message: "book with id '1' not found",
+                message: "author with id '1' not found",
               },
             ],
           },

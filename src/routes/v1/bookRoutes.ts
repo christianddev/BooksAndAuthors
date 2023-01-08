@@ -127,7 +127,7 @@ bookRouter.post(
  *        - Books
  *      summary: "Create Book with Authors"
  *      operationId: createBookWithAuthors
- *      description: "This endpoint will add a new record to the **books** table.<br><br>In case this registration process is completed correctly, it will try to add to the **booksauthors** table the relation with the IDs of the **authors** field.<br><br>In case a **author** is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (**isDeleted** field equals true), an error message will be returned: example: `author with id '##' not found`."
+ *      description: "This endpoint will add a new record to the **books** table.<br><br>In case this registration process is completed correctly, it will try to add to the **booksauthors** table the relation with the IDs of the **authors** field.<br><br>In case a **author** is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (**isDeleted** field equals true), an error message will be returned:<br>example: `author with id '##' not found`."
  *      requestBody:
  *          required: true
  *          content:
@@ -149,7 +149,6 @@ bookRouter.post(
   [validateISBN, validateTitle, validateAuthorIDs, validateBookByISBNDataBase],
   postBookWithAuthors
 );
-
 
 /**
  * Update Book
@@ -192,6 +191,36 @@ bookRouter.patch(
   patchBook
 );
 
+/**
+ * Set Authors
+ * @openapi
+ * /api/v1/books/{id}/authors:
+ *    patch:
+ *      tags:
+ *        - Books
+ *      summary: "Set Authors"
+ *      operationId: setAuthors
+ *      parameters:
+ *        - $ref: "#/components/parameters/id"
+ *      description: "Associates an book with authors.<br><br>If the book exists, it will try to add to the **booksauthors** table the relation with the IDs of the **authors** field.<br><br>In case a **book** is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (**isDeleted** equals true), an error message will be returned:<br>example: `book with id '##' not found`.<br><br>if a relationship between an book and a author already exists, it will return a message similar to `there is an author with the bookId '##' & authorId '##'`."
+ *      requestBody:
+ *          required: true
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: "#/components/schemas/booksAuthorsUpdateRequest"
+ *      responses:
+ *        '200':
+ *          $ref: "#/components/responses/patchBookAuthors"
+ *        '400':
+ *          $ref: "#/components/responses/patchBookAuthorBadRequest"
+ *        '404':
+ *          $ref: "#/components/responses/bookNotFound"
+ *        '500':
+ *          $ref: "#/components/responses/internalServerError"
+ *      security:
+ *       - jwtAuth: []
+ */
 bookRouter.patch(
   "/:id/authors",
   [validateId, validateAuthorIDs, validateBookByIdDataBase],
