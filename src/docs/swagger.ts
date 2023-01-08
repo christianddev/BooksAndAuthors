@@ -6,9 +6,12 @@ import links from "./common/links";
 import parameters from "./common/parameters";
 import defaultSchemas from "./schemas/defaultSchemas";
 import authorSchemas from "./schemas/authorSchemas";
+import bookSchemas from "./schemas/bookSchemas";
 import authorsExamples from "./examples/authorsExamples";
+import bookExamples from "./examples/bookExamples";
 import defaultResponses from "./responses/defaultResponses";
 import authorsResponses from "./responses/authorsResponses";
+import booksResponses from "./responses/booksResponses";
 
 import { DEVELOPMENT_SERVER, PRODUCTION_SERVER, SERVER_PORT } from "../helpers";
 
@@ -37,11 +40,11 @@ const swaggerDefinition: OAS3Definition = {
         scheme: "bearer",
       },
     },
-    schemas: { ...defaultSchemas, ...authorSchemas },
+    schemas: { ...defaultSchemas, ...authorSchemas, ...bookSchemas },
     parameters,
-    responses: { ...defaultResponses, ...authorsResponses },
+    responses: { ...defaultResponses, ...authorsResponses, ...booksResponses },
     links,
-    examples: { ...authorsExamples },
+    examples: { ...authorsExamples, ...bookExamples },
   },
 };
 

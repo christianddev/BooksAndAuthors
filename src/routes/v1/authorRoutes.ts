@@ -31,7 +31,7 @@ export const authorRouter = Router();
  *        - Authors
  *      operationId: getAllAuthors
  *      summary: "Get list of Authors"
- *      description: "returns a list of authors, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed.<br><br> if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
+ *      description: "Returns a list of authors.<br><br>If the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed.<br><br> if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
  *        '200':
  *          $ref: "#/components/responses/getAuthors"

@@ -28,6 +28,42 @@ const swaggerDefinition: OAS3Definition = {
           title: "The Name of the Wind",
         },
       },
+      getBooks: {
+        type: "object",
+        required: ["data"],
+        properties: {
+          data: {
+            type: "object",
+            required: ["author"],
+            properties: {
+              books: {
+                type: "array",
+                items: {
+                  type: "object",
+                  required: ["id", "isbn", "title"],
+                  properties: {
+                    id: {
+                      type: "number",
+                      description:
+                        "Assigned by the database, is used to identify the ledger in database queries",
+                    },
+                    isbn: {
+                      type: "string",
+                      description:
+                        "Book's isbn, in combination with the **title** field, is used to identify an book, the **isbn** & **title** fields must be unique.",
+                    },
+                    title: {
+                      type: "string",
+                      description:
+                        "Books's title, in combination with the **isbn** field, is used to identify an book, the **isbn** & **title** fields must be unique.",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
 };

@@ -199,26 +199,29 @@ const swaggerDefinition: OAS3Definition = {
         properties: {
           data: {
             type: "object",
-            required: ["author"],
+            required: ["authors"],
             properties: {
-              author: {
-                type: "object",
-                required: ["id", "name", "country"],
-                properties: {
-                  id: {
-                    type: "number",
-                    description:
-                      "assigned by the database, is used to identify the ledger in database queries",
-                  },
-                  name: {
-                    type: "string",
-                    description:
-                      "author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
-                  },
-                  country: {
-                    type: "string",
-                    description:
-                      "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+              authors: {
+                type: "array",
+                items: {
+                  type: "object",
+                  required: ["id", "name", "country"],
+                  properties: {
+                    id: {
+                      type: "number",
+                      description:
+                        "Assigned by the database, is used to identify the ledger in database queries",
+                    },
+                    name: {
+                      type: "string",
+                      description:
+                        "Author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
+                    },
+                    country: {
+                      type: "string",
+                      description:
+                        "Author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+                    },
                   },
                 },
               },

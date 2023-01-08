@@ -28,75 +28,75 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      authorsExists: {
-        summary: "Authors exists",
+      booksExists: {
+        summary: "Books exists",
         description:
-          "The combination of **name** and **country** must be unique.",
+          "The combination of **ISBN** and **title** must be unique.",
         value: {
           error: {
             status: 400,
-            message: "a authors exists with the name '##' & country '###'",
+            message: "a book exists with the isbn '###', id '##' & title '###'",
           },
         },
       },
-      authorNotFound: {
-        summary: "Author not found",
+      bookNotFound: {
+        summary: "Book not found",
         description: "Resource not found.",
         value: {
           error: {
             status: 404,
-            message: "author with id '###' not found",
+            message: "book with id '###' not found",
           },
         },
       },
-      author: {
-        summary: "Authors",
+      book: {
+        summary: "Book",
         description: "",
         value: {
           data: {
             author: {
               id: 1,
-              name: "Patrick Rothfuss",
-              country: "USA",
+              isbn: "978-0-7564-0407-9",
+              title: "The Name of the Wind, 2007",
             },
           },
         },
       },
-      authorsList: {
-        summary: "List of authors",
+      booksList: {
+        summary: "List of books",
         description: "",
         value: {
           data: {
-            authors: [
+            books: [
               {
                 id: 1,
-                name: "Patrick Rothfuss",
-                country: "USA",
+                isbn: "978-0-7564-0407-9",
+                title: "The Name of the Wind, 2007",
               },
               {
                 id: 2,
-                name: "Santiago Posteguillo",
-                country: "ESP",
+                isbn: "9788408234494",
+                title: "YO, JULIA",
               },
             ],
           },
         },
       },
-      authorsAndHisBooksList: {
-        summary: "List of authors and their books",
-        description: "Some authors may not have associated books.",
+      booksAndHisAuthorsList: {
+        summary: "List of books and their authors",
+        description: "Some books may not have associated authors.",
         value: {
           data: {
             booksAuthors: [
               {
                 id: 1,
-                name: "Patrick Rothfuss",
-                country: "USA",
+                isbn: "978-0-7564-0407-9",
+                title: "The Name of the Wind, 2007",
                 books: [
                   {
                     id: 1,
-                    isbn: "978-0-7564-0407-9",
-                    title: "The Name of the Wind, 2007",
+                    name: "Patrick Rothfuss",
+                    country: "USA",
                     booksauthors: {
                       bookId: 1,
                       authorId: 1,
@@ -104,25 +104,31 @@ const swaggerDefinition: OAS3Definition = {
                   },
                 ],
               },
-
               {
                 id: 2,
-                name: "Santiago Posteguillo",
-                country: "ESP",
-                books: [
+                isbn: "9788408234494",
+                title: "YO, JULIA",
+                authors: [
                   {
                     id: 2,
-                    isbn: "9788408234494",
-                    title: "YO, JULIA",
+                    name: "Santiago Posteguillo",
+                    country: "ESP",
                     booksauthors: {
                       bookId: 2,
                       authorId: 2,
                     },
                   },
+                ],
+              },
+              {
+                id: 3,
+                isbn: "Las legiones malditas ",
+                title: "978-84-666-3768-8",
+                authors: [
                   {
-                    id: 3,
-                    isbn: "Las legiones malditas ",
-                    title: "978-84-666-3768-8",
+                    id: 2,
+                    name: "Santiago Posteguillo",
+                    country: "ESP",
                     booksauthors: {
                       bookId: 3,
                       authorId: 2,
@@ -130,27 +136,26 @@ const swaggerDefinition: OAS3Definition = {
                   },
                 ],
               },
-
               {
-                id: 3,
-                name: "Paul Kearney",
-                country: "GB-NIR",
-                books: [],
+                id: 4,
+                name: "Los diez mil",
+                country: "978-84-9889-084-6",
+                authors: [],
               },
             ],
           },
         },
       },
-      postAuthorsWithBooks: {
-        summary: "Author with books",
+      postBooksWithAuthors: {
+        summary: "Books with authors",
         description:
           "Data of the created record and the result of the association in the **booksauthors** table.",
         value: {
           data: {
-            author: {
+            book: {
               id: 1,
-              name: "Patrick Rothfuss",
-              country: "USA",
+              isbn: "978-0-7564-0407-9",
+              title: "The Name of the Wind, 2007",
             },
             booksAuthors: {
               data: [
@@ -165,7 +170,7 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      postAuthorsWithBooksSomeErrors: {
+      postBookWithAuthorsSomeErrors: {
         summary: "Author with books and errors",
         description:
           "Data of the created record, the result of the associations in the **booksauthors** table and the errors when trying to make associations with the **booksauthors** table.",
@@ -229,8 +234,8 @@ const swaggerDefinition: OAS3Definition = {
         },
       },
 
-      patchAuthorWithBooksSomeErrors: {
-        summary: "Author with books and errors",
+      patchBookWithAuthorsSomeErrors: {
+        summary: "Book with authors and errors",
         description:
           "The result of the associations in the **booksauthors** table and the errors when trying to make associations with the **booksauthors** table.",
         value: {
@@ -245,10 +250,10 @@ const swaggerDefinition: OAS3Definition = {
               ],
               error: [
                 {
-                  message: "book with id '11' not found",
+                  message: "author with id '##' not found",
                 },
                 {
-                  message: "book with id '12' not found",
+                  message: "author with id '##' not found",
                 },
               ],
             },

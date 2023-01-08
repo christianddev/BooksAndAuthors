@@ -22,6 +22,24 @@ import {
 
 export const bookRouter = Router();
 
+/**
+ * Get list of Books
+ * @openapi
+ * /api/v1/books:
+ *    get:
+ *      tags:
+ *        - Books
+ *      operationId: getAllBooks
+ *      summary: "Get list of Books"
+ *      description: "Returns a list of books.<br><br>if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed.<br><br> if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
+ *      responses:
+ *        '200':
+ *          $ref: "#/components/responses/getBooks"
+ *        '500':
+ *          $ref: "#/components/responses/internalServerError"
+ *      security:
+ *       - jwtAuth: []
+ */
 bookRouter.get("/", getBooks);
 bookRouter.get("/:id", [validateId], getBook);
 bookRouter.get("/all/authors", getAllBooksAuthorsGroupByBook);
