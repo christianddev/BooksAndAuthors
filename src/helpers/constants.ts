@@ -14,6 +14,9 @@ export const PRODUCTION_SERVER =
 export const EXCLUDE_ORM_FIELDS =
   process.env?.DATABASE_DEFAULT_EXCLUDE_ORM_FIELDS == "true";
 
+export const TEMPORARY_DELETE =
+  process.env?.DATABASE_DEFAULT_TEMPORARY_DELETED == "true";
+
 export const EXCLUDE_TEMPORARY_DELETED =
   process.env?.DATABASE_DEFAULT_EXCLUDE_TEMPORARY_DELETED == "true";
 

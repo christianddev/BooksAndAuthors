@@ -31,7 +31,7 @@ export const authorRouter = Router();
  *        - Authors
  *      operationId: getAllAuthors
  *      summary: "Get list of Authors"
- *      description: "returns a list of authors, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
+ *      description: "returns a list of authors, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed.<br><br> if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
  *        '200':
  *          $ref: "#/components/responses/getAuthors"
@@ -75,7 +75,7 @@ authorRouter.get("/:id", [validateId], getAuthor);
  *        - Authors
  *      summary: "Get all authors and his books"
  *      operationId: getAllAuthorsWithBooks
- *      description: "Get all authors and their books that may be associated with them,<br><br> - if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, <br> - if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
+ *      description: "Get all authors and their books that may be associated with them.<br><br>If the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed.<br><br>If the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
  *        '200':
  *          $ref: "#/components/responses/getAuthorsAndHisBooks"
@@ -243,7 +243,7 @@ authorRouter.patch(
  *      operationId: deleteAuthor
  *      parameters:
  *        - $ref: "#/components/parameters/id"
- *      description: "Deletes a user's record, `by default records are not permanently deleted`, deleting a record means deleting its relationship with books in the **booksauthors** table, and updating the author table with the **isDeleted** property set to true."
+ *      description: "Deletes a user's record, `by default records are not permanently deleted`, deleting a record means deleting its relationship with books in the **booksauthors** table, and updating the author table with the **isDeleted** property set to true.<br><br>**If the `TEMPORARY_DELETE` environment variable is set, the records will be permanently deleted**."
  *      responses:
  *        '200':
  *          $ref: "#/components/responses/deletedAuthor"

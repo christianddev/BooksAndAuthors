@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 
 import {
   createAuthor,
-  deleteAuthorTemporary,
+  removeAuthor,
   findAllAuthors,
   findAllBooksAuthorsGroupByAuthor,
   finOneAuthorById,
@@ -123,9 +123,7 @@ export const patchAuthorWithBooks = async (req: Request, res: Response) => {
 
 export const deleteAuthor = async (req: Request, res: Response) => {
   try {
-    const { id } = req?.params;
-
-    const response = await deleteAuthorTemporary(Number(id), true);
+    const response = await removeAuthor(Number(req?.params?.id));
 
     return res.status(httpStatus?.OK).json(response);
   } catch (err) {

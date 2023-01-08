@@ -8,7 +8,7 @@ import {
   findOneBookById,
   findAllBooksAuthorsGroupByBook,
   updateBook,
-  deleteBookTemporary,
+  removeBook,
   setBooksAuthorsFromBookId,
 } from "../helpers/";
 import { defaultErrorResponse } from "../utils";
@@ -72,6 +72,7 @@ export const postBook = async (req: Request, res: Response) => {
     return defaultErrorResponse(err, res);
   }
 };
+
 export const postBookWithAuthors = async (req: Request, res: Response) => {
   const rawBook = req?.body as BookRequest;
 
@@ -92,6 +93,7 @@ export const patchBook = async (req: Request, res: Response) => {
     } = req;
 
     const response = await updateBook({ id: Number(id), isbn, title });
+
     return res.status(httpStatus.OK).json(response);
   } catch (err) {
     return defaultErrorResponse(err, res);
@@ -123,11 +125,8 @@ export const patchBookWithAuthors = async (req: Request, res: Response) => {
 
 export const deleteBook = async (req: Request, res: Response) => {
   try {
-    const {
-      params: { id },
-    } = req;
+    const response = await removeBook(Number(req?.params?.id));
 
-    const response = await deleteBookTemporary(Number(id), true);
     return res.status(httpStatus.OK).json(response);
   } catch (err) {
     return defaultErrorResponse(err, res);

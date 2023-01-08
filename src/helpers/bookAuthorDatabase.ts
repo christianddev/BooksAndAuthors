@@ -187,29 +187,31 @@ export const createBooksAuthorsByAuthorId = async (
 ): Promise<OperationResponse<Model<any, any>[], ErrorOperation[]>> =>
   await createBooksAuthorsByIds(booksIds, [authorId]);
 
-export const deleteBooksAuthorsByBookId = async (bookId: number) => {
+export const destroyBooksAuthorsByBookId = async (bookId: number) => {
   try {
     const response = await BooksAuthorsModel.destroy({
       where: {
         bookId,
       },
     });
+
     return response;
   } catch (error) {
-    return setError("deleteBooksAuthorsByBookId", error);
+    return setError("destroyBooksAuthorsByBookId", error);
   }
 };
 
-export const deleteBooksAuthorsByAuthorId = async (authorId: number) => {
+export const destroyBooksAuthorsByAuthorId = async (authorId: number) => {
   try {
     const response = await BooksAuthorsModel.destroy({
       where: {
         authorId,
       },
     });
+
     return response;
   } catch (error) {
-    return setError("deleteBooksAuthorsByAuthorId", error);
+    return setError("destroyBooksAuthorsByAuthorId", error);
   }
 };
 

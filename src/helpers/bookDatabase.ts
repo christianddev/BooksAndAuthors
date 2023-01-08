@@ -3,12 +3,13 @@ import { setError } from "../utils";
 
 import {
   createBooksAuthorsByBookId,
-  deleteBooksAuthorsByBookId,
+  destroyBooksAuthorsByBookId,
 } from "./bookAuthorDatabase";
 import {
   EXCLUDE_ORM_FIELDS,
   EXCLUDE_TEMPORARY_DELETED,
   SEQUELIZE_FIELDS,
+  TEMPORARY_DELETE,
 } from "./constants";
 
 import type { OperationResponse } from "../typings/api";
@@ -27,6 +28,7 @@ export const findAllBooks = async (
         exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
       },
     });
+
     return books;
   } catch (error) {
     return setError("findAllBooks", error);
@@ -48,6 +50,7 @@ export const findOneBookById = async (
         exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
       },
     });
+
     return book;
   } catch (error) {
     return setError("findOneBookById", error);
@@ -69,6 +72,7 @@ export const findOneBookByISBN = async (
         exclude: excludeORMFields ? SEQUELIZE_FIELDS : [""],
       },
     });
+
     return book;
   } catch (error) {
     return setError("findOneBookByISBN", error);
@@ -101,6 +105,7 @@ export const findAllBooksAuthorsGroupByBook = async (
         },
       ],
     });
+
     return book;
   } catch (error) {
     return setError("findAllBooksAuthorsGroupByBook", error);
@@ -113,6 +118,7 @@ const createBookFromModel = async ({ isbn, title }: BookRequest) => {
       isbn,
       title,
     });
+
     return book;
   } catch (error) {
     return setError("createBookFromModel", error);
@@ -176,6 +182,7 @@ const updateBookFromModel = async ({
         },
       }
     );
+
     return response;
   } catch (error) {
     return setError("updateBookFromModel", error);
@@ -194,11 +201,32 @@ export const updateBook = async ({ id, isbn, title }: BookRequest) => {
   }
 };
 
-export const deleteBookTemporary = async (id: number, isDeleted: boolean) => {
+const destroyBookFromModel = async (id: number) => {
   try {
-    const deletedBooksAuthors = await deleteBooksAuthorsByBookId(id);
+    const response = await BookModel.destroy({
+      where: {
+        id,
+      },
+    });
+    return response;
+  } catch (error) {
+    return setError("destroyBookFromModel", error);
+  }
+};
 
-    const deletedBook = await updateBookFromModel({ id, isDeleted });
+export const removeBook = async (id: number) => {
+  try {
+    const deletedBooksAuthors = await destroyBooksAuthorsByBookId(id);
+
+    if (TEMPORARY_DELETE) {
+      const deletedBook = await updateBookFromModel({ id, isDeleted: true });
+
+      return {
+        data: { affectedRows: { deletedBooksAuthors, deletedBook } },
+      };
+    }
+
+    const deletedBook = await destroyBookFromModel(id);
 
     return {
       data: { affectedRows: { deletedBooksAuthors, deletedBook } },
