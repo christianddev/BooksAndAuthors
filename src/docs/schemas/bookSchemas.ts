@@ -82,22 +82,21 @@ const swaggerDefinition: OAS3Definition = {
       bookUpdateRequest: {
         type: "object",
         properties: {
-          name: {
+          isbn: {
             type: "string",
-            description:
-              "author's name, in **combination** with the **country** field (ISO Code) is used to identify an author, the name & country field must be unique.",
-            example: "Patrick Rothfuss",
+            description: "**isbn** must be unique in the database.",
+            example: "978-0-7564-0407-9",
           },
-          country: {
+          title: {
             type: "string",
             description:
               "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
-            example: "USA",
+            example: "The Name of the Wind.",
           },
         },
         example: {
-          name: "Patrick Rothfuss",
-          country: "USA",
+          isbn: "978-0-7564-0407-9",
+          title: "The Name of the Wind.",
         },
       },
       booksAuthorsUpdateRequest: {

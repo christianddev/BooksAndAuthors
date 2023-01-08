@@ -42,7 +42,7 @@ const swaggerDefinition: OAS3Definition = {
               titleField: {
                 $ref: "#/components/examples/titleField",
               },
-              authorsExists: {
+              booksExists: {
                 $ref: "#/components/examples/booksExists",
               },
             },
@@ -162,32 +162,32 @@ const swaggerDefinition: OAS3Definition = {
       },
       patchBook: {
         description:
-          "Update the author's name or country,, taking into account the setting of environment variables  `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.",
+          "Update the book's **isbn** or **title**,<br><br>Taking into account the setting of environment variables  `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.",
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/authorUpdate",
+              $ref: "#/components/schemas/bookUpdate",
             },
           },
         },
       },
       patchBookBadRequest: {
         description:
-          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null,<br><br>If the **isbn** is in use in the database, it returns an error message similar to:<br>`a book exists with the isbn '####', id '##' & title '###'`.<br><br>If both fields are not sent, it will return an error message similar to `check 'name' & 'country' field`.",
+          "Bad Request, Error related to the request data, **isbn** and **title** fields must not be null,<br><br>If the **isbn** is in use in the database, it returns an error message similar to:<br>`a book exists with the isbn '####', id '##' & title '###'`.<br><br>If both fields are not sent, it will return an error message similar to `check 'isbn' & 'title' field`.",
         content: {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/internalServerError",
             },
             examples: {
-              nameField: {
-                $ref: "#/components/examples/nameField",
+              isbnField: {
+                $ref: "#/components/examples/isbnField",
               },
-              countryField: {
-                $ref: "#/components/examples/countryField",
+              titleField: {
+                $ref: "#/components/examples/titleField",
               },
-              authorsExists: {
-                $ref: "#/components/examples/authorsExists",
+              booksExists: {
+                $ref: "#/components/examples/booksExists",
               },
             },
           },

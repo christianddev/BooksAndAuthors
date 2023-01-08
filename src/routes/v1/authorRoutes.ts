@@ -166,7 +166,7 @@ authorRouter.post(
  *      operationId: updateAuthor
  *      parameters:
  *        - $ref: "#/components/parameters/id"
- *      description: "Update the author's name or country, the new data must be unique in combination."
+ *      description: "Update the author's **name** or **country**, the new data must be unique in combination."
  *      requestBody:
  *          required: true
  *          content:

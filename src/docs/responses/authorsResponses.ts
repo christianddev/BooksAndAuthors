@@ -162,7 +162,7 @@ const swaggerDefinition: OAS3Definition = {
       },
       patchAuthor: {
         description:
-          "Update the author's name or country,, taking into account the setting of environment variables  `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.",
+          "Update the author's **name** or **country**,<br><br>Taking into account the setting of environment variables  `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.",
         content: {
           "application/json": {
             schema: {
@@ -173,7 +173,7 @@ const swaggerDefinition: OAS3Definition = {
       },
       patchAuthorBadRequest: {
         description:
-          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null,<br><br>If the combination between **name** and **country** already exists in the database, it returns an error message similar to:<br>`a authors exists with the name '#####' & country '###'`.<br><br>If both fields are not sent, it will return an error message similar to `check 'name' & 'country' field`.",
+          "Bad Request, Error related to the request data, **name** and **country** fields must not be null,<br><br>If the combination between **name** and **country** already exists in the database, it returns an error message similar to:<br>`a authors exists with the name '#####' & country '###'`.<br><br>If both fields are not sent, it will return an error message similar to `check 'name' & 'country' field`.",
         content: {
           "application/json": {
             schema: {

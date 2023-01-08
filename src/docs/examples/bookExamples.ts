@@ -31,7 +31,7 @@ const swaggerDefinition: OAS3Definition = {
       booksExists: {
         summary: "Books exists",
         description:
-          "The **isbn** must be unique",
+          "The **isbn** must be unique.",
         value: {
           error: {
             status: 400,

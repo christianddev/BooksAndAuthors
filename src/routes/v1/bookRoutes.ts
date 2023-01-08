@@ -149,6 +149,38 @@ bookRouter.post(
   [validateISBN, validateTitle, validateAuthorIDs, validateBookByISBNDataBase],
   postBookWithAuthors
 );
+
+
+/**
+ * Update Book
+ * @openapi
+ * /api/v1/books/{id}:
+ *    patch:
+ *      tags:
+ *        - Books
+ *      summary: "Update Book"
+ *      operationId: updateBook
+ *      parameters:
+ *        - $ref: "#/components/parameters/id"
+ *      description: "Update the books's **isbn** or **title**, **isbn** must be unique in the database."
+ *      requestBody:
+ *          required: true
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: "#/components/schemas/bookUpdateRequest"
+ *      responses:
+ *        '200':
+ *          $ref: "#/components/responses/patchBook"
+ *        '400':
+ *          $ref: "#/components/responses/patchBookBadRequest"
+ *        '404':
+ *          $ref: "#/components/responses/bookNotFound"
+ *        '500':
+ *          $ref: "#/components/responses/internalServerError"
+ *      security:
+ *       - jwtAuth: []
+ */
 bookRouter.patch(
   "/:id",
   [
