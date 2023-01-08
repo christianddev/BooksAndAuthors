@@ -19,7 +19,7 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
         links: {
-          getAuthorById: { $ref: "#/components/links/getAuthorById" },
+          authorId: { $ref: "#/components/links/authorId" },
         },
       },
       postAuthorBadRequest: {
@@ -28,7 +28,40 @@ const swaggerDefinition: OAS3Definition = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/internalServerError",
+              $ref: "#/components/schemas/authorBadRequest",
+            },
+            examples: {
+              nameFIeld: {
+                summary: "Name field validation",
+                description: "the **name** field is required.",
+                value: {
+                  error: {
+                    status: 400,
+                    message: "check 'name' field",
+                  },
+                },
+              },
+              countryField: {
+                summary: "Country field validation",
+                description: "the **country** field is required.",
+                value: {
+                  error: {
+                    status: 400,
+                    message: "check 'country' field",
+                  },
+                },
+              },
+              authorsExists: {
+                summary: "Authors exists",
+                description: "The combination of **name** and **country** must be unique.",
+                value: {
+                  error: {
+                    status: 400,
+                    message:
+                      "a authors exists with the name '##' & country '###'",
+                  },
+                },
+              },
             },
           },
         },
@@ -61,7 +94,7 @@ const swaggerDefinition: OAS3Definition = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/authors",
+              $ref: "#/components/schemas/getAuthors",
             },
           },
         },
@@ -77,7 +110,7 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
         links: {
-          getAuthorById: { $ref: "#/components/links/getAuthorById" },
+          authorId: { $ref: "#/components/links/authorId" },
         },
       },
       getAuthorsAndHisBooks: {
