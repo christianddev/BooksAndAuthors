@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-01-2023 a las 14:49:13
+-- Tiempo de generación: 08-01-2023 a las 22:18:44
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.1.12
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `authors` (
   `id` int(11) NOT NULL,
   `name` varchar(150) NOT NULL,
-  `country` varchar(5) NOT NULL,
+  `country` varchar(15) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -78,7 +78,8 @@ ALTER TABLE `authors`
 -- Indices de la tabla `books`
 --
 ALTER TABLE `books`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `isbn` (`isbn`);
 
 --
 -- Indices de la tabla `booksauthors`
@@ -95,13 +96,13 @@ ALTER TABLE `booksauthors`
 -- AUTO_INCREMENT de la tabla `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- Restricciones para tablas volcadas
@@ -111,8 +112,8 @@ ALTER TABLE `books`
 -- Filtros para la tabla `booksauthors`
 --
 ALTER TABLE `booksauthors`
-  ADD CONSTRAINT `fk_authorId` FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`) ON DELETE  CASCADE,
-  ADD CONSTRAINT `fk_bookId` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE  CASCADE;
+  ADD CONSTRAINT `fk_authorId` FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_bookId` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
