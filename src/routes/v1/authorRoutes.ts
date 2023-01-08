@@ -53,7 +53,7 @@ authorRouter.get("/", getAuthors);
  *      operationId: getAuthor
  *      parameters:
  *        - $ref: "#/components/parameters/id"
- *      description: "Returns the information of an author, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
+ *      description: "Returns the information of an author.<br><br>If the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed.<br><br>If the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
  *        '200':
  *          $ref: "#/components/responses/getAuthor"

@@ -50,7 +50,7 @@ const swaggerDefinition: OAS3Definition = {
         },
       },
       author: {
-        summary: "Authors",
+        summary: "Author",
         description: "",
         value: {
           data: {

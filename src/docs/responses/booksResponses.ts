@@ -108,15 +108,15 @@ const swaggerDefinition: OAS3Definition = {
       },
       getBook: {
         description:
-          "Returns the information of an author, taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS`, `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.",
+          "Returns the information of an book.<br><br>Taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS`, `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.",
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/author",
+              $ref: "#/components/schemas/book",
             },
             examples: {
               author: {
-                $ref: "#/components/examples/author",
+                $ref: "#/components/examples/book",
               },
             },
           },
@@ -127,7 +127,7 @@ const swaggerDefinition: OAS3Definition = {
       },
       bookNotFound: {
         description:
-          "Not Found, The requested resource is not found.<br><br>A **author** cannot be found for two reasons:<br><br> - There is no record related to the request ID.<br><br> - Taking into account the setting of the environment variables `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`, the record may exist in the database, but is not available if the value of the **isDeleted** field is set to **true**.",
+          "Not Found, The requested resource is not found, a **book** cannot be found for two reasons:<br><br> - There is no record related to the request ID.<br><br> - Taking into account the setting of the environment variables `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`, the record may exist in the database, but is not available if the value of the **isDeleted** field is set to **true**.",
         content: {
           "application/json": {
             schema: {
@@ -135,7 +135,7 @@ const swaggerDefinition: OAS3Definition = {
             },
             examples: {
               authorNotFound: {
-                $ref: "#/components/examples/authorNotFound",
+                $ref: "#/components/examples/bookNotFound",
               },
             },
           },

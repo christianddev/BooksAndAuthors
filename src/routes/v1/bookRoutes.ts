@@ -41,6 +41,29 @@ export const bookRouter = Router();
  *       - jwtAuth: []
  */
 bookRouter.get("/", getBooks);
+
+/**
+ * Get Book
+ * @openapi
+ * /api/v1/books/{id}:
+ *    get:
+ *      tags:
+ *        - Books
+ *      summary: "Get Book"
+ *      operationId: getBook
+ *      parameters:
+ *        - $ref: "#/components/parameters/id"
+ *      description: "Returns the information of an book.<br><br>If the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed.<br><br>If the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
+ *      responses:
+ *        '200':
+ *          $ref: "#/components/responses/getBook"
+ *        '404':
+ *          $ref: "#/components/responses/bookNotFound"
+ *        '500':
+ *          $ref: "#/components/responses/internalServerError"
+ *      security:
+ *       - jwtAuth: []
+ */
 bookRouter.get("/:id", [validateId], getBook);
 bookRouter.get("/all/authors", getAllBooksAuthorsGroupByBook);
 

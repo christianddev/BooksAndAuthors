@@ -336,26 +336,6 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      validateAuthorByIdDataBaseErrorResponse: {
-        type: "object",
-        required: ["error"],
-        properties: {
-          error: {
-            type: "object",
-            description: "contains information related to one or more errors",
-            properties: {
-              status: {
-                type: "number",
-                description: "status code associated with the error",
-              },
-              message: {
-                type: "string",
-                description: "description related to the error",
-              },
-            },
-          },
-        },
-      },
       authorUpdate: {
         type: "object",
         required: ["data"],
