@@ -16,6 +16,11 @@ const swaggerDefinition: OAS3Definition = {
             schema: {
               $ref: "#/components/schemas/author",
             },
+            examples: {
+              author: {
+                $ref: "#/components/examples/author",
+              },
+            },
           },
         },
         links: {
@@ -52,6 +57,14 @@ const swaggerDefinition: OAS3Definition = {
             schema: {
               $ref: "#/components/schemas/authorsWithBooks",
             },
+            examples: {
+              postAuthorsWithBooks: {
+                $ref: "#/components/examples/postAuthorsWithBooks",
+              },
+              postAuthorsWithBooksSomeError: {
+                $ref: "#/components/examples/postAuthorsWithBooksSomeError",
+              },
+            },
           },
         },
       },
@@ -62,6 +75,17 @@ const swaggerDefinition: OAS3Definition = {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/internalServerError",
+            },
+            examples: {
+              nameFIeld: {
+                $ref: "#/components/examples/nameFIeld",
+              },
+              countryField: {
+                $ref: "#/components/examples/countryField",
+              },
+              authorsExists: {
+                $ref: "#/components/examples/authorsExists",
+              },
             },
           },
         },
@@ -74,6 +98,11 @@ const swaggerDefinition: OAS3Definition = {
             schema: {
               $ref: "#/components/schemas/getAuthors",
             },
+            examples: {
+              authorsList: {
+                $ref: "#/components/examples/authorsList",
+              },
+            },
           },
         },
       },
@@ -85,23 +114,28 @@ const swaggerDefinition: OAS3Definition = {
             schema: {
               $ref: "#/components/schemas/author",
             },
+            examples: {
+              author: {
+                $ref: "#/components/examples/author",
+              },
+            },
           },
         },
         links: {
           authorId: { $ref: "#/components/links/authorId" },
         },
       },
-      getAuthorNotFound: {
-        description: "Not Found, Error related to the request data.",
+      authorNotFound: {
+        description:
+          "Not Found, The requested resource is not found.<br><br>A **author** cannot be found for two reasons:<br><br> - There is no record related to the request ID.<br><br> - Taking into account the setting of the environment variable `EXCLUDE_TEMPORARY_DELETED`, the record may exist in the database, but is not available if the value of the **isDeleted** field is set to **true**.",
         content: {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/internalServerError",
             },
-            example: {
-              error: {
-                status: 404,
-                message: "author with id '21' not found",
+            examples: {
+              authorNotFound: {
+                $ref: "#/components/examples/authorNotFound",
               },
             },
           },
@@ -117,7 +151,7 @@ const swaggerDefinition: OAS3Definition = {
             },
             examples: {
               authorsAndHisBooks: {
-                $ref: "#/components/examples/authorsAndHisBooks",
+                $ref: "#/components/examples/authorsAndHisBooksList",
               },
             },
           },
@@ -156,40 +190,34 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      patchAuthorNotFound: {
-        description:
-          "Not Found, The requested resource is not found.<br><br>A author cannot be found for two reasons:<br><br> - There is no record related to the request ID.<br><br> - Taking into account the setting of the environment variable `EXCLUDE_TEMPORARY_DELETED`, the record may exist in the database, but is not available if the value of the **isDeleted** field is set to **true**.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/internalServerError",
-            },
-            examples: {
-              authorNotFound: {
-                $ref: "#/components/examples/authorNotFound",
-              },
-            },
-          },
-        },
-      },
       patchAuthorBooks: {
         description:
-          "Updates the register of books associated with an author, taking into account the setting of environment variables `EXCLUDE_TEMPORARY_DELETED`.",
+          "Updates the register of books associated with an author, taking into account the setting of environment variables `EXCLUDE_TEMPORARY_DELETED`.<br><br>**At least one of the author-books partnerships has been completed successfully**.",
         content: {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/authorBooksUpdateSuccess",
+            },
+            examples: {
+              patchAuthorsWithBooksSomeError: {
+                $ref: "#/components/examples/patchAuthorsWithBooksSomeError",
+              },
             },
           },
         },
       },
       patchAuthorBookBadRequest: {
         description:
-          "Bad Request.<br>If the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.<br><br> if the relationship between the author and the book has been made previously, an error message is returned similar to `there is an author with the bookId '##' & authorId '##'`.",
+          "Bad Request.<br>If the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.<br><br> If the relationship between the author and the book has been made previously, an error message is returned similar to `there is an author with the bookId '##' & authorId '##'`.<br><br>**All associations between book and author have returned some type of error.**",
         content: {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/authorBooksUpdateBadRequest",
+            },
+            examples: {
+              booksAuthorsExist: {
+                $ref: "#/components/examples/booksAuthorsErrors",
+              },
             },
           },
         },
@@ -200,6 +228,11 @@ const swaggerDefinition: OAS3Definition = {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/authorDeleted",
+            },
+            examples: {
+              booksAuthorsUpdatedRows: {
+                $ref: "#/components/examples/booksAuthorsUpdatedRows",
+              },
             },
           },
         },

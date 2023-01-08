@@ -58,7 +58,7 @@ authorRouter.get("/", getAuthors);
  *        '200':
  *          $ref: "#/components/responses/getAuthor"
  *        '404':
- *          $ref: "#/components/responses/getAuthorNotFound"
+ *          $ref: "#/components/responses/authorNotFound"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
@@ -179,7 +179,7 @@ authorRouter.post(
  *        '400':
  *          $ref: "#/components/responses/patchAuthorBadRequest"
  *        '404':
- *          $ref: "#/components/responses/patchAuthorNotFound"
+ *          $ref: "#/components/responses/authorNotFound"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
@@ -220,7 +220,7 @@ authorRouter.patch(
  *        '400':
  *          $ref: "#/components/responses/patchAuthorBookBadRequest"
  *        '404':
- *          $ref: "#/components/responses/notFound"
+ *          $ref: "#/components/responses/authorNotFound"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
@@ -248,7 +248,7 @@ authorRouter.patch(
  *        '200':
  *          $ref: "#/components/responses/deletedAuthor"
  *        '404':
- *          $ref: "#/components/responses/notFound"
+ *          $ref: "#/components/responses/authorNotFound"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:

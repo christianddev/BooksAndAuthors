@@ -45,12 +45,6 @@ const swaggerDefinition: OAS3Definition = {
                 description: "description related to the error",
               },
             },
-            example: {
-              error: {
-                status: 400,
-                message: "check 'name' field",
-              },
-            },
           },
         },
       },
@@ -198,32 +192,6 @@ const swaggerDefinition: OAS3Definition = {
             },
           },
         },
-        example: {
-          data: {
-            author: {
-              id: 1,
-              name: "Patrick Rothfuss",
-              country: "USA",
-            },
-            booksAuthors: {
-              data: [
-                {
-                  createdAt: "2023-01-07T06:09:23.900Z",
-                  bookId: 1,
-                  authorId: 1,
-                },
-              ],
-              error: [
-                {
-                  message: "book with id '11' not found",
-                },
-                {
-                  message: "book with id '12' not found",
-                },
-              ],
-            },
-          },
-        },
       },
       getAuthors: {
         type: "object",
@@ -257,22 +225,6 @@ const swaggerDefinition: OAS3Definition = {
             },
           },
         },
-        example: {
-          data: {
-            authors: [
-              {
-                id: 1,
-                name: "Patrick Rothfuss",
-                country: "USA",
-              },
-              {
-                id: 2,
-                name: "Santiago Posteguillo",
-                country: "ESP",
-              },
-            ],
-          },
-        },
       },
       author: {
         type: "object",
@@ -303,15 +255,6 @@ const swaggerDefinition: OAS3Definition = {
                   },
                 },
               },
-            },
-          },
-        },
-        example: {
-          data: {
-            author: {
-              id: 1,
-              name: "Patrick Rothfuss",
-              country: "USA",
             },
           },
         },
@@ -444,7 +387,7 @@ const swaggerDefinition: OAS3Definition = {
                   deletedBooksAuthors: {
                     type: "number",
                     description:
-                      "number of author associations and books that have been permanently deleted from the **booksauthors** table",
+                      "number of author associations and books that have been permanently deleted from the **booksauthors** table.",
                   },
                   deletedBook: {
                     type: "array",
@@ -456,14 +399,6 @@ const swaggerDefinition: OAS3Definition = {
                   },
                 },
               },
-            },
-          },
-        },
-        example: {
-          data: {
-            affectedRows: {
-              deletedBooksAuthors: 5,
-              deletedBook: [1],
             },
           },
         },
@@ -515,27 +450,6 @@ const swaggerDefinition: OAS3Definition = {
             },
           },
         },
-        example: {
-          data: {
-            booksAuthors: [
-              {
-                createdAt: "2023-01-07T21:27:02.183Z",
-                bookId: 2,
-                authorId: 2,
-              },
-              {
-                createdAt: "2023-01-07T21:27:02.183Z",
-                bookId: 3,
-                authorId: 2,
-              },
-            ],
-          },
-          error: [
-            {
-              message: "book with id '1' not found",
-            },
-          ],
-        },
       },
       authorBooksUpdateBadRequest: {
         type: "object",
@@ -564,20 +478,6 @@ const swaggerDefinition: OAS3Definition = {
                 },
               },
             },
-          },
-        },
-        example: {
-          error: {
-            status: 400,
-            errors: [
-              {
-                message:
-                  "there is an author with the bookId '1' & authorId '1'",
-              },
-              {
-                message: "book with id '1' not found",
-              },
-            ],
           },
         },
       },
