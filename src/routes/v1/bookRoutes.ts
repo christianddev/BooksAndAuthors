@@ -44,7 +44,7 @@ bookRouter.get("/all/authors", getAllBooksAuthorsGroupByBook);
  *        '200':
  *          description: returns information related to the book that has been created, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the fields **isDeleted**, **createdAt** and **updatedAt** are displayed.
  *        '400':
- *          $ref: "#/components/responses/defaultBadRequest"
+ *          $ref: "#/components/responses/badRequest"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:

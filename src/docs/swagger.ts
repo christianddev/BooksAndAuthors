@@ -4,6 +4,8 @@ import type { OAS3Definition, OAS3Options } from "swagger-jsdoc";
 
 import links from "./links";
 import parameters from "./parameters";
+import defaultResponses from "./responses/defaultResponses";
+import authorsResponses from "./responses/authorsResponses";
 
 import { DEVELOPMENT_SERVER, PRODUCTION_SERVER, SERVER_PORT } from "../helpers";
 
@@ -515,7 +517,7 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      authorDelete: {
+      authorDeleted: {
         type: "object",
         required: ["data"],
         properties: {
@@ -669,162 +671,7 @@ const swaggerDefinition: OAS3Definition = {
       },
     },
     parameters,
-    responses: {
-      internalServerError: {
-        description:
-          "Internal Server Error, you should contact the administrator or check the logs",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/internalServerError",
-            },
-          },
-        },
-      },
-      defaultBadRequest: {
-        description: "Bad Request, Error related to the request data",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/internalServerError",
-            },
-          },
-        },
-      },
-      defaultNotFound: {
-        description: "Not Found, Error related to the request data.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/internalServerError",
-            },
-          },
-        },
-      },
-      authorPostBadRequest: {
-        description:
-          "Bad Request, Error related to the request data, **name** and **country** fields must not be null, if you do not send some of these fields, an error similar to `check **####** field` will be returned.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/internalServerError",
-            },
-          },
-        },
-      },
-      authorWithBooksPostBadRequest: {
-        description:
-          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null, if you do not send some of these fields, an error similar to `check **####** field` will be returned.<br><br>if the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/internalServerError",
-            },
-          },
-        },
-      },
-      authorsList: {
-        description:
-          "Returns a list of authors, taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS` and `EXCLUDE_TEMPORARY_DELETED`.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/authors",
-            },
-          },
-        },
-      },
-      author: {
-        description:
-          "Returns the information of an author, taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS` and `EXCLUDE_TEMPORARY_DELETED`.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/author",
-            },
-          },
-        },
-        links: {
-          getAuthorById: { $ref: "#/components/links/getAuthorById" },
-        },
-      },
-      authorsWithBooks: {
-        description:
-          "Returns the information of the new record in the field **author**, in the **booksAuthors** field it returns information related to the association between the author and his books, in case some of the books are not available, an error message will be sent, <br><br>the response of this endpoint takes into account the setting of environment variables `EXCLUDE_ORM_FIELDS` and `EXCLUDE_TEMPORARY_DELETED`.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/authorsWithBooks",
-            },
-          },
-        },
-      },
-      authorWithBooksList: {
-        description:
-          "Returns the information of an author, taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS` and `EXCLUDE_TEMPORARY_DELETED`.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/authorWhitBook",
-            },
-          },
-        },
-      },
-      authorUpdated: {
-        description:
-          "Update the author's name or country,, taking into account the setting of environment variables `EXCLUDE_TEMPORARY_DELETED`.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/authorUpdate",
-            },
-          },
-        },
-      },
-      authorBooksUpdated: {
-        description:
-          "Updates the register of books associated with an author, taking into account the setting of environment variables `EXCLUDE_TEMPORARY_DELETED`.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/authorBooksUpdateSuccess",
-            },
-          },
-        },
-      },
-      authorPatchBadRequest: {
-        description:
-          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null,<br><br> - if the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.<br> - if you do not send both fields, it will return an error message similar to `check 'name' & 'country' field`.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/internalServerError",
-            },
-          },
-        },
-      },
-      authorBookPatchBadRequest: {
-        description:
-          "Bad Request.<br>If the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.<br><br> if the relationship between the author and the book has been made previously, an error message is returned similar to `there is an author with the bookId '##' & authorId '##'`.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/authorBooksUpdateBadRequest",
-            },
-          },
-        },
-      },
-      authorDeleted: {
-        description: "Delete a record temporarily.",
-        content: {
-          "application/json": {
-            schema: {
-              $ref: "#/components/schemas/authorDelete",
-            },
-          },
-        },
-      },
-    },
+    responses: { ...defaultResponses, ...authorsResponses },
     links,
   },
 };

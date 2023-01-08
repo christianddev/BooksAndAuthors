@@ -34,7 +34,7 @@ export const authorRouter = Router();
  *      description: "returns a list of authors, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
  *        '200':
- *          $ref: "#/components/responses/authorsList"
+ *          $ref: "#/components/responses/getAuthors"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
@@ -56,11 +56,11 @@ authorRouter.get("/", getAuthors);
  *      description: "Returns the information of an author, if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
  *        '200':
- *          $ref: "#/components/responses/author"
+ *          $ref: "#/components/responses/getAuthor"
  *        '400':
- *          $ref: "#/components/responses/defaultBadRequest"
+ *          $ref: "#/components/responses/badRequest"
  *        '404':
- *          $ref: "#/components/responses/defaultNotFound"
+ *          $ref: "#/components/responses/notFound"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
@@ -80,9 +80,9 @@ authorRouter.get("/:id", [validateId], getAuthor);
  *      description: "Get all authors and their books that may be associated with them,<br><br> - if the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed, <br> - if the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
  *      responses:
  *        '200':
- *          $ref: "#/components/responses/authorWithBooksList"
+ *          $ref: "#/components/responses/getAuthorsAndHisBooks"
  *        '400':
- *          $ref: "#/components/responses/defaultBadRequest"
+ *          $ref: "#/components/responses/badRequest"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
@@ -108,9 +108,9 @@ authorRouter.get("/all/books", getAllBooksAuthorsGroupByAuthor);
  *                $ref: "#/components/schemas/authorRequest"
  *      responses:
  *        '201':
- *          $ref: "#/components/responses/author"
+ *          $ref: "#/components/responses/postAuthor"
  *        '400':
- *          $ref: "#/components/responses/authorPostBadRequest"
+ *          $ref: "#/components/responses/postAuthorBadRequest"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
@@ -140,9 +140,9 @@ authorRouter.post(
  *                $ref: "#/components/schemas/authorWithBooksRequest"
  *      responses:
  *        '201':
- *          $ref: "#/components/responses/authorsWithBooks"
+ *          $ref: "#/components/responses/postAuthorsWithBooks"
  *        '400':
- *          $ref: "#/components/responses/authorWithBooksPostBadRequest"
+ *          $ref: "#/components/responses/postAuthorWithBooksBadRequest"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
@@ -179,9 +179,9 @@ authorRouter.post(
  *                $ref: "#/components/schemas/authorUpdateRequest"
  *      responses:
  *        '200':
- *          $ref: "#/components/responses/authorUpdated"
+ *          $ref: "#/components/responses/patchAuthor"
  *        '400':
- *          $ref: "#/components/responses/authorPatchBadRequest"
+ *          $ref: "#/components/responses/patchAuthorBadRequest"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
@@ -218,11 +218,11 @@ authorRouter.patch(
  *                $ref: "#/components/schemas/authorBooksUpdateRequest"
  *      responses:
  *        '200':
- *          $ref: "#/components/responses/authorBooksUpdated"
+ *          $ref: "#/components/responses/patchAuthorBooks"
  *        '400':
- *          $ref: "#/components/responses/authorBookPatchBadRequest"
+ *          $ref: "#/components/responses/patchAuthorBookBadRequest"
  *        '404':
- *          $ref: "#/components/responses/defaultNotFound"
+ *          $ref: "#/components/responses/notFound"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
@@ -248,9 +248,9 @@ authorRouter.patch(
  *      description: "Deletes a user's record, `by default records are not permanently deleted`, deleting a record means deleting its relationship with books in the **booksauthors** table, and updating the author table with the **isDeleted** property set to true."
  *      responses:
  *        '200':
- *          $ref: "#/components/responses/authorDeleted"
+ *          $ref: "#/components/responses/deletedAuthor"
  *        '404':
- *          $ref: "#/components/responses/defaultNotFound"
+ *          $ref: "#/components/responses/notFound"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
