@@ -2,8 +2,8 @@ import swaggerJSDoc from "swagger-jsdoc";
 
 import type { OAS3Definition, OAS3Options } from "swagger-jsdoc";
 
-import links from "./links";
-import parameters from "./parameters";
+import links from "./common/links";
+import parameters from "./common/parameters";
 import defaultSchemas from "./schemas/defaultSchemas";
 import authorSchemas from "./schemas/authorSchemas";
 import authorsExamples from "./examples/authorsExamples";
