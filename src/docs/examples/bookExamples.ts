@@ -92,7 +92,7 @@ const swaggerDefinition: OAS3Definition = {
                 id: 1,
                 isbn: "978-0-7564-0407-9",
                 title: "The Name of the Wind, 2007",
-                books: [
+                authors: [
                   {
                     id: 1,
                     name: "Patrick Rothfuss",

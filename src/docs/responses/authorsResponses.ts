@@ -143,7 +143,7 @@ const swaggerDefinition: OAS3Definition = {
       },
       getAuthorsAndHisBooks: {
         description:
-          "Returns the information of an author, taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS`, `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.",
+          "Returns the authors' information.<br><br>Taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS`, `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.",
         content: {
           "application/json": {
             schema: {

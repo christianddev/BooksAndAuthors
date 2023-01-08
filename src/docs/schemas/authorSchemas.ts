@@ -274,6 +274,7 @@ const swaggerDefinition: OAS3Definition = {
                 type: "array",
                 items: {
                   type: "object",
+                  required: ["id", "name", "country"],
                   properties: {
                     id: {
                       type: "number",
@@ -295,6 +296,7 @@ const swaggerDefinition: OAS3Definition = {
                       description: "Books associated with the author",
                       items: {
                         type: "object",
+                        required: ["id", "isbn", "title"],
                         properties: {
                           id: {
                             type: "number",

@@ -274,42 +274,44 @@ const swaggerDefinition: OAS3Definition = {
                 type: "array",
                 items: {
                   type: "object",
+                  required: ["id", "isbn", "title"],
                   properties: {
                     id: {
                       type: "number",
                       description:
                         "assigned by the database, is used to identify the ledger in database queries",
                     },
-                    name: {
+                    isbn: {
                       type: "string",
                       description:
-                        "author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
+                        "the ISBN must be unique, this field allows to identify the book when performing some operations in the database.",
                     },
-                    country: {
+                    title: {
                       type: "string",
                       description:
-                        "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+                        "field associated with an ISBN, several books can have the same title.",
                     },
-                    books: {
+                    authors: {
                       type: "array",
-                      description: "Books associated with the author",
+                      description: "Authors associated with the book",
                       items: {
                         type: "object",
+                        required: ["id", "name", "country"],
                         properties: {
                           id: {
                             type: "number",
                             description:
                               "assigned by the database, is used to identify the ledger in database queries",
                           },
-                          isbn: {
+                          name: {
                             type: "string",
                             description:
-                              "the ISBN must be unique, this field allows to identify the book when performing some operations in the database.",
+                              "author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
                           },
-                          title: {
+                          country: {
                             type: "string",
                             description:
-                              "field associated with an ISBN, several books can have the same title.",
+                              "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
                           },
                           booksauthors: {
                             type: "object",

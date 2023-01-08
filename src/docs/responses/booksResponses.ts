@@ -143,15 +143,15 @@ const swaggerDefinition: OAS3Definition = {
       },
       getBooksAndHisAuthors: {
         description:
-          "Returns the information of an author, taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS`, `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.",
+          "Returns the books' information.<br><br>Taking into account the setting of environment variables `EXCLUDE_ORM_FIELDS`, `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.",
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/authorsAndHisBooks",
+              $ref: "#/components/schemas/booksAndHisAuthors",
             },
             examples: {
               authorsAndHisBooks: {
-                $ref: "#/components/examples/authorsAndHisBooksList",
+                $ref: "#/components/examples/booksAndHisAuthorsList",
               },
             },
           },

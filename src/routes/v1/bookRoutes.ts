@@ -65,6 +65,25 @@ bookRouter.get("/", getBooks);
  *       - jwtAuth: []
  */
 bookRouter.get("/:id", [validateId], getBook);
+
+/**
+ * Get all books and his authors
+ * @openapi
+ * /api/v1/books/all/authors:
+ *    get:
+ *      tags:
+ *        - Books
+ *      summary: "Get all books and his authors"
+ *      operationId: getAllBooksWithAuthors
+ *      description: "Get all books and their authors that may be associated with them.<br><br>If the environment variable `EXCLUDE_ORM_FIELDS` is active, the **isDeleted**, **createdAt** and **updatedAt** fields are displayed.<br><br>If the environment variable `EXCLUDE_TEMPORARY_DELETED` is active, it does not return the records where the **isDeleted** field is **true**."
+ *      responses:
+ *        '200':
+ *          $ref: "#/components/responses/getBooksAndHisAuthors"
+ *        '500':
+ *          $ref: "#/components/responses/internalServerError"
+ *      security:
+ *       - jwtAuth: []
+ */
 bookRouter.get("/all/authors", getAllBooksAuthorsGroupByBook);
 
 /**
