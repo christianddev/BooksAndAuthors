@@ -2,6 +2,9 @@ import swaggerJSDoc from "swagger-jsdoc";
 
 import type { OAS3Definition, OAS3Options } from "swagger-jsdoc";
 
+import links from "./links";
+import parameters from "./parameters";
+
 import { DEVELOPMENT_SERVER, PRODUCTION_SERVER, SERVER_PORT } from "../helpers";
 
 const swaggerDefinition: OAS3Definition = {
@@ -453,7 +456,7 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      defaultError: {
+      internalServerError: {
         type: "object",
         required: ["error"],
         properties: {
@@ -665,25 +668,15 @@ const swaggerDefinition: OAS3Definition = {
         },
       },
     },
-    parameters: {
-      id: {
-        name: "id",
-        in: "path",
-        description: "ID of the item to retrieve",
-        required: true,
-        schema: {
-          type: "number",
-        },
-      },
-    },
+    parameters,
     responses: {
-      defaultError: {
+      internalServerError: {
         description:
           "Internal Server Error, you should contact the administrator or check the logs",
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/defaultError",
+              $ref: "#/components/schemas/internalServerError",
             },
           },
         },
@@ -693,7 +686,7 @@ const swaggerDefinition: OAS3Definition = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/defaultError",
+              $ref: "#/components/schemas/internalServerError",
             },
           },
         },
@@ -703,7 +696,7 @@ const swaggerDefinition: OAS3Definition = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/defaultError",
+              $ref: "#/components/schemas/internalServerError",
             },
           },
         },
@@ -714,7 +707,7 @@ const swaggerDefinition: OAS3Definition = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/defaultError",
+              $ref: "#/components/schemas/internalServerError",
             },
           },
         },
@@ -725,7 +718,7 @@ const swaggerDefinition: OAS3Definition = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/defaultError",
+              $ref: "#/components/schemas/internalServerError",
             },
           },
         },
@@ -805,7 +798,7 @@ const swaggerDefinition: OAS3Definition = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/defaultError",
+              $ref: "#/components/schemas/internalServerError",
             },
           },
         },
@@ -832,16 +825,7 @@ const swaggerDefinition: OAS3Definition = {
         },
       },
     },
-    links: {
-      getAuthorById: {
-        operationId: "getAuthor",
-        description:
-          "The `id` value returned in the response can be used as  the Id` parameter in `GET api/v1/authors/{id}`.",
-        parameters: {
-          id: "$request.path.id",
-        },
-      },
-    },
+    links,
   },
 };
 

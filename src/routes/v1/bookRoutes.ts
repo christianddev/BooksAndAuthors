@@ -46,7 +46,7 @@ bookRouter.get("/all/authors", getAllBooksAuthorsGroupByBook);
  *        '400':
  *          $ref: "#/components/responses/defaultBadRequest"
  *        '500':
- *          $ref: "#/components/responses/defaultError"
+ *          $ref: "#/components/responses/internalServerError"
  *      security:
  *       - jwtAuth: []
  */

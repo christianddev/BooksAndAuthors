@@ -36,7 +36,7 @@ export const authorRouter = Router();
  *        '200':
  *          $ref: "#/components/responses/authorsList"
  *        '500':
- *          $ref: "#/components/responses/defaultError"
+ *          $ref: "#/components/responses/internalServerError"
  *      security:
  *       - jwtAuth: []
  */
@@ -58,11 +58,11 @@ authorRouter.get("/", getAuthors);
  *        '200':
  *          $ref: "#/components/responses/author"
  *        '400':
- *          $ref: "#/components/responses/badRequestDefault"
+ *          $ref: "#/components/responses/defaultBadRequest"
  *        '404':
  *          $ref: "#/components/responses/defaultNotFound"
  *        '500':
- *          $ref: "#/components/responses/defaultError"
+ *          $ref: "#/components/responses/internalServerError"
  *      security:
  *       - jwtAuth: []
  */
@@ -84,7 +84,7 @@ authorRouter.get("/:id", [validateId], getAuthor);
  *        '400':
  *          $ref: "#/components/responses/defaultBadRequest"
  *        '500':
- *          $ref: "#/components/responses/defaultError"
+ *          $ref: "#/components/responses/internalServerError"
  *      security:
  *       - jwtAuth: []
  */
@@ -112,7 +112,7 @@ authorRouter.get("/all/books", getAllBooksAuthorsGroupByAuthor);
  *        '400':
  *          $ref: "#/components/responses/authorPostBadRequest"
  *        '500':
- *          $ref: "#/components/responses/defaultError"
+ *          $ref: "#/components/responses/internalServerError"
  *      security:
  *       - jwtAuth: []
  */
@@ -144,7 +144,7 @@ authorRouter.post(
  *        '400':
  *          $ref: "#/components/responses/authorWithBooksPostBadRequest"
  *        '500':
- *          $ref: "#/components/responses/defaultError"
+ *          $ref: "#/components/responses/internalServerError"
  *      security:
  *       - jwtAuth: []
  */
@@ -183,7 +183,7 @@ authorRouter.post(
  *        '400':
  *          $ref: "#/components/responses/authorPatchBadRequest"
  *        '500':
- *          $ref: "#/components/responses/defaultError"
+ *          $ref: "#/components/responses/internalServerError"
  *      security:
  *       - jwtAuth: []
  */
@@ -224,7 +224,7 @@ authorRouter.patch(
  *        '404':
  *          $ref: "#/components/responses/defaultNotFound"
  *        '500':
- *          $ref: "#/components/responses/defaultError"
+ *          $ref: "#/components/responses/internalServerError"
  *      security:
  *       - jwtAuth: []
  */
@@ -252,7 +252,7 @@ authorRouter.patch(
  *        '404':
  *          $ref: "#/components/responses/defaultNotFound"
  *        '500':
- *          $ref: "#/components/responses/defaultError"
+ *          $ref: "#/components/responses/internalServerError"
  *      security:
  *       - jwtAuth: []
  */
