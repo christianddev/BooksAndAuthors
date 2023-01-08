@@ -124,9 +124,6 @@ const swaggerDefinition: OAS3Definition = {
             },
           },
         },
-        links: {
-          authorId: { $ref: "#/components/links/authorId" },
-        },
       },
       authorNotFound: {
         description:
@@ -238,10 +235,7 @@ const swaggerDefinition: OAS3Definition = {
               },
             },
           },
-        },
-        links: {
-          authorId: { $ref: "#/components/links/authorId" },
-        },
+        }
       },
     },
   },

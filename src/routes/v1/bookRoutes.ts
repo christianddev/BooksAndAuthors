@@ -226,4 +226,27 @@ bookRouter.patch(
   [validateId, validateAuthorIDs, validateBookByIdDataBase],
   patchBookWithAuthors
 );
+
+/**
+ * Delete Book
+ * @openapi
+ * /api/v1/books/{id}:
+ *    delete:
+ *      tags:
+ *        - Books
+ *      summary: "Delete Book"
+ *      operationId: deleteBook
+ *      parameters:
+ *        - $ref: "#/components/parameters/id"
+ *      description: "Deletes a book's record.<br><br>`by default records are not permanently deleted`, deleting a record means deleting its relationship with books in the **booksauthors** table, and updating the author table with the **isDeleted** property set to true.<br><br>**If the `TEMPORARY_DELETE` environment variable is set, the records will be permanently deleted**."
+ *      responses:
+ *        '200':
+ *          $ref: "#/components/responses/deletedBook"
+ *        '404':
+ *          $ref: "#/components/responses/bookNotFound"
+ *        '500':
+ *          $ref: "#/components/responses/internalServerError"
+ *      security:
+ *       - jwtAuth: []
+ */
 bookRouter.delete("/:id", [validateId, validateBookByIdDataBase], deleteBook);

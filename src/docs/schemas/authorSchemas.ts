@@ -20,7 +20,7 @@ const swaggerDefinition: OAS3Definition = {
           country: {
             type: "string",
             description:
-              "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+              "Author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
           },
         },
         example: {
@@ -34,15 +34,15 @@ const swaggerDefinition: OAS3Definition = {
         properties: {
           error: {
             type: "object",
-            description: "contains information related to one or more errors",
+            description: "Contains information related to one or more errors.",
             properties: {
               status: {
                 type: "number",
-                description: "status code associated with the error",
+                description: "Status code associated with the error.",
               },
               message: {
                 type: "string",
-                description: "description related to the error",
+                description: "Description related to the error.",
               },
             },
           },
@@ -61,7 +61,7 @@ const swaggerDefinition: OAS3Definition = {
           country: {
             type: "string",
             description:
-              "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+              "Author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
             example: "USA",
           },
           books: {
@@ -93,7 +93,7 @@ const swaggerDefinition: OAS3Definition = {
           country: {
             type: "string",
             description:
-              "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+              "Author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
             example: "USA",
           },
         },
@@ -135,17 +135,17 @@ const swaggerDefinition: OAS3Definition = {
                   id: {
                     type: "number",
                     description:
-                      "assigned by the database, is used to identify the ledger in database queries",
+                      "Assigned by the database, is used to identify the ledger in database queries.",
                   },
                   name: {
                     type: "string",
                     description:
-                      "author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
+                      "Author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
                   },
                   country: {
                     type: "string",
                     description:
-                      "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+                      "Author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
                   },
                 },
               },
@@ -210,7 +210,7 @@ const swaggerDefinition: OAS3Definition = {
                     id: {
                       type: "number",
                       description:
-                        "Assigned by the database, is used to identify the ledger in database queries",
+                        "Assigned by the database, is used to identify the ledger in database queries.",
                     },
                     name: {
                       type: "string",
@@ -244,17 +244,17 @@ const swaggerDefinition: OAS3Definition = {
                   id: {
                     type: "number",
                     description:
-                      "assigned by the database, is used to identify the ledger in database queries",
+                      "Assigned by the database, is used to identify the ledger in database queries.",
                   },
                   name: {
                     type: "string",
                     description:
-                      "author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
+                      "Author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
                   },
                   country: {
                     type: "string",
                     description:
-                      "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+                      "Author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
                   },
                 },
               },
@@ -279,17 +279,17 @@ const swaggerDefinition: OAS3Definition = {
                     id: {
                       type: "number",
                       description:
-                        "assigned by the database, is used to identify the ledger in database queries",
+                        "Assigned by the database, is used to identify the ledger in database queries.",
                     },
                     name: {
                       type: "string",
                       description:
-                        "author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
+                        "Author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
                     },
                     country: {
                       type: "string",
                       description:
-                        "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+                        "Author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
                     },
                     books: {
                       type: "array",
@@ -301,7 +301,7 @@ const swaggerDefinition: OAS3Definition = {
                           id: {
                             type: "number",
                             description:
-                              "assigned by the database, is used to identify the ledger in database queries",
+                              "Assigned by the database, is used to identify the ledger in database queries.",
                           },
                           isbn: {
                             type: "string",
@@ -319,12 +319,12 @@ const swaggerDefinition: OAS3Definition = {
                               bookId: {
                                 type: "number",
                                 description:
-                                  "assigned by the database, is used to identify the ledger in database queries",
+                                  "Assigned by the database, is used to identify the ledger in database queries.",
                               },
                               authorId: {
                                 type: "number",
                                 description:
-                                  "author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
+                                  "Author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
                               },
                             },
                           },
@@ -372,14 +372,15 @@ const swaggerDefinition: OAS3Definition = {
                   deletedBooksAuthors: {
                     type: "number",
                     description:
-                      "number of author associations and books that have been permanently deleted from the **booksauthors** table.",
+                      "Number of author associations and books that have been permanently deleted from the **booksauthors** table.",
                   },
                   deletedBook: {
                     type: "array",
                     description:
-                      "number of records in the **authors** table that have been **temporarily** or **permanently** deleted.",
+                      "Number of records in the **authors** table that have been **temporarily** or **permanently** deleted.",
                     items: {
                       types: "number",
+                      description: "Number of records affected.",
                     },
                   },
                 },
@@ -450,7 +451,7 @@ const swaggerDefinition: OAS3Definition = {
             properties: {
               status: {
                 type: "number",
-                description: "status code associated with the error",
+                description: "Status code associated with the error.",
               },
               errors: {
                 type: "array",

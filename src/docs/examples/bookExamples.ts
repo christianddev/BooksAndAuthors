@@ -222,7 +222,7 @@ const swaggerDefinition: OAS3Definition = {
       booksAuthorsUpdatedRows: {
         summary: "Affected rows",
         description:
-          "fields:<br><br>**deletedBooksAuthors**: number of author associations and books that have been permanently deleted from the **booksauthors** table.<br><br>**deletedAuthor**: number of records in the *authors* table that have been **temporarily** or **permanently** deleted.",
+          "fields:<br><br>**deletedBooksAuthors**: number of associations between books and authors that have been **permanently** deleted from the **booksauthors** table.<br><br>**deletedBook**: number of records in the **books** table that have been **temporarily** or **permanently** deleted.",
         value: {
           data: {
             affectedRows: {

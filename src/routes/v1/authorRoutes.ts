@@ -95,7 +95,7 @@ authorRouter.get("/all/books", getAllBooksAuthorsGroupByAuthor);
  *        - Authors
  *      summary: "Create Author"
  *      operationId: createAuthor
- *      description: "This endpoint will add a new record to the **authors** table.<br><br>**name** and **country** fields must be unique.<br>The information in the country field must be of type ISO Code Alpha-3.<br><br>for example:*USA, ESP...*"
+ *      description: "This endpoint will add a new record to the **authors** table.<br><br>**name** and **country** fields must be unique.<br><br>The information in the country field must be of type ISO Code Alpha-3.<br><br>for example:*USA, ESP...*"
  *      requestBody:
  *          required: true
  *          content:
@@ -243,7 +243,7 @@ authorRouter.patch(
  *      operationId: deleteAuthor
  *      parameters:
  *        - $ref: "#/components/parameters/id"
- *      description: "Deletes a user's record, `by default records are not permanently deleted`, deleting a record means deleting its relationship with books in the **booksauthors** table, and updating the author table with the **isDeleted** property set to true.<br><br>**If the `TEMPORARY_DELETE` environment variable is set, the records will be permanently deleted**."
+ *      description: "Deletes a author's record.<br><br>`by default records are not permanently deleted`, deleting a record means deleting its relationship with books in the **booksauthors** table, and updating the author table with the **isDeleted** property set to true.<br><br>**If the `TEMPORARY_DELETE` environment variable is set, the records will be permanently deleted**."
  *      responses:
  *        '200':
  *          $ref: "#/components/responses/deletedAuthor"

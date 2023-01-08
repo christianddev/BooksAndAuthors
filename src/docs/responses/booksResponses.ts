@@ -124,9 +124,6 @@ const swaggerDefinition: OAS3Definition = {
             },
           },
         },
-        links: {
-          bookId: { $ref: "#/components/links/bookId" },
-        },
       },
       bookNotFound: {
         description:
@@ -238,9 +235,6 @@ const swaggerDefinition: OAS3Definition = {
               },
             },
           },
-        },
-        links: {
-          bookId: { $ref: "#/components/links/bookId" },
         },
       },
     },

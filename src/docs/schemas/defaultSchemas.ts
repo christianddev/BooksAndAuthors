@@ -14,15 +14,15 @@ const swaggerDefinition: OAS3Definition = {
         properties: {
           error: {
             type: "object",
-            description: "contains information related to one or more errors",
+            description: "Contains information related to one or more errors.",
             properties: {
               status: {
                 type: "number",
-                description: "status code associated with the error",
+                description: "Status code associated with the error.",
               },
               message: {
                 type: "string",
-                description: "description related to the error",
+                description: "Description related to the error.",
               },
             },
           },
