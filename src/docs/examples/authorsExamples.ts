@@ -141,7 +141,7 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      postAuthorsWithBooks: {
+      postAuthorWithBooks: {
         summary: "Author with books",
         description:
           "Data of the created record and the result of the association in the **booksauthors** table.",
@@ -165,10 +165,10 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      postAuthorsWithBooksSomeErrors: {
+      postAuthorWithBooksSomeErrors: {
         summary: "Author with books and errors",
         description:
-          "Data of the created record, the result of the associations in the **booksauthors** table and the errors when trying to make associations with the **booksauthors** table.",
+          "The result of the associations in the **booksauthors** table and the errors when trying to make associations with the **booksauthors** table.",
         value: {
           data: {
             author: {

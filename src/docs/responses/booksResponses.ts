@@ -29,7 +29,7 @@ const swaggerDefinition: OAS3Definition = {
       },
       postBookBadRequest: {
         description:
-          "Bad Request, Error related to the request data.<br><br>**isbn** and **title** fields must not be null, if you do not send some of these fields, an error similar to `check **####** field` will be returned.<br><br>If the **isbn** is in use in the database, it returns an error message similar to `a book exists with the isbn '####', id '##' & title '###'`.",
+          "Bad Request, Error related to the request data.<br><br>**isbn** and **title** fields must not be null, if you do not send some of these fields, an error similar to `check **####** field` will be returned.<br><br>If the **isbn** is in use in the database, it returns an error message similar to:<br>`a book exists with the isbn '####', id '##' & title '###'`.",
         content: {
           "application/json": {
             schema: {
@@ -49,42 +49,45 @@ const swaggerDefinition: OAS3Definition = {
           },
         },
       },
-      postBooksWithAuthors: {
+      postBookWithAuthors: {
         description:
-          "Returns the information of the new record in the field **author**, in the **booksAuthors** field it returns information related to the association between the author and his books, in case some of the books are not available, an error message will be sent.<br><br>The response of this endpoint takes into account the setting of environment variables `EXCLUDE_ORM_FIELDS`, `TEMPORARY_DELETE`, `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.<br><br>If the **isbn** is in use in the database, it returns an error message similar to `a book exists with the isbn '####', id '##' & title '###'`.",
+          "Returns the information of the new record in the field **book**.<br><br>In the **booksAuthors** field it returns information related to the association between the author and his books, in case some of the books are not available, an error message will be sent.<br><br>The response of this endpoint takes into account the setting of environment variables `EXCLUDE_ORM_FIELDS`, `TEMPORARY_DELETE`, `TEMPORARY_DELETE` and `EXCLUDE_TEMPORARY_DELETED`.<br><br>If the **isbn** is in use in the database, it returns an error message similar to:<br>`a book exists with the isbn '####', id '##' & title '###'`.",
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/authorsWithBooks",
+              $ref: "#/components/schemas/booksWithAuthors",
             },
             examples: {
-              postAuthorsWithBooks: {
-                $ref: "#/components/examples/postAuthorsWithBooks",
+              postBooksWithAuthors: {
+                $ref: "#/components/examples/postBooksWithAuthors",
               },
-              postAuthorsWithBooksSomeErrors: {
-                $ref: "#/components/examples/postAuthorsWithBooksSomeErrors",
+              postBookWithAuthorsSomeErrors: {
+                $ref: "#/components/examples/postBookWithAuthorsSomeErrors",
               },
             },
           },
         },
+        links: {
+          bookId: { $ref: "#/components/links/bookId" },
+        },
       },
       postBookWithAuthorsBadRequest: {
         description:
-          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null, if you do not send some of these fields, an error similar to `check **####** field` will be returned.<br><br>If the **isbn** is in use in the database, it returns an error message similar to `a book exists with the isbn '####', id '##' & title '###'`.",
+          "Bad Request, Error related to the request data, **isbn**, **title** and **authors** fields must not be null.<br><br>If you do not send some of these fields, an error similar to `check **####** field` will be returned.<br><br>If the **isbn** is in use in the database, it returns an error message similar to:<br>`a book exists with the isbn '####', id '##' & title '###'`.",
         content: {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/internalServerError",
             },
             examples: {
-              nameField: {
-                $ref: "#/components/examples/nameField",
+              isbnField: {
+                $ref: "#/components/examples/isbnField",
               },
-              countryField: {
-                $ref: "#/components/examples/countryField",
+              titleField: {
+                $ref: "#/components/examples/titleField",
               },
-              authorsExists: {
-                $ref: "#/components/examples/authorsExists",
+              booksExists: {
+                $ref: "#/components/examples/booksExists",
               },
             },
           },
@@ -170,7 +173,7 @@ const swaggerDefinition: OAS3Definition = {
       },
       patchBookBadRequest: {
         description:
-          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null,<br><br>If the **isbn** is in use in the database, it returns an error message similar to `a book exists with the isbn '####', id '##' & title '###'`.<br><br>If both fields are not sent, it will return an error message similar to `check 'name' & 'country' field`.",
+          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null,<br><br>If the **isbn** is in use in the database, it returns an error message similar to:<br>`a book exists with the isbn '####', id '##' & title '###'`.<br><br>If both fields are not sent, it will return an error message similar to `check 'name' & 'country' field`.",
         content: {
           "application/json": {
             schema: {

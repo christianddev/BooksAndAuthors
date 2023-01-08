@@ -95,7 +95,7 @@ bookRouter.get("/all/authors", getAllBooksAuthorsGroupByBook);
  *        - Books
  *      summary: "Create Book"
  *      operationId: createBook
- *      description: "This endpoint will add a new record to the **books** table.<br><br>**isbn** and **title** fields must be unique"
+ *      description: "This endpoint will add a new record to the **books** table.<br><br>**isbn** field must be unique"
  *      requestBody:
  *          required: true
  *          content:
@@ -117,6 +117,33 @@ bookRouter.post(
   [validateISBN, validateTitle, validateBookByISBNDataBase],
   postBook
 );
+
+/**
+ * Create Book with Authors
+ * @openapi
+ * /api/v1/books/authors:
+ *    post:
+ *      tags:
+ *        - Books
+ *      summary: "Create Book with Authors"
+ *      operationId: createBookWithAuthors
+ *      description: "This endpoint will add a new record to the **books** table.<br><br>In case this registration process is completed correctly, it will try to add to the **booksauthors** table the relation with the IDs of the **authors** field.<br><br>In case a **author** is not found in the database, either because it does not exist or because it is a record that has been temporarily deleted (**isDeleted** field equals true), an error message will be returned: example: `author with id '##' not found`."
+ *      requestBody:
+ *          required: true
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: "#/components/schemas/bookWithAuthorsRequest"
+ *      responses:
+ *        '201':
+ *          $ref: "#/components/responses/postBookWithAuthors"
+ *        '400':
+ *          $ref: "#/components/responses/postBookWithAuthorsBadRequest"
+ *        '500':
+ *          $ref: "#/components/responses/internalServerError"
+ *      security:
+ *       - jwtAuth: []
+ */
 bookRouter.post(
   "/authors",
   [validateISBN, validateTitle, validateAuthorIDs, validateBookByISBNDataBase],

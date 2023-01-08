@@ -163,6 +163,11 @@ export const createAuthorWithBooks = async ({
         id: dataValues?.id,
         name: dataValues?.name,
         country: dataValues?.country,
+        ...(!EXCLUDE_ORM_FIELDS && {
+          createdAt: dataValues?.createdAt,
+          updatedAt: dataValues?.updatedAt,
+          isDeleted: dataValues?.isDeleted,
+        }),
       },
       booksAuthors,
     };

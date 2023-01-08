@@ -154,14 +154,26 @@ export const createBookWithAuthors = async ({
   authors,
 }: BookRequest) => {
   try {
-    const newBook = await createBookFromModel({ isbn, title });
+    const { dataValues } = await createBookFromModel({ isbn, title });
 
     const booksAuthors = await createBooksAuthorsByBookId(
-      newBook?.dataValues?.id,
+      dataValues?.id,
       authors
     );
 
-    return { book: newBook, booksAuthors };
+    return {
+      book: {
+        id: dataValues?.id,
+        isbn: dataValues?.isbn,
+        title: dataValues?.title,
+        ...(!EXCLUDE_ORM_FIELDS && {
+          createdAt: dataValues?.createdAt,
+          updatedAt: dataValues?.updatedAt,
+          isDeleted: dataValues?.isDeleted,
+        }),
+      },
+      booksAuthors,
+    };
   } catch (error) {
     return setError("createBookWithAuthors", error);
   }

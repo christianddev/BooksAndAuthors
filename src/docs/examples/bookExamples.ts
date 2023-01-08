@@ -171,15 +171,15 @@ const swaggerDefinition: OAS3Definition = {
         },
       },
       postBookWithAuthorsSomeErrors: {
-        summary: "Author with books and errors",
+        summary: "Book with authors and errors",
         description:
-          "Data of the created record, the result of the associations in the **booksauthors** table and the errors when trying to make associations with the **booksauthors** table.",
+          "The result of the associations in the **booksauthors** table and the errors when trying to make associations with the **booksauthors** table.",
         value: {
           data: {
             author: {
               id: 1,
-              name: "Patrick Rothfuss",
-              country: "USA",
+              isbn: "978-0-7564-0407-9",
+              title: "The Name of the Wind, 2007",
             },
             booksAuthors: {
               data: [
@@ -191,10 +191,10 @@ const swaggerDefinition: OAS3Definition = {
               ],
               error: [
                 {
-                  message: "book with id '11' not found",
+                  message: "author with id '##' not found",
                 },
                 {
-                  message: "book with id '12' not found",
+                  message: "author with id '##' not found",
                 },
               ],
             },

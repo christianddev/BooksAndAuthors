@@ -160,7 +160,7 @@ const swaggerDefinition: OAS3Definition = {
                       properties: {
                         createdAt: {
                           type: "string",
-                          description: "date of creation of the registry",
+                          description: "Date of creation of the registry",
                         },
                         bookId: {
                           type: "number",
@@ -182,7 +182,7 @@ const swaggerDefinition: OAS3Definition = {
                         message: {
                           type: "string",
                           description:
-                            "description related to the error, return message error similar to `book with id '##' not found` ",
+                            "Description related to the error, return message error similar to `book with id '##' not found` ",
                         },
                       },
                     },
@@ -404,7 +404,7 @@ const swaggerDefinition: OAS3Definition = {
                     properties: {
                       createdAt: {
                         type: "string",
-                        description: "date of creation of the registry",
+                        description: "Date of creation of the registry",
                       },
                       bookId: {
                         type: "number",
@@ -427,7 +427,7 @@ const swaggerDefinition: OAS3Definition = {
                     message: {
                       type: "string",
                       description:
-                        "description related to the error, return message error similar to `book with id '##' not found` ",
+                        "Description related to the error, return message error similar to `book with id '##' not found` ",
                     },
                   },
                 },
@@ -457,7 +457,7 @@ const swaggerDefinition: OAS3Definition = {
                     message: {
                       type: "string",
                       description:
-                        "description related to the error, return message error similar to `book with id '##' not found` ",
+                        "Description related to the error, return message error similar to `book with id '##' not found` ",
                     },
                   },
                 },

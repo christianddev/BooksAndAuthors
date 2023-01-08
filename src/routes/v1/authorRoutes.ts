@@ -136,7 +136,7 @@ authorRouter.post(
  *                $ref: "#/components/schemas/authorWithBooksRequest"
  *      responses:
  *        '201':
- *          $ref: "#/components/responses/postAuthorsWithBooks"
+ *          $ref: "#/components/responses/postAuthorWithBooks"
  *        '400':
  *          $ref: "#/components/responses/postAuthorWithBooksBadRequest"
  *        '500':

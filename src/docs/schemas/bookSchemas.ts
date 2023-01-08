@@ -50,35 +50,33 @@ const swaggerDefinition: OAS3Definition = {
       },
       bookWithAuthorsRequest: {
         type: "object",
-        required: ["name", "country", "books"],
+        required: ["name", "country", "authors"],
         properties: {
-          name: {
+          isbn: {
             type: "string",
             description:
-              "author's name, in **combination** with the **country** field (ISO Code) is used to identify an author, the name & country field must be unique.",
-            example: "Patrick Rothfuss",
+              "Book's isbn, in combination with the **title** field, is used to identify an book, the **isbn** field must be unique.",
           },
-          country: {
+          title: {
             type: "string",
             description:
-              "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
-            example: "USA",
+              "Books's title, in combination with the **isbn** field, is used to identify an book, the **isbn** field must be unique.",
           },
-          books: {
+          authors: {
             type: "array",
             description:
-              "Refers to the IDs set by the database to identify a record,<br><br> if the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `book with id '##' not found` is returned.",
+              "Refers to the IDs set by the database to identify a record,<br><br> if the record associated to an ID does not exist or the `EXCLUDE_TEMPORARY_DELETED` configuration has been set and the record is defined as **isDeleted**, a message similar to `author with id '##' not found` is returned.",
             items: {
               type: "number",
-              description: "ID of the books to be associated with this author",
+              description: "ID of the authors to be associated with this book",
             },
             example: [1, 2],
           },
         },
         example: {
-          name: "Patrick Rothfuss",
-          country: "USA",
-          books: [1, 2],
+          isbn: "978-0-7564-0407-9",
+          title: "The Name of the Wind, 2007",
+          authors: [1, 2],
         },
       },
       bookUpdateRequest: {
@@ -126,26 +124,26 @@ const swaggerDefinition: OAS3Definition = {
         properties: {
           data: {
             type: "object",
-            required: ["author", "booksAuthors"],
+            required: ["book", "booksAuthors"],
             properties: {
-              author: {
+              book: {
                 type: "object",
-                required: ["id", "name", "country"],
+                required: ["id", "isbn", "title"],
                 properties: {
                   id: {
                     type: "number",
                     description:
                       "assigned by the database, is used to identify the ledger in database queries",
                   },
-                  name: {
+                  isbn: {
                     type: "string",
                     description:
-                      "author's name, in combination with the country field (ISO Code) is used to identify an author, the name & country field must be unique.",
+                      "Book's isbn, in combination with the **title** field, is used to identify an book, the **isbn** field must be unique.",
                   },
-                  country: {
+                  title: {
                     type: "string",
                     description:
-                      "author's country in ISO code format, in combination with the name field, is used to identify an author, the name & country fields must be unique.",
+                      "Books's title, in combination with the **isbn** field, is used to identify an book, the **isbn** field must be unique.",
                   },
                 },
               },
@@ -160,7 +158,7 @@ const swaggerDefinition: OAS3Definition = {
                       properties: {
                         createdAt: {
                           type: "string",
-                          description: "date of creation of the registry",
+                          description: "Date of creation of the registry",
                         },
                         bookId: {
                           type: "number",
@@ -182,7 +180,7 @@ const swaggerDefinition: OAS3Definition = {
                         message: {
                           type: "string",
                           description:
-                            "description related to the error, return message error similar to `book with id '##' not found` ",
+                            "Description related to the error, return message error similar to `author with id '##' not found` ",
                         },
                       },
                     },
@@ -215,12 +213,12 @@ const swaggerDefinition: OAS3Definition = {
                     isbn: {
                       type: "string",
                       description:
-                        "Book's isbn, in combination with the **title** field, is used to identify an book, the **isbn** & **title** fields must be unique.",
+                        "Book's isbn, in combination with the **title** field, is used to identify an book, the **isbn** field must be unique.",
                     },
                     title: {
                       type: "string",
                       description:
-                        "Books's title, in combination with the **isbn** field, is used to identify an book, the **isbn** & **title** fields must be unique.",
+                        "Books's title, in combination with the **isbn** field, is used to identify an book, the **isbn** field must be unique.",
                     },
                   },
                 },
@@ -249,12 +247,12 @@ const swaggerDefinition: OAS3Definition = {
                   isbn: {
                     type: "string",
                     description:
-                      "Book's isbn, in combination with the **title** field, is used to identify an book, the **isbn** & **title** fields must be unique.",
+                      "Book's isbn, in combination with the **title** field, is used to identify an book, the **isbn** field must be unique.",
                   },
                   title: {
                     type: "string",
                     description:
-                      "Books's title, in combination with the **isbn** field, is used to identify an book, the **isbn** & **title** fields must be unique.",
+                      "Books's title, in combination with the **isbn** field, is used to identify an book, the **isbn** field must be unique.",
                   },
                 },
               },
@@ -404,7 +402,7 @@ const swaggerDefinition: OAS3Definition = {
                     properties: {
                       createdAt: {
                         type: "string",
-                        description: "date of creation of the registry",
+                        description: "Date of creation of the registry",
                       },
                       bookId: {
                         type: "number",
@@ -427,7 +425,7 @@ const swaggerDefinition: OAS3Definition = {
                     message: {
                       type: "string",
                       description:
-                        "description related to the error, return message error similar to `book with id '##' not found` ",
+                        "Description related to the error, return message error similar to `book with id '##' not found` ",
                     },
                   },
                 },
@@ -457,7 +455,7 @@ const swaggerDefinition: OAS3Definition = {
                     message: {
                       type: "string",
                       description:
-                        "description related to the error, return message error similar to `book with id '##' not found` ",
+                        "Description related to the error, return message error similar to `book with id '##' not found` ",
                     },
                   },
                 },
