@@ -32,36 +32,13 @@ const swaggerDefinition: OAS3Definition = {
             },
             examples: {
               nameFIeld: {
-                summary: "Name field validation",
-                description: "the **name** field is required.",
-                value: {
-                  error: {
-                    status: 400,
-                    message: "check 'name' field",
-                  },
-                },
+                $ref: "#/components/examples/nameFIeld",
               },
               countryField: {
-                summary: "Country field validation",
-                description: "the **country** field is required.",
-                value: {
-                  error: {
-                    status: 400,
-                    message: "check 'country' field",
-                  },
-                },
+                $ref: "#/components/examples/countryField",
               },
               authorsExists: {
-                summary: "Authors exists",
-                description:
-                  "The combination of **name** and **country** must be unique.",
-                value: {
-                  error: {
-                    status: 400,
-                    message:
-                      "a authors exists with the name '##' & country '###'",
-                  },
-                },
+                $ref: "#/components/examples/authorsExists",
               },
             },
           },
@@ -136,7 +113,12 @@ const swaggerDefinition: OAS3Definition = {
         content: {
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/authorWhitBook",
+              $ref: "#/components/schemas/authorsAndHisBooks",
+            },
+            examples: {
+              authorsAndHisBooks: {
+                $ref: "#/components/examples/authorsAndHisBooks",
+              },
             },
           },
         },
@@ -154,11 +136,38 @@ const swaggerDefinition: OAS3Definition = {
       },
       patchAuthorBadRequest: {
         description:
-          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null,<br><br>If the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.<br> - if you do not send both fields, it will return an error message similar to `check 'name' & 'country' field`.",
+          "Bad Request, Error related to the request data, **name** , **country** and **books** fields must not be null,<br><br>If the combination between **name** and **country** already exists in the database, it returns an error message similar to `a authors exists with the name '#####' & country '###'`.<br><br>If both fields are not sent, it will return an error message similar to `check 'name' & 'country' field`.",
         content: {
           "application/json": {
             schema: {
               $ref: "#/components/schemas/internalServerError",
+            },
+            examples: {
+              nameFIeld: {
+                $ref: "#/components/examples/nameFIeld",
+              },
+              countryField: {
+                $ref: "#/components/examples/countryField",
+              },
+              authorsExists: {
+                $ref: "#/components/examples/authorsExists",
+              },
+            },
+          },
+        },
+      },
+      patchAuthorNotFound: {
+        description:
+          "Not Found, The requested resource is not found.<br><br>A author cannot be found for two reasons:<br><br> - There is no record related to the request ID.<br><br> - Taking into account the setting of the environment variable `EXCLUDE_TEMPORARY_DELETED`, the record may exist in the database, but is not available if the value of the **isDeleted** field is set to **true**.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/internalServerError",
+            },
+            examples: {
+              authorNotFound: {
+                $ref: "#/components/examples/authorNotFound",
+              },
             },
           },
         },

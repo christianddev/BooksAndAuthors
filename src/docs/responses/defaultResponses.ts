@@ -10,7 +10,7 @@ const swaggerDefinition: OAS3Definition = {
     responses: {
       internalServerError: {
         description:
-          "Internal Server Error, you should contact the administrator or check the logs",
+          "Internal Server Error, you should contact the administrator or check the logs.",
         content: {
           "application/json": {
             schema: {

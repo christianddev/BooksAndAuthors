@@ -79,8 +79,6 @@ authorRouter.get("/:id", [validateId], getAuthor);
  *      responses:
  *        '200':
  *          $ref: "#/components/responses/getAuthorsAndHisBooks"
- *        '400':
- *          $ref: "#/components/responses/badRequest"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:
@@ -180,6 +178,8 @@ authorRouter.post(
  *          $ref: "#/components/responses/patchAuthor"
  *        '400':
  *          $ref: "#/components/responses/patchAuthorBadRequest"
+ *        '404':
+ *          $ref: "#/components/responses/patchAuthorNotFound"
  *        '500':
  *          $ref: "#/components/responses/internalServerError"
  *      security:

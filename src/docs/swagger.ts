@@ -6,6 +6,7 @@ import links from "./links";
 import parameters from "./parameters";
 import defaultSchemas from "./schemas/defaultSchemas";
 import authorSchemas from "./schemas/authorSchemas";
+import authorsExamples from "./examples/authorsExamples";
 import defaultResponses from "./responses/defaultResponses";
 import authorsResponses from "./responses/authorsResponses";
 
@@ -40,6 +41,7 @@ const swaggerDefinition: OAS3Definition = {
     parameters,
     responses: { ...defaultResponses, ...authorsResponses },
     links,
+    examples: { ...authorsExamples },
   },
 };
 
