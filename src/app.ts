@@ -3,6 +3,7 @@ import { ServerModel } from "./models/";
 
 dotenv.config();
 
-const server = new ServerModel();
+const app = new ServerModel();
 
-server.listen();
+const server = app.listen();
+export { app, server };

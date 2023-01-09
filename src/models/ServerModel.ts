@@ -63,6 +63,10 @@ class ServerModel {
       console.log("Server running on port " + this.port);
     });
   }
+
+  close() {
+    this.app.listen().close();
+  }
 }
 
 export default ServerModel;
