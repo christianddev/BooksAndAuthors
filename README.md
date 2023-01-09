@@ -25,18 +25,18 @@ git clone git@github.com:christianddev/BooksAndAuthors.git
 
 ### 🧐 How to start the application (Local).
 
-- start up the database & check environment variables
-- from the root of the project, type `yarn`, `yarn install`, or `npm install`
-- after installing the dependencies, type `yarn dev:nodemon`, `npm run dev:nodemon`
-- documentation available into [localhost:8000/api/v1/documentation](http://localhost:8000/api/v1/documentation/)
+- Start up the database & check environment variables.
+- From the root of the project, type `yarn`, `yarn install`, or `npm install`.
+- After installing the dependencies, type `yarn dev:nodemon`, `npm run dev:nodemon`.
+- Documentation available into [localhost:8000/api/v1/documentation](http://localhost:8000/api/v1/documentation/).
 
-### 💻 How to start the application - Development mode (Local).
+### 💻 How to start the application (Development mode).
 
-- start up the database & check environment variables
-- from the root of the project, type `yarn` or `yarn install`, or `npm install`
-- after installing the dependencies, type `yarn tsc:watch` or `npm run tsc:watch`
-- after installing the dependencies, type `yarn dev:nodemon` or `npm run dev:nodemon`
-- documentation available into [localhost:8000/api/v1/documentation](http://localhost:8000/api/v1/documentation/)
+- Start up the database & check environment variables
+- From the root of the project, type `yarn` or `yarn install`, or `npm install`
+- After installing the dependencies, type `yarn tsc:watch` or `npm run tsc:watch`
+- After installing the dependencies, type `yarn dev:nodemon` or `npm run dev:nodemon`
+- Documentation available into [localhost:8000/api/v1/documentation](http://localhost:8000/api/v1/documentation/)
 
 ### 📝 Description of the elements used.
 
@@ -45,10 +45,10 @@ This application is a NodeJS API, developed with TypeScript and the express fram
 This application uses sequelize as ORM for working with a SQL database.
 
 Some of the business rules have been defined at the database level,
-for example,
+for example:
 
-- in the books table, the isbn field must be unique
-- in the authors table, the fields name & country, in combination must be unique e
+- In the books table, the isbn field must be unique.
+- In the authors table, the fields name & country, in combination must be unique.
 
 #### ⚙ Environment variables
 
@@ -95,43 +95,43 @@ DATABASE_DEFAULT_EXCLUDE_TEMPORARY_DELETED
  ┃ ┗ 📜index.html
  ┣ 📂src
  ┃ ┣ 📂controllers
- ┃ ┃ ┣ 📜authorsController.ts # processes api requests related to the path api/v1/authors
- ┃ ┃ ┣ 📜booksController.ts # processes api requests related to the path api/v1/books
+ ┃ ┃ ┣ 📜authorsController.ts # processes api requests related to the path api/v1/authors.
+ ┃ ┃ ┣ 📜booksController.ts # processes api requests related to the path api/v1/books.
  ┃ ┃ ┗ 📜index.ts
  ┃ ┣ 📂database
- ┃ ┃ ┗ 📜connection.ts # performs the configuration for the connection to the database
+ ┃ ┃ ┗ 📜connection.ts # performs the configuration for the connection to the database.
  ┃ ┣ 📂docs
  ┃ ┃ ┣ 📂common
  ┃ ┃ ┣ 📂examples
  ┃ ┃ ┣ 📂responses
  ┃ ┃ ┣ 📂schemas
- ┃ ┃ ┗ 📜swagger.ts # swagger related configuration
+ ┃ ┃ ┗ 📜swagger.ts # swagger related configuration.
  ┃ ┣ 📂helpers
- ┃ ┃ ┣ 📜authorDatabase.ts # performs CRUD operations using AuthorModel
- ┃ ┃ ┣ 📜bookAuthorDatabase.ts # performs Read & Delete operations using BooksAuthorsModel
- ┃ ┃ ┣ 📜bookDatabase.ts # performs CRUD operations using BookModel
+ ┃ ┃ ┣ 📜authorDatabase.ts # performs CRUD operations using AuthorModel.
+ ┃ ┃ ┣ 📜bookAuthorDatabase.ts # performs Read & Delete operations using BooksAuthorsModel.
+ ┃ ┃ ┣ 📜bookDatabase.ts # performs CRUD operations using BookModel.
  ┃ ┃ ┗ 📜index.ts
  ┃ ┣ 📂middlewares
- ┃ ┃ ┣ 📜AuthorDatabaseValidators.ts # validators associated with the path /api/v1/authors with database check operations
- ┃ ┃ ┣ 📜BookDatabaseValidators.ts # validators associated with the path /api/v1/books with database check operations
- ┃ ┃ ┣ 📜fieldsValidators.ts # validations on requests, no database connection is needed
+ ┃ ┃ ┣ 📜AuthorDatabaseValidators.ts # validators associated with the path /api/v1/authors with database check operations.
+ ┃ ┃ ┣ 📜BookDatabaseValidators.ts # validators associated with the path /api/v1/books with database check operations.
+ ┃ ┃ ┣ 📜fieldsValidators.ts # validations on requests, no database connection is needed.
  ┃ ┃ ┗ 📜index.ts
  ┃ ┣ 📂models
- ┃ ┃ ┣ 📜AuthorModel.ts # authors table configuration using sequelize (Model)
- ┃ ┃ ┣ 📜BookModel.ts # books table configuration using sequelize (Model)
- ┃ ┃ ┣ 📜BooksAuthorsModel.ts # booksAuthors table configuration using sequelize (Model)
- ┃ ┃ ┣ 📜index.ts # exports the models and makes the belongsToMany associations
- ┃ ┃ ┗ 📜ServerModel.ts # defines the express server configuration
+ ┃ ┃ ┣ 📜AuthorModel.ts # authors table configuration using sequelize (Model).
+ ┃ ┃ ┣ 📜BookModel.ts # books table configuration using sequelize (Model).
+ ┃ ┃ ┣ 📜BooksAuthorsModel.ts # booksAuthors table configuration using sequelize (Model).
+ ┃ ┃ ┣ 📜index.ts # exports the models and makes the belongsToMany associations.
+ ┃ ┃ ┗ 📜ServerModel.ts # defines the express server configuration.
  ┃ ┣ 📂routes
  ┃ ┃ ┗ 📂v1
- ┃ ┃ ┃ ┣ 📜authorRoutes.ts # paths associated with /api/v1/authors
- ┃ ┃ ┃ ┣ 📜bookRoutes.ts # paths associated with /api/v1/books
+ ┃ ┃ ┃ ┣ 📜authorRoutes.ts # paths associated with /api/v1/authors.
+ ┃ ┃ ┃ ┣ 📜bookRoutes.ts # paths associated with /api/v1/books.
  ┃ ┃ ┃ ┗ 📜index.ts
- ┃ ┣ 📂typings # types used in the application
+ ┃ ┣ 📂typings # types used in the application.
  ┃ ┣ 📂utils
- ┃ ┃ ┣ 📜constants.ts # configuration variables
+ ┃ ┃ ┣ 📜constants.ts # configuration variables.
  ┃ ┃ ┗ 📜index.ts
- ┃ ┗ 📜app.ts # main file application
+ ┃ ┗ 📜app.ts # main file application.
  ┣ 📜package.json
 
 ```
@@ -148,23 +148,23 @@ DATABASE_DEFAULT_EXCLUDE_TEMPORARY_DELETED
 
 ### 🛠 Next improvements
 
-- Perform tests to ensure the quality and robustness of the application
-- Improve the typing of data coming from the ORM
+- Perform tests to ensure the quality and robustness of the application.
+- Improve the typing of data coming from the ORM.
 - Apply security over routes using an authentication provider such as OAuth with JWT.
 - Add the possibility to export the list using csv or plain text.
-- Add pagination for some `GET`, use headers from request
+- Add pagination for some `GET`, use headers from request:
   - `api/v1/authors`
   - `api/v1/authors/all/books`
   - `api/v1/book`
   - `api/v1/books/all/authors`
 - Apply logger
-- For the test and development environment, use sedders or migrations from sequelize to set up a database
-  to improve the experience
-- deploy in the cloud
+- For the test and development environment, use seders or migrations from sequelize to set up a database.
+  to improve the experience.
+- Deploy in the cloud.
 
 ## 👾 known bugs
 
 - api:
-  - the database must be ready for operation before starting the application.
+  - The database must be ready for operation before starting the application.
 - sql:
-  - if an author or a book is temporarily deleted, it is not possible to register a new one, as the verification query detects that such a record exists in the database, if the deletion were independent, a new business rule would be that it does not detect that record as a duplicate or existing record, if the database record is temporarily deleted.
+  - If an author or a book is temporarily deleted, it is not possible to register a new one, as the verification query detects that such a record exists in the database, if the deletion were independent, a new business rule would be that it does not detect that record as a duplicate or existing record, if the database record is temporarily deleted.
