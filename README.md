@@ -42,7 +42,7 @@ git clone git@github.com:christianddev/BooksAndAuthors.git
 
 This application is a NodeJS API, developed with TypeScript and the express framework.
 
-This application uses sequelize as ORM for working with a SQL database.
+This application uses sequelize as ORM for working with a SQL database and Swagger for documentation.
 
 Some of the business rules have been defined at the database level,
 for example:
