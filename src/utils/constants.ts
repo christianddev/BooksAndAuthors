@@ -73,3 +73,5 @@ export const DOCUMENTATION_PATH = `${
 }`;
 
 export const SEQUELIZE_FIELDS = ["isDeleted", "createdAt", "updatedAt"];
+
+console.log('process?.env?.NODE_ENV', process?.env?.NODE_ENV)
