@@ -10,7 +10,7 @@ import {
   BOOKS_PATH,
   DOCUMENTATION_PATH,
   SERVER_PORT,
-} from "../helpers/";
+} from "../utils/";
 
 class ServerModel {
   private app: Application;

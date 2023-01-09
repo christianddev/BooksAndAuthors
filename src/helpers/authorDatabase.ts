@@ -1,5 +1,5 @@
 import { AuthorModel, BookModel } from "../models";
-import { setError } from "../utils";
+import { throwError } from "../utils";
 
 import {
   createBooksAuthorsByAuthorId,
@@ -10,7 +10,7 @@ import {
   EXCLUDE_TEMPORARY_DELETED,
   SEQUELIZE_FIELDS,
   TEMPORARY_DELETE,
-} from "./constants";
+} from "../utils/";
 
 import type { AuthorRequest } from "../typings/author";
 
@@ -30,7 +30,7 @@ export const findAllAuthors = async (
 
     return authors;
   } catch (error) {
-    return setError("findAllAuthors", error);
+    return throwError("findAllAuthors", error);
   }
 };
 
@@ -52,7 +52,7 @@ export const finOneAuthorById = async (
 
     return author;
   } catch (error) {
-    return setError("finOneAuthorById", error);
+    return throwError("finOneAuthorById", error);
   }
 };
 
@@ -75,7 +75,7 @@ export const findOneAuthorByNameAndCountry = async (
 
     return author;
   } catch (error) {
-    return setError("findOneAuthorByNameAndCountry", error);
+    return throwError("findOneAuthorByNameAndCountry", error);
   }
 };
 
@@ -108,7 +108,7 @@ export const findAllBooksAuthorsGroupByAuthor = async (
 
     return authors;
   } catch (error) {
-    return setError("findAllBooksAuthorsGroupByAuthor", error);
+    return throwError("findAllBooksAuthorsGroupByAuthor", error);
   }
 };
 
@@ -121,7 +121,7 @@ const createBookFromModel = async ({ name, country }: AuthorRequest) => {
 
     return author;
   } catch (error) {
-    return setError("createBookFromModel", error);
+    return throwError("createBookFromModel", error);
   }
 };
 
@@ -138,7 +138,7 @@ export const createAuthor = async (rawAuthor: AuthorRequest) => {
       data: { id, name, country },
     };
   } catch (error) {
-    return setError("createAuthor", error);
+    return throwError("createAuthor", error);
   }
 };
 
@@ -172,7 +172,7 @@ export const createAuthorWithBooks = async ({
       booksAuthors,
     };
   } catch (error) {
-    return setError("createAuthorWithBooks", error);
+    return throwError("createAuthorWithBooks", error);
   }
 };
 
@@ -188,7 +188,7 @@ export const setBooksAuthorsFromAuthorId = async (
       error: booksAuthors?.error,
     };
   } catch (error) {
-    return setError("setBooksAuthorsFromAuthorId", error);
+    return throwError("setBooksAuthorsFromAuthorId", error);
   }
 };
 
@@ -214,7 +214,7 @@ const updateAuthorFromModel = async ({
 
     return response;
   } catch (error) {
-    return setError("updateAuthorFromModel", error);
+    return throwError("updateAuthorFromModel", error);
   }
 };
 
@@ -226,7 +226,7 @@ export const updateAuthor = async ({ id, name, country }: AuthorRequest) => {
       data: { affectedRows: updatedAuthor },
     };
   } catch (error) {
-    return setError("updateAuthor", error);
+    return throwError("updateAuthor", error);
   }
 };
 
@@ -240,7 +240,7 @@ const destroyAuthorFromModel = async (id: number) => {
 
     return response;
   } catch (error) {
-    return setError("destroyAuthorFromModel", error);
+    return throwError("destroyAuthorFromModel", error);
   }
 };
 
@@ -265,6 +265,6 @@ export const removeAuthor = async (id: number) => {
       data: { affectedRows: { deletedBooksAuthors, deletedAuthor } },
     };
   } catch (error) {
-    return setError("deleteAuthorTemporary", error);
+    return throwError("deleteAuthorTemporary", error);
   }
 };

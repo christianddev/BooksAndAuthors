@@ -7,7 +7,7 @@ import {
   BOOK_AUTHOR_MODEL_NAME,
   BOOK_ID_FIELD,
   BOOK_MODEL_NAME,
-} from "../helpers/";
+} from "../utils/";
 
 export const BooksAuthorsModel = database.define(
   BOOK_AUTHOR_MODEL_NAME,

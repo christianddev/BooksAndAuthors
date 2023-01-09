@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 
 import database from "../database/connection";
-import { BOOK_MODEL_NAME } from "../helpers/";
+import { BOOK_MODEL_NAME } from "../utils/";
 
 export const BookModel = database.define(
   BOOK_MODEL_NAME,

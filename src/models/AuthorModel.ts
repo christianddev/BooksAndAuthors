@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 
 import database from "../database/connection";
-import { AUTHOR_MODEL_NAME } from "../helpers/";
+import { AUTHOR_MODEL_NAME } from "../utils/";
 
 export const AuthorModel = database.define(
   AUTHOR_MODEL_NAME,

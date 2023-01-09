@@ -13,7 +13,7 @@ import defaultResponses from "./responses/defaultResponses";
 import authorsResponses from "./responses/authorsResponses";
 import booksResponses from "./responses/booksResponses";
 
-import { DEVELOPMENT_SERVER, PRODUCTION_SERVER, SERVER_PORT } from "../helpers";
+import { DEVELOPMENT_SERVER, PRODUCTION_SERVER, SERVER_PORT } from "../utils";
 
 const swaggerDefinition: OAS3Definition = {
   openapi: "3.0.0",

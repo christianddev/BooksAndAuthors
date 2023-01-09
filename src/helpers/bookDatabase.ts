@@ -1,5 +1,5 @@
 import { AuthorModel, BookModel } from "../models";
-import { setError } from "../utils";
+import { throwError } from "../utils";
 
 import {
   createBooksAuthorsByBookId,
@@ -10,7 +10,7 @@ import {
   EXCLUDE_TEMPORARY_DELETED,
   SEQUELIZE_FIELDS,
   TEMPORARY_DELETE,
-} from "./constants";
+} from "../utils/";
 
 import type { OperationResponse } from "../typings/api";
 import type { BookRequest } from "../typings/book";
@@ -31,7 +31,7 @@ export const findAllBooks = async (
 
     return books;
   } catch (error) {
-    return setError("findAllBooks", error);
+    return throwError("findAllBooks", error);
   }
 };
 
@@ -53,7 +53,7 @@ export const findOneBookById = async (
 
     return book;
   } catch (error) {
-    return setError("findOneBookById", error);
+    return throwError("findOneBookById", error);
   }
 };
 
@@ -75,7 +75,7 @@ export const findOneBookByISBN = async (
 
     return book;
   } catch (error) {
-    return setError("findOneBookByISBN", error);
+    return throwError("findOneBookByISBN", error);
   }
 };
 
@@ -108,7 +108,7 @@ export const findAllBooksAuthorsGroupByBook = async (
 
     return book;
   } catch (error) {
-    return setError("findAllBooksAuthorsGroupByBook", error);
+    return throwError("findAllBooksAuthorsGroupByBook", error);
   }
 };
 
@@ -121,7 +121,7 @@ const createBookFromModel = async ({ isbn, title }: BookRequest) => {
 
     return book;
   } catch (error) {
-    return setError("createBookFromModel", error);
+    return throwError("createBookFromModel", error);
   }
 };
 
@@ -144,7 +144,7 @@ export const createBook = async (
       },
     };
   } catch (error) {
-    return setError("createBook", error);
+    return throwError("createBook", error);
   }
 };
 
@@ -175,7 +175,7 @@ export const createBookWithAuthors = async ({
       booksAuthors,
     };
   } catch (error) {
-    return setError("createBookWithAuthors", error);
+    return throwError("createBookWithAuthors", error);
   }
 };
 
@@ -197,7 +197,7 @@ const updateBookFromModel = async ({
 
     return response;
   } catch (error) {
-    return setError("updateBookFromModel", error);
+    return throwError("updateBookFromModel", error);
   }
 };
 
@@ -209,7 +209,7 @@ export const updateBook = async ({ id, isbn, title }: BookRequest) => {
       data: { affectedRows: updatedBook },
     };
   } catch (error) {
-    return setError("updateBook", error);
+    return throwError("updateBook", error);
   }
 };
 
@@ -222,7 +222,7 @@ const destroyBookFromModel = async (id: number) => {
     });
     return response;
   } catch (error) {
-    return setError("destroyBookFromModel", error);
+    return throwError("destroyBookFromModel", error);
   }
 };
 
@@ -244,6 +244,6 @@ export const removeBook = async (id: number) => {
       data: { affectedRows: { deletedBooksAuthors, deletedBook } },
     };
   } catch (error) {
-    return setError("deleteBookTemporary", error);
+    return throwError("deleteBookTemporary", error);
   }
 };

@@ -3,6 +3,8 @@ import httpStatus from "http-status";
 
 import type { ErrorOperation } from "../typings/api";
 
+export * from "../utils/constants";
+
 export const defaultErrorResponse = (error: unknown, res: Response) => {
   console.trace(error);
 
@@ -14,7 +16,7 @@ export const defaultErrorResponse = (error: unknown, res: Response) => {
   res.status(httpStatus?.INTERNAL_SERVER_ERROR).json({ error: customError });
 };
 
-export const setError = (message: string, error: unknown) => {
+export const throwError = (message: string, error: unknown) => {
   console.trace(`${message}: `, error);
   throw new Error(message);
 };

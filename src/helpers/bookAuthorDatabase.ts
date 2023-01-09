@@ -3,9 +3,9 @@ import { Model } from "sequelize";
 import { BooksAuthorsModel } from "../models";
 import { finOneAuthorById } from "./authorDatabase";
 import { findOneBookById } from "./bookDatabase";
-import { setError } from "../utils";
+import { throwError } from "../utils";
 
-import { EXCLUDE_ORM_FIELDS, SEQUELIZE_FIELDS } from "./constants";
+import { EXCLUDE_ORM_FIELDS, SEQUELIZE_FIELDS } from "../utils/";
 
 import type { ErrorOperation, OperationResponse } from "../typings/api";
 
@@ -32,7 +32,7 @@ export const findOneBookAuthorByIds = async ({
     });
     return bookAuthor;
   } catch (error) {
-    return setError("findOneBookAuthorByIds", error);
+    return throwError("findOneBookAuthorByIds", error);
   }
 };
 
@@ -51,7 +51,7 @@ export const findBooksAuthorsByBookId = async (
     });
     return bookAuthors;
   } catch (error) {
-    return setError("findBooksAuthorsByBookId", error);
+    return throwError("findBooksAuthorsByBookId", error);
   }
 };
 
@@ -70,7 +70,7 @@ export const findBooksAuthorsByAuthorId = async (
     });
     return bookAuthors;
   } catch (error) {
-    return setError("findBooksAuthorsByAuthorId", error);
+    return throwError("findBooksAuthorsByAuthorId", error);
   }
 };
 
@@ -82,7 +82,7 @@ const createBookAuthorFromModel = async (bookId: number, authorId: number) => {
     });
     return bookAuthor;
   } catch (error) {
-    return setError("createBookAuthorFromModel", error);
+    return throwError("createBookAuthorFromModel", error);
   }
 };
 
@@ -140,7 +140,7 @@ export const createBookAuthor = async (
 
     return { data: newBookAuthor };
   } catch (error) {
-    return setError("createBookAuthorFromModel", error);
+    return throwError("createBookAuthorFromModel", error);
   }
 };
 
@@ -197,7 +197,7 @@ export const destroyBooksAuthorsByBookId = async (bookId: number) => {
 
     return response;
   } catch (error) {
-    return setError("destroyBooksAuthorsByBookId", error);
+    return throwError("destroyBooksAuthorsByBookId", error);
   }
 };
 
@@ -211,7 +211,7 @@ export const destroyBooksAuthorsByAuthorId = async (authorId: number) => {
 
     return response;
   } catch (error) {
-    return setError("destroyBooksAuthorsByAuthorId", error);
+    return throwError("destroyBooksAuthorsByAuthorId", error);
   }
 };
 
@@ -224,6 +224,6 @@ export const setBooksAuthorsFromBookId = async (
 
     return booksAuthors;
   } catch (error) {
-    return setError("setBooksAuthorsFromBookId", error);
+    return throwError("setBooksAuthorsFromBookId", error);
   }
 };

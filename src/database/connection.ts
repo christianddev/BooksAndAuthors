@@ -8,7 +8,7 @@ import {
   DATABASE_PASSWORD,
   DATABASE_PORT,
   DATABASE_USER,
-} from "../helpers/";
+} from "../utils/";
 
 dotenv.config();
 
