@@ -1,8 +1,8 @@
 {
-  "name": "11-ts-rest-server",
-  "version": "1.0.0",
+  "name": "books-and-authors-crud",
+  "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.ts",
   "scripts": {
     "tsc:init": "tsc --init",
     "tsc:watch": "tsc --watch",
