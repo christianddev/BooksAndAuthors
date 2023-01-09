@@ -160,7 +160,7 @@ DATABASE_DEFAULT_EXCLUDE_TEMPORARY_DELETED
 - Apply logger
 - For the test and development environment, use seders or migrations from sequelize to set up a database.
   to improve the experience.
-- Deploy in the cloud.
+- Deploy in the cloud and apply | configure CI/CD.
 
 ## 👾 known bugs
 
