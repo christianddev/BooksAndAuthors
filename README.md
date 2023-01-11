@@ -17,7 +17,6 @@
   In [./assets](./assets/library.sql), you have available a SQL file with the database structure, you can import this file from a SQL client, remember to create the database first and then import the structure using [this](./assets/library.sql) file.
 - you must define the values of the configuration variables, you can use the [env-example](./env-example) file as for the configuration of the environment variables.
 
-
 ### 🚀 Quick Start
 
 - Clone this repo:
@@ -30,18 +29,19 @@
 - Start up the database & check environment variables.
 - From the root of the project, run `yarn` or `yarn install`.
 - After installing the dependencies,into another terminals:
-  run: `yarn tsc:watch`.
-  run: `yarn dev:env:nodemon`.
+  - run: `yarn tsc:watch`.
+  - run: `yarn dev:env:nodemon`.
 - Documentation available into [localhost:8000/api/v1/documentation](http://localhost:8000/api/v1/documentation/).
 
 #### 📝 Short Description.
 
 Some of the business rules have been defined at the database level,
-for example: - In the books table, the isbn field must be unique. - In the authors table, the fields name & country, in combination must be unique.
+for example:
+- In the books table, the isbn field must be unique.
+- In the authors table, the fields name & country, in combination must be unique.
 
 The relationship between books and authors is N:M:
 ![](./assets/library.png)
-
 
 #### ⚙ Environment variables
 
