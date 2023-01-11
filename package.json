@@ -6,9 +6,9 @@
   "scripts": {
     "tsc:init": "tsc --init",
     "tsc:watch": "tsc --watch",
-    "dev:nodemon": "cross-env NODE_ENV=development nodemon ./dist/app.js",
-    "start:nodemon": "cross-env NODE_ENV=production nodemon ./dist/app.js",
-    "test:nodemon": "cross-env NODE_ENV=test nodemon ./dist/app.js",
+    "dev:env:nodemon": "cross-env NODE_ENV=development nodemon ./dist/app.js",
+    "start:env:nodemon": "cross-env NODE_ENV=production nodemon ./dist/app.js",
+    "test:env:nodemon": "cross-env NODE_ENV=test nodemon ./dist/app.js",
     "test": "jest",
     "test:watch": "cross-env NODE_ENV=test jest --watch --runInBand",
     "ts-jest:config:init": "yarn ts-jest config:init"

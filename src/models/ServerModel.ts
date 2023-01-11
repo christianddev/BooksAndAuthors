@@ -26,8 +26,8 @@ class ServerModel {
     this.port = SERVER_PORT;
 
     this.dbConnection();
-    this.middlewares();
     this.routes();
+    this.middlewares();
   }
 
   async dbConnection() {

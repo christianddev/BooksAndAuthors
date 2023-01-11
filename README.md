@@ -1,21 +1,15 @@
 <div align="center">
   <h1>Books and Authors </h1>
-  <strong>⚡️ CRUD ⚡️</strong>
+  <strong>⚡️ This application allows you to make a CRUD related to books and authors. ⚡️</strong>
 </div>
 
-## 🚀 Installation
+### 📝 Technologies used:
 
-Using HTTPS:
-
-```bash
-git clone https://github.com/christianddev/BooksAndAuthors.git
-```
-
-Or using SSH:
-
-```bash
-git clone git@github.com:christianddev/BooksAndAuthors.git
-```
+- Express
+- Sequelize
+- Swagger
+- TypeScript
+- MySQL
 
 ## 🎇 First steps
 
@@ -23,32 +17,31 @@ git clone git@github.com:christianddev/BooksAndAuthors.git
   In [./assets](./assets/library.sql), you have available a SQL file with the database structure, you can import this file from a SQL client, remember to create the database first and then import the structure using [this](./assets/library.sql) file.
 - you must define the values of the configuration variables, you can use the [env-example](./env-example) file as for the configuration of the environment variables.
 
-### 🧐 How to start the application (Local).
+
+### 🚀 Quick Start
+
+- Clone this repo:
+  ```bash
+  git clone https://github.com/christianddev/BooksAndAuthors.git
+  ```
+
+#### 💻 Quick start of development:
 
 - Start up the database & check environment variables.
-- From the root of the project, type `yarn`, `yarn install`, or `npm install`.
-- After installing the dependencies, type `yarn dev:nodemon`, `npm run dev:nodemon`.
+- From the root of the project, run `yarn` or `yarn install`.
+- After installing the dependencies,into another terminals:
+  run: `yarn tsc:watch`.
+  run: `yarn dev:env:nodemon`.
 - Documentation available into [localhost:8000/api/v1/documentation](http://localhost:8000/api/v1/documentation/).
 
-### 💻 How to start the application (Development mode).
-
-- Start up the database & check environment variables
-- From the root of the project, type `yarn` or `yarn install`, or `npm install`
-- After installing the dependencies, type `yarn tsc:watch` or `npm run tsc:watch`
-- After installing the dependencies, type `yarn dev:nodemon` or `npm run dev:nodemon`
-- Documentation available into [localhost:8000/api/v1/documentation](http://localhost:8000/api/v1/documentation/)
-
-### 📝 Description of the elements used.
-
-This application is a NodeJS API, developed with TypeScript and the express framework.
-
-This application uses sequelize as ORM for working with a SQL database and Swagger for documentation.
+#### 📝 Short Description.
 
 Some of the business rules have been defined at the database level,
-for example:
+for example: - In the books table, the isbn field must be unique. - In the authors table, the fields name & country, in combination must be unique.
 
-- In the books table, the isbn field must be unique.
-- In the authors table, the fields name & country, in combination must be unique.
+The relationship between books and authors is N:M:
+![](./assets/library.png)
+
 
 #### ⚙ Environment variables
 
