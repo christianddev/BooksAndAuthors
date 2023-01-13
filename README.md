@@ -28,9 +28,9 @@
 
 - Start up the database & check environment variables.
 - From the root of the project, run `yarn` or `yarn install`.
-- After installing the dependencies,into another terminals:
-  - run: `yarn tsc:watch`.
-  - run: `yarn dev:env:nodemon`.
+- After installing the dependencies,
+  - into another terminal: `yarn dev`.
+  - or using multiple terminals, run: `yarn tsc:watch` and `yarn dev:env:nodemon`
 - Documentation available into [localhost:8000/api/v1/documentation](http://localhost:8000/api/v1/documentation/).
 
 #### 📝 Short Description.
