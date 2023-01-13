@@ -7,7 +7,7 @@ import { throwError } from "../utils";
 
 import { EXCLUDE_ORM_FIELDS, SEQUELIZE_FIELDS } from "../utils/";
 
-import type { ErrorOperation, OperationResponse } from "../typings/api";
+import type { ErrorOperation, OperationResponse } from "../types/api";
 
 export interface BookAuthorQuery {
   bookId: number;

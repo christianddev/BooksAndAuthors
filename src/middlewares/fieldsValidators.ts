@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 
-import type { ErrorOperation } from "../typings/api";
+import type { ErrorOperation } from "../types/api";
 
 export const validateId = (req: Request, res: Response, next: NextFunction) => {
   if (!req?.params?.id) {

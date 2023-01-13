@@ -4,8 +4,8 @@ import httpStatus from "http-status";
 import { findOneBookById, findOneBookByISBN } from "../services";
 import { defaultErrorResponse } from "../utils";
 
-import type { ErrorOperation } from "../typings/api";
-import type { BookRequest } from "../typings/book";
+import type { ErrorOperation } from "../types/api";
+import type { BookRequest } from "../types/book";
 
 export const validateBookByIdDataBase = async (
   req: Request,

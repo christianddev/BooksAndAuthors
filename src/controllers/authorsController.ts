@@ -14,8 +14,8 @@ import {
 
 import { defaultErrorResponse } from "../utils";
 
-import type { ErrorOperation } from "../typings/api";
-import type { AuthorRequest } from "../typings/author";
+import type { ErrorOperation } from "../types/api";
+import type { AuthorRequest } from "../types/author";
 
 export const getAuthors = async (req: Request, res: Response) => {
   try {
