@@ -10,7 +10,7 @@ import {
   updateBook,
   removeBook,
   setBooksAuthorsFromBookId,
-} from "../helpers/";
+} from "../services";
 import { defaultErrorResponse } from "../utils";
 
 import type { ErrorOperation } from "../typings/api";

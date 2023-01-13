@@ -1,8 +1,8 @@
 import { Model } from "sequelize";
 
 import { BooksAuthorsModel } from "../models";
-import { finOneAuthorById } from "./authorDatabase";
-import { findOneBookById } from "./bookDatabase";
+import { finOneAuthorById } from "./authorService";
+import { findOneBookById } from "./bookService";
 import { throwError } from "../utils";
 
 import { EXCLUDE_ORM_FIELDS, SEQUELIZE_FIELDS } from "../utils/";

@@ -99,10 +99,10 @@ DATABASE_DEFAULT_EXCLUDE_TEMPORARY_DELETED
  ┃ ┃ ┣ 📂responses
  ┃ ┃ ┣ 📂schemas
  ┃ ┃ ┗ 📜swagger.ts # swagger related configuration.
- ┃ ┣ 📂helpers
- ┃ ┃ ┣ 📜authorDatabase.ts # performs CRUD operations using AuthorModel.
- ┃ ┃ ┣ 📜bookAuthorDatabase.ts # performs Read & Delete operations using BooksAuthorsModel.
- ┃ ┃ ┣ 📜bookDatabase.ts # performs CRUD operations using BookModel.
+ ┃ ┣ 📂services
+ ┃ ┃ ┣ 📜authorService.ts # performs CRUD operations using AuthorModel.
+ ┃ ┃ ┣ 📜bookAuthorService.ts # performs Read & Delete operations using BooksAuthorsModel.
+ ┃ ┃ ┣ 📜bookService.ts # performs CRUD operations using BookModel.
  ┃ ┃ ┗ 📜index.ts
  ┃ ┣ 📂middlewares
  ┃ ┃ ┣ 📜AuthorDatabaseValidators.ts # validators associated with the path /api/v1/authors with database check operations.

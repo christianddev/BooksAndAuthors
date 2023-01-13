@@ -4,7 +4,7 @@ import { throwError } from "../utils";
 import {
   createBooksAuthorsByBookId,
   destroyBooksAuthorsByBookId,
-} from "./bookAuthorDatabase";
+} from "./bookAuthorService";
 import {
   EXCLUDE_ORM_FIELDS,
   EXCLUDE_TEMPORARY_DELETED,

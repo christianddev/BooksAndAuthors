@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 
-import { findOneBookById, findOneBookByISBN } from "../helpers";
+import { findOneBookById, findOneBookByISBN } from "../services";
 import { defaultErrorResponse } from "../utils";
 
 import type { ErrorOperation } from "../typings/api";

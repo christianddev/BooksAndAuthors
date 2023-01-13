@@ -10,7 +10,7 @@ import {
   updateAuthor,
   createAuthorWithBooks,
   setBooksAuthorsFromAuthorId,
-} from "../helpers";
+} from "../services";
 
 import { defaultErrorResponse } from "../utils";
 
