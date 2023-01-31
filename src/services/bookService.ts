@@ -4,7 +4,7 @@ import { throwError } from "../utils";
 import {
   createBooksAuthorsByBookId,
   destroyBooksAuthorsByBookId,
-} from "./bookAuthorDatabase";
+} from "./bookAuthorService";
 import {
   EXCLUDE_ORM_FIELDS,
   EXCLUDE_TEMPORARY_DELETED,
@@ -12,8 +12,8 @@ import {
   TEMPORARY_DELETE,
 } from "../utils/";
 
-import type { OperationResponse } from "../typings/api";
-import type { BookRequest } from "../typings/book";
+import type { OperationResponse } from "../types/api";
+import type { BookRequest } from "../types/book";
 
 export const findAllBooks = async (
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS,

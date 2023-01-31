@@ -4,7 +4,7 @@ import { throwError } from "../utils";
 import {
   createBooksAuthorsByAuthorId,
   destroyBooksAuthorsByAuthorId,
-} from "./bookAuthorDatabase";
+} from "./bookAuthorService";
 import {
   EXCLUDE_ORM_FIELDS,
   EXCLUDE_TEMPORARY_DELETED,
@@ -12,10 +12,11 @@ import {
   TEMPORARY_DELETE,
 } from "../utils/";
 
-import type { AuthorRequest } from "../typings/author";
+import type { AuthorRequest } from "../types/author";
 
 export const findAllAuthors = async (
   excludeTemporaryDeleted: boolean = EXCLUDE_TEMPORARY_DELETED,
+
   excludeORMFields: boolean = EXCLUDE_ORM_FIELDS
 ) => {
   try {
