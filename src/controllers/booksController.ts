@@ -10,11 +10,11 @@ import {
   updateBook,
   removeBook,
   setBooksAuthorsFromBookId,
-} from "../helpers/";
+} from "../services";
 import { defaultErrorResponse } from "../utils";
 
-import type { ErrorOperation } from "../typings/api";
-import type { BookRequest } from "../typings/book";
+import type { ErrorOperation } from "../types/api";
+import type { BookRequest } from "../types/book";
 
 export const getBooks = async (req: Request, res: Response) => {
   try {

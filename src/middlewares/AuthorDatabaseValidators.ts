@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 
-import { finOneAuthorById, findOneAuthorByNameAndCountry } from "../helpers";
+import { finOneAuthorById, findOneAuthorByNameAndCountry } from "../services";
 import { defaultErrorResponse } from "../utils";
 
-import type { ErrorOperation } from "../typings/api";
-import type { AuthorRequest } from "../typings/author";
+import type { ErrorOperation } from "../types/api";
+import type { AuthorRequest } from "../types/author";
 
 export const validateAuthorByIdDataBase = async (
   req: Request,
